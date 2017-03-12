@@ -1,0 +1,13 @@
+0.1.7                            
+											Added cd/1 to documentation for cd/2.
+											Introduced &/1 with threads implementation (SWI's detached(true) aint working).
+                                 Some more support for environment variables in args.
+                                 Added password example.
+											Load ~/.pl/by_unix.pl if it exists.
+											Prolog flags, 
+											  by_unix_shell, Shell
+											  by_unix_shell_com_arg, Arg
+											Now library plays with other shells. 
+											Fixed @ cd( pack(by_unix) ).
+
+0.1.6          2013/12/26      

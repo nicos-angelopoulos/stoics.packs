@@ -1,0 +1,217 @@
+<html>
+  <head>
+    <title>by_unix.pl</title>
+    <link href="pldoc.css" rel="stylesheet" type="text/css">
+    <meta
+	http-equiv="content-type"
+	content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <div class="navhdr">
+      <div class="jump">
+	<div>
+	  <a class="prolog_version" href="http://www.swi-prolog.org"> SWI-Prolog 7.1.4</a>
+	</div>
+      </div>
+      <div class="search">
+      </div>
+      <br clear="right">
+    </div>
+    <h1 class="file">by_unix: by_unix</h1>
+    <p>An elegance layer to calling unix commands.</p>
+    <p>This library provides primitives that allow programmers and users
+to embed calls to <a href="/doc_for?object=process:process_create/3">process_create/3</a>. The aim is to keep application
+code clear and succinct. This is achieved by (a) reducing the call to
+<a href="/doc_for?object=process:process_create/3">process_create/3</a> to its essential constituents and (b) allowing for
+term structures in the arguments of the call.</p>
+    <p>A simple example is</p>
+    <pre class="code" ext="">  ?- @ ls.</pre>
+    <p>which lists all files by translating ls to <code>process_create( path(ls), [], [] )</code>.</p>
+    <p>To list all details (long list):</p>
+    <pre class="code" ext="">        ?- @ ls(-l).</pre>
+    <p>which demonstrates translation of terms in arguments.</p>
+    <p>By_unix looks at the arguments of the terms right of an @ to decide which ones are options
+(3rd argument of <a href="/doc_for?object=process:process_create/3">process_create/3</a>) assuming the rest to be arguments to the call (2nd argument of <a href="/doc_for?object=process:process_create/3">process_create/3</a>).
+Command arguments can be terms which will be serialised, so that a/b becomes 'a/b'.
+The argument * is special and it is expanded fed into <a class="builtin" href="/man?predicate=expand_file_name/2">expand_file_name/2</a>.</p>
+    <p>With SWI 7 you can now have '.' in atoms, making interactions with the OS even smoother.</p>
+    <pre class="code" ext="">?- @ mkdir( -p, /tmp/test_by_unix ).
+?- @ cd( /tmp/test_by_unix ).
+?- @ touch( empty.pl ).
+?- @ rm( -f, empty.pl ).
+
+?- @ cd( pack(by_unix) ).
+?- Wc @@ wc( -l, pack.pl ).
+
+Wc = ['10 pack.pl'].
+
+?- @ cd( @ '$HOME' ).
+?- [Pwd] @@ pwd.
+Pwd = '/home/nicos'.
+</pre>
+    <p>The main objective of by_unix is achieved by what has been described so far.
+We have found that more than 90 percent of the its uses are to produce elegant Goals that
+are clear to read and construct their arguments within Prolog.
+We provide some more features, which are described in what follows, but they should be seen as marginal.</p>
+    <p>Changing directory is not supported via cd in process_create as <code>which cd</code> fails to return
+an executable in bash. That is,</p>
+    <pre class="code" ext="">?- process_create( path(cd), ['/'], [] ).
+ERROR: source_sink `path(cd)' does not exist</pre>
+    <p>As oppose to:</p>
+    <pre class="code" ext="">?- [library(by_unix)].
+
+?- @ cd( / ).
+true.
+
+?- @ ls.
+bin   dev  home        initrd.img.old  lib64	   media  opt	root  sbin     srv  tmp  var
+boot  etc  initrd.img  lib	       lost+found  mnt	  proc	run   selinux  sys  usr  vmlinuz
+true.
+
+?- @ cd( /home/nicos ).
+?- @ cd( pack(by_unix) ).
+</pre>
+    <p><a href="#which/2">which/2</a> provides a locator for executables. <a href="#by_unix_term_to_serial/2">by_unix_term_to_serial/2</a> serialises Prolog terms
+to <a href="/doc_for?object=process:process_create/3">process_create/3</a> atoms, and <a href="#by_unix_assert/0">by_unix_assert/0</a> allows for doing away with the @.</p>
+    <p>As <a href="/doc_for?object=process:process_create/3">process_create/3</a> quotes special characters, for instance</p>
+    <pre class="code" ext="">?- process_create( path(ls), ['*'], [] ).
+/bin/ls: cannot access *: No such file or directory
+ERROR: Process "/bin/ls": exit status: 2</pre>
+    <p>By_unix allows for in-argument file name expansions via <a class="builtin" href="/man?predicate=expand_file_name/2">expand_file_name/2</a>.</p>
+    <p>?- @ <code>ls( -l, @('*.pl') )</code>.</p>
+    <p><a href="#@@/2">@@/2</a> provides dual functionality: either picking up output lines from the calling command
+or for <a class="builtin" href="/man?predicate=maplist/2">maplist/2</a> applications. See <a href="#@@/2">@@/2</a> and <a href="#@@/3">@@/3</a>.</p>
+    <p>A lines example</p>
+    <pre class="code" ext="">?- @ cd( @ '$HOME' ).
+?- Pwd @@ pwd.
+Pwd = ['/home/nicos'].</pre>
+    <p>A maplist example</p>
+    <pre class="code" ext="">?- @ cd( pack(by_unix) ).
+?- Files = ['by_unix.pl'], maplist( @@wc(-l), Files, Wcs ).
+</pre>
+    <pre class="code">@author Nicos Angelopoulos
+@version 0.1.6   2013/12/26
+@see http://stoics.org.uk/~nicos/sware/by_unix</pre>
+    <dl>
+      <dt class="pubdef">
+	<span style="float:right"></span>
+	<a name="@@/2">
+	  <var class="arglist">-Lines</var>
+	  <b class="pred">@@</b>
+	  <var class="arglist">+Comm</var>
+	</a>
+      </dt>
+      <dt class="pubdef">
+	<var class="arglist">+Comm</var>
+	<b class="pred">@@</b>
+	<var class="arglist">-Arg</var>
+      </dt>
+      <dd class="defbody">If first argument is a variable or list, it is interpretted to be the <var>Lines</var> invocation,
+Output from <var>Comm</var> instantiated in <var>Lines</var>. Attach <var>Arg</var> to <var>Comm</var> before processing as a
+Unix command.</dd>
+      <dt class="pubdef">
+	<span style="float:right"></span>
+	<a name="@/1">
+	  <b class="pred">@</b>
+	  <var class="arglist">+Goal</var>
+	</a>
+      </dt>
+      <dd class="defbody">This is the main predicate of by_unix.
+See module documentation for examples.
+
+<p>For @<code>cd( Arg )</code> see documentation of <a href="#cd/2">cd/2</a>.</p>
+
+<pre class="code" ext="">   ?- @ mkdir( -p, /tmp/test_by_unix ).
+   ?- @ cd( /tmp/test_by_unix ).
+   ?- @ touch( empty.pl ).
+   ?- @ rm( -f, empty.pl ).</pre>
+</dd>
+      <dt class="pubdef">
+	<span style="float:right"></span>
+	<a name="which/2">
+	  <b class="pred">which</b>
+	  <var class="arglist">(+Which, -This)</var>
+	</a>
+      </dt>
+      <dd class="defbody">Expand <var>Which</var> as a unix command in the path and return its <a class="builtin" href="/man?predicate=absolute_file_name/3">absolute_file_name/3</a> in <var>This</var>.
+When <var>Which</var> is <code>cd</code>, variable <var>This</var> is also bound to <code>cd</code>. cd is handled separately as <code>which cd</code>
+fails in bash, as does <code>process_create(path(cd), ['/'], [] )</code>.</dd>
+      <dt class="pubdef">
+	<span style="float:right"></span>
+	<a name="by_unix_term_to_serial/2">
+	  <b class="pred">by_unix_term_to_serial</b>
+	  <var class="arglist">(Term, Serial)</var>
+	</a>
+      </dt>
+      <dd class="defbody"><var>Term</var> is serialised into an atomic <var>Serial</var>. When <var>Term</var> is *, <var>Serial</var> is the list of current files,
+while when <var>Term</var> = @ Atom, <var>Serial</var> is the result of applying <code>expand_file_name( Atom, Serial )</code>.</dd>
+      <dt class="pubdef">
+	<span style="float:right"></span>
+	<a name="by_unix_version/2">
+	  <b class="pred">by_unix_version</b>
+	  <var class="arglist">(-Version, -Date)</var>
+	</a>
+      </dt>
+      <dd class="defbody">Provides version and date of current release.</dd>
+      <dt class="pubdef">
+	<span style="float:right"></span>
+	<a name="by_unix_retract/0">
+	  <b class="pred">by_unix_retract</b>
+	</a>
+      </dt>
+      <dd class="defbody">Retract all user:<code>goal_expansion(_,_)</code>.</dd>
+      <dt class="pubdef">
+	<span style="float:right"></span>
+	<a name="by_unix_assert/0">
+	  <b class="pred">by_unix_assert</b>
+	</a>
+      </dt>
+      <dd class="defbody">Allows for goal expansion of Com to @ Com, when Com is a which-able Unix command.
+
+<pre class="code" ext="">  ?- by_unix_asert.
+  ?- mkdir( -p, /tmp/test_by_unix ).
+  ?- cd( /tmp/test_by_unix ).
+  ?- touch( empty.pl ).
+  ?- ls( -l ).
+  ?- rm( -f, empty.pl ).
+  ?- ls( -a ).</pre>
+</dd>
+      <dt class="pubdef">
+	<span style="float:right"></span>
+	<a name="cd/2">
+	  <b class="pred">cd</b>
+	  <var class="arglist">(-Old, +New)</var>
+	</a>
+      </dt>
+      <dd class="defbody">Similar to <a class="builtin" href="/man?predicate=working_directory/2">working_directory/2</a>, but in addition <var>New</var> can be
+a search path alias or the 1st argument of <a class="builtin" href="/man?predicate=absolute_file_name/2">absolute_file_name/2</a>.
+This is also the case when @ <code>cd( New )</code> is called.
+
+<pre class="code" ext="">?- @ cd( pack ).
+true.
+
+?- @ pwd.
+/usr/local/users/nicos/local/git/lib/swipl-7.1.4/pack
+true.
+
+?- @ cd( @ '$HOME' ).
+true.
+
+?- @ pwd.
+/home/nicos
+true.</pre>
+</dd>
+    </dl>
+    <h2 class="undoc">Undocumented predicates</h2>
+    <p>The following predicates are exported, but not or incorrectly documented.</p>
+    <dl class="undoc">
+      <dt class="undoc">
+	<span style="float:right"></span>
+	<a name="@@/3">
+	  <b class="pred">@@</b>
+	  <var class="arglist">(Arg1, Arg2, Arg3)</var>
+	</a>
+      </dt>
+    </dl>
+  </body>
+</html>

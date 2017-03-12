@@ -1,0 +1,22 @@
+Todo: 
+						db_table_keys( +Db, ?Table, -Keys ).
+						(  sqlite is easy, check if this works in odbc, 
+						   see hdb/src/page_db_update_table.pl )
+
+0.4    16.12.22   FIXED: wrap use_module/1 call for backends in a catch
+                         so it fails, rather than error.
+0.3    16.12.22   FIXED: phone.pl example (string and code-list as argument)
+                  FIXED: code-list as argument (clause was missing ConT argument?)
+						ADDED: support for strings as argument
+						FIXED: URL for uniprot.sqlite in uniprot.pl
+
+0.2    16.09.18   
+		 16.09.05   added multi goals (for proSQLite for now) in db_assert/n.
+						Corrected typo disambled -> disabled
+
+0.1.0  13.11.1
+						Added db_table/2, db_table_column/3,4.
+                  Added "" trick for sqlite assertions.       
+                    In sqlite "" escapes the " code. 
+
+0.0.1  12.10.18   First public release

@@ -1,0 +1,10 @@
+---   Releases   ---
+--------------------
+
+0.2 @ 2017/03/11   UPDATED: for pack(lib) v1.1
+                   FIXED:   protected some dotted atoms passed to Real
+    @ 2017/02/22   UPDATED: to factorised lib/1 with dependencies to stoics_lib.
+    @ 2016/11/08   ADDED:   Separated pred: mlu_mtx_header_rows/4.
+                   ADDED:   separated interface k_fold_segments/3.
+
+0.1 @ 2016/03/05   VERSION: First public release

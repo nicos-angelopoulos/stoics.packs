@@ -1,0 +1,7 @@
+---   Releases   ---
+--------------------
+0.3   2016/03/11   VERSION:  to work with pack(lib) v1.1
+                   ADDED:    non-nested values in Pairs of gg_bar_plot/2 
+						           these plot as non-grouped bar plots
+
+0.2   2016/01/23   VERSION: public release
