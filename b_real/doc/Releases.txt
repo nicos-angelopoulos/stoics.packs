@@ -1,7 +1,11 @@
 ---   Releases   ---
 --------------------
+0.4
+      2017/03/24   ADDED:    lazy loader file: prolog/b_real_lazy.pl
+                   ADDED:    src/b_real_core.pl
+
 0.3   2016/03/11   VERSION:  to work with pack(lib) v1.1
                    ADDED:    non-nested values in Pairs of gg_bar_plot/2 
-						           these plot as non-grouped bar plots
+                             these plot as non-grouped bar plots
 
 0.2   2016/01/23   VERSION: public release
