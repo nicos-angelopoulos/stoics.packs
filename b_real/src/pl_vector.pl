@@ -2,8 +2,11 @@
 :- lib(options). %
 :- lib(suggests(mtx)).     %
 
+:- lib( stoics_lib:en_list/2 ).
 :- lib( stoics_lib:holds/2 ).
 :- lib( stoics_lib:kv_compose/3 ).
+
+pl_vector_defaults( if_rvar(true) ).
 
 %% pl_vector( +VectSpec, -Vect, +Opts ).
 %
@@ -31,6 +34,9 @@
 %     curtail values < Min to Min
 %  * mtx(Mtx)
 %     a matrix 
+%  * if_rvar(Rvar=true)
+%    how to treat R variables in VectSpec. true: allows them by passing them to Vect, 
+%    false: dissallows R variables, and prolog: allows them by passing their Prolog representation to Vect.
 %  * v(Vid)
 %     return a paired vector where V is taken from Vid column of Mtx (below)- 
 %     and K from VectSpec. Only used if k(Kid) is not present
@@ -68,21 +74,40 @@
 % @author  nicos angelopoulos
 % @version 0.2 2016/6/7,  added where() and k(),v() pairs
 %
-pl_vector( VectSpec, Vect, OptS ) :-
-	is_list( VectSpec ),
-	!,
-	en_list( OptS, Opts ),
+pl_vector( VectSpec, Vect, Args ) :-
+    options_append( pl_vector, Args, Opts ),
+    holds( is_list(VectSpec), IsList ),
+    pl_vector_is_list( IsList, VectSpec, Vect, Opts ).
+
+pl_vector_is_list( true, VectSpec, Vect, Opts ) :-
 	( memberchk(cnm_def(Cnm),Opts) -> options_return(cnm(Cnm),Opts); true ),
 	pl_vector_curtail( VectSpec, Vect, Opts ).
 	% Vect = VectSpec.
-pl_vector( Cid, Vect, OptS ) :-
-	en_list( OptS, Opts ),
+pl_vector_is_list( false, VectSpec, Vect, Opts ) :-
+    holds( atomic(VectSpec), AtmVS ),
+    pl_vector_non_list( AtmVS, VectSpec, Vect, Opts ).
+
+pl_vector_non_list( true, RVect, Vect, Opts ) :-
+    r_is_var( RVect ),
+    options( if_rvar(IfRvar), Opts ),
+    ground( IfRvar ),
+    pl_vector_rvar( IfRvar, RVect, Vect, Opts ),
+    !.
+pl_vector_non_list( _, Cid, Vect, Opts ) :-
 	options( mtx(FullMtx), Opts ),
 	pl_vector_where( FullMtx, Mtx, Opts ),
 	mtx_column( Mtx, Cid, MtxVect, Cnm, _Cpos ),
 	options_return( cnm(Cnm), Opts ),
 	pl_vector_pair( AsPair, IsK, Mtx, PairVect, Opts ),
 	pl_vector_curtail( MtxVect, AsPair, IsK, PairVect, Vect, Opts ).
+
+% pl_vector_rvar( false, RVect, Vect, Opts ) :-  fail.  % default if 1st arg not in {false,true,prolog}
+% fixme: enable curtailing...
+pl_vector_rvar( true, RVect, Vect, _Opts ) :-
+    !,
+    Vect = RVect.
+pl_vector_rvar( prolog, RVect, Vect, _Opts ) :-
+    Vect <- RVect.
 
 pl_vector_where( FullMtx, Mtx, Opts ) :-
 	holds( memberchk(where(Where),Opts), HasWhere ),
@@ -133,6 +158,40 @@ pl_vector_curtail_pass_combine( true, Vect, PairTo, Pairs ) :-
 pl_vector_curtail_pass_combine( false, Vect, PairTo, Pairs ) :-
 	kv_compose( PairTo, Vect, Pairs ).
 
+/** pl_vector_curtail( +List, -Curtailed, +Opts )
+
+Calls =|pl_vector_list( List, Min, Max, Curtailed )|=
+with Min and Max picked from min(Min) and max(Max) terms in Opts,
+or the respective end points in List.
+
+==
+?- pl_vector_curtail( [1,2,5,4,3,6], Curt, [min(2),max(4)] ).
+?- pl_vector_curtail( [1,2,5,4,3,6], Curt, max(4) ).
+==
+
+@author nicos angelopoulos
+@version  0.1 2017/4/24
+
+*/
+pl_vector_curtail( List, Curtailed, OptS ) :-
+    en_list( OptS, Opts ),
+    ( memberchk(min(Min),Opts) -> true; min_list(List,Min) ),
+    ( memberchk(max(Max),Opts) -> true; max_list(List,Max) ),
+    pl_vector_curtail( List, Max, Min, Curtailed ).
+
+/** pl_vector_curtail( +List, +Max, +Min, -Curtailed ).
+
+Curtails List to values withing [Min,Max] (extremes included).
+The resulting list is Curtailed.
+
+==
+?- pl_vector_curtail( [1,2,4,5,3,2,6,1], 5, 2, Curt )
+==
+
+@author nicos angelopoulos
+@version  0.1 2017/4/24
+
+*/
 pl_vector_curtail( [], _Max, _Min, [] ).
 pl_vector_curtail( [V|Vs], Max, Min, [Val|Tvs] ) :-
 	( V > Max -> 

@@ -1,10 +1,13 @@
 ---   Releases   ---
 --------------------
 0.4
+      2017/04/24   ADDED:    missing? pl_vector_curtail/3
+                   CHANGED:  loading set up for the 2 core preds
+                   ADDED:    if_rvar/1 option  to pl_vector.pl
       2017/03/24   ADDED:    lazy loader file: prolog/b_real_lazy.pl
                    ADDED:    src/b_real_core.pl
 
-0.3   2016/03/11   VERSION:  to work with pack(lib) v1.1
+0.3   2017/03/11   VERSION:  to work with pack(lib) v1.1
                    ADDED:    non-nested values in Pairs of gg_bar_plot/2 
                              these plot as non-grouped bar plots
 

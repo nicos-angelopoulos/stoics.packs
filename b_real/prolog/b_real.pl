@@ -25,6 +25,8 @@
 :- lib(options).
 :- lib(suggests(mtx)).
 
+:- lib(b_real/0).
+:- lib(b_real_version/2).
 :- lib(options_rvar_rmv/2).
 :- lib(mtx_pheatmap/2).
 :- lib(mtx_column_pheatmap/3). % requires( library(mtx) ).
