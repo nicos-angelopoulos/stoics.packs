@@ -29,13 +29,23 @@ Opts
 ?- Mtc <- as.matrix(mtcars), r_hist( 2, mtx(Mtc) ).
 ?- rns <- rnorm(1000).
 ?- Rns <- rns, r_hist( Rns, name("rnorm") ).
-?- Rns <- rns, r_hist( Rns, [name("rnorm"),main="Main Title"] ).
+?- Rns <- rns, r_hist( Rns, [name("rnorm"),main="Main Title",outputs(svg),stem(rh1)] ).
+==
+Produces file: rh1.svg
+
+[[../doc/images/rh1.svg]]
+
+==
 ?- rnsm <- rnorm(10000), r_hist( rnsm, true ).
 ?- r_hist( rnsm, as_density(true) ).
 ?- pl_vector( rnsm, Rnsm, if_rvar(prolog) ), r_hist( Rnsm, name(+true) ).
 ?- r_hist( rnsm, [as_density(true),transparent(false)] ).
-?- r_hist( rnsm, [as_density(true),transparency_colour("lightgreen")] ).
+?- r_hist( rnsm, [as_density(true),transparency_colour("lightgreen"),outputs(svg),stem(rh2)] ).
 ==
+Produces file: rh2.svg
+
+
+[[../doc/images/rh2.svg]]
 
 @author nicos angelopoulos
 @version  0.1 2017/4/25

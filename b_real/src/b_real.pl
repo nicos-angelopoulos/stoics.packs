@@ -17,6 +17,7 @@ Dependancies
 @version  0.1.1 2015/7/24, added gg_bar_plot/2, then on 12/16 added pl_plot_on/2.
 @version  0.2   2016/1/23  
 @version  0.3   2017/3/11, works with lib 2.0 and stoics_lib
+@version  0.4   2017/4/25, fixes + r_hist/2.
 
 */
 
