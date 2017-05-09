@@ -1,28 +1,28 @@
 
-:- lib(b_real). % pl_vector/3  % fixme: use lazy loading
-
 r_hist_defaults( [as_density(false),transparent(true),transparency_colour("lightblue")] ).
 
 /** r_hist( +VectSpec, +Opts ).
 
-Plots a histogram of a vector.
+Plots a histogram or density of an arithmetic vector.
 
 VectSpec should be as that recognised by the 1st argument of pl_vector/3.
+A list is the simplest representation of a vector.
 
-Displaying is via r_call/2 so Opts can influence that call.
+Displaying is via r_call/2, so Opts can influence that call.
 
 Opts 
- * as_density(AsDense=false)
-   when true it plots the density instead of the histogram
 
- * name(Name) 
-   set Name (string on +atom) default value for xlab and main
+  * as_density(AsDense=false)
+    when true it plots the density instead of the histogram
 
- * transparency_colour(TransClr="lightblue")
-    colour for the t(density's) transparency colour
+  * name(Name) 
+    set Name (string or +atom) default value for x-axis and main labels
 
- * transparent(Trans=true)
-   use transparent colour to highlight density (currently only with AsDens=true)
+  * transparency_colour(TransClr="lightblue")
+    colour for the density, transparency colour
+
+  * transparent(Trans=true)
+    use transparent colour to highlight density (currently only with AsDens=true)
 
 ==
 ?- lib(real).
