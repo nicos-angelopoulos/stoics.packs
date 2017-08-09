@@ -152,4 +152,5 @@ wgraph_columns_options( Mtx, WClms, Opts ) :-
 wgraph_columns( [from,to,weight] ).
 
 wgraph_mtx_column( Mtx, Opts, Cnm, Clm ) :-
-	mtx_column_options( Mtx, Cnm, Cnm, Clm, Opts ).
+	% mtx_column_options( Mtx, Cnm, Cnm, Clm, Opts ).
+	mtx_column_name_options( Mtx, Cnm, Cnm, Clm, Opts ).
