@@ -26,7 +26,7 @@ wgraph_plot_defaults( All, Defs ) :-
 		;
 		WgraphPrv = Wgraph
 	),
-	Tail = [width(7),height(7),format(x11)],
+	Tail = [width(7),height(7),format(x11),post_call(true)],
 	( memberchk(layout_call(LayG),Args) ->
 		layout_plot_qgraph_layout(LayG,Lay)
 		;
@@ -35,8 +35,8 @@ wgraph_plot_defaults( All, Defs ) :-
 		findall( W, member(_-_:W,Wgraph), Ws ),
 		( memberchk(layout_mtx(LayF),Args) ->
 			mtx( LayF, Lay ),
-			mtx_column_options( Lay, x, layout, Xs, Args ),
-			mtx_column_options( Lay, y, layout, Ys, Args )
+			mtx_column_name_options( Lay, x, layout, Xs, Args ),
+			mtx_column_name_options( Lay, y, layout, Ys, Args )
 			;
 			Lay = [row(x)],
 			gnet <- graph.adjacency(lp_adj, weighted='T', mode ="undirected"),
@@ -51,16 +51,16 @@ wgraph_plot_defaults( All, Defs ) :-
 			kv_decompose( XYs, Xs, Ys )
 		)
 	),
-	mtx_column_options( Lay, color, Clrs="steelblue1", Clrs, Args ),
-	mtx_column_options( Lay, label_distance, Ldist=0.5, Ldist, Args ),
+	mtx_column_name_options( Lay, color, Clrs="steelblue1", Clrs, Args ),
+	mtx_column_name_options( Lay, label_distance, Ldist=0.5, Ldist, Args ),
 	% Ldegre = -pi/4, although doc says -pi/2
-	mtx_column_options( Lay, label_degree, Ldegree= -0.7853982, Ldegree, Args ),
+	mtx_column_name_options( Lay, label_degree, Ldegree= -0.7853982, Ldegree, Args ),
 	wgraph_vertices( Wgraph, Nodes ),
 	( memberchk(labels(Lbls),Args) ->  
 		true
 		;
 			% fixme: was labels() instead or label, which is correct?
-		mtx_column_options( Lay, label, Lbls=Nodes, Lbls, Args )
+		mtx_column_name_options( Lay, label, Lbls=Nodes, Lbls, Args )
 	),
 	( memberchk(stem(Stem),Args) -> 
 		Save = true
@@ -83,7 +83,7 @@ wgraph_plot_test( Args ) :-
 	
 %% wgraph_plot( +Wgraph, +Opts ).
 %
-% Display weighed graph Wgraph from a layout that may include colours and labels.
+% Display weighted graph Wgraph from a layout that may include colours and labels.
 % Wgraph should be in a form accepted by wgraph/3.
 %
 % Layout (see below) should be an mtx/1 matrix with at least two columns: x, y defining
@@ -143,7 +143,7 @@ wgraph_plot_test( Args ) :-
 %  * node_size(Vz)
 %    size of nodes, can be prop(Min,Mult)- size being proportional to label length
 %  * wgraph(Wgraph)
-%    the weighed graph (wgraph/1)
+%    the weighted graph (wgraph/1)
 %  * wgraph_mtx(WgMtx)
 %    the matrix from which to extract the graph if one is not given by Wgraph
 %  * w_threshold(Thres=1)
@@ -230,13 +230,13 @@ wgraph_plotter( igraph, Self, Ws, HclS, Labels, Clrs, Ldist, Ldegr, Opts ) :-
 	% 120 = Green, 260 = Blue
 	maplist( hcl_colour, Hus, Lus, EClrS ),
 	% r_call( plot.igraph(ilp), [edge.color=EClrs,edge.width=Ws,layout=lp_coords,vertex.color=Clrs,vertex.label=Labels,vertex.label.dist=Ldist,vertex.label.degree=Ldegr|Opts] ).
-	findall( Ropt=Rval, member(Ropt=Rval,Opts), RinOpts ),
-	append( OutputL, RinOpts, Ropts ),
+	% findall( Ropt=Rval, member(Ropt=Rval,Opts), RinOpts ),
+	append( OutputL, Opts, Aopts ),
 	en_list( EClrS, EClrs ),
 	% maplist( en_plus, EnpClrs, EClrs ),
 	debug( wgraph_plot, 'igraph R options: ~w', [Ropts] ),
 	options( node_size(Vsize), Opts ),
-	r_call( plot.igraph(ilp), [edge.color=EClrs,edge.width=Ws,layout=lp_coords,vertex.color=Clrs,vertex.label=Labels,vertex.label.dist=Ldist,vertex.label.degree=Ldegr,vertex.size=Vsize|Ropts] ).
+	r_call( plot.igraph(ilp), [edge.color=EClrs,edge.width=Ws,layout=lp_coords,vertex.color=Clrs,vertex.label=Labels,vertex.label.dist=Ldist,vertex.label.degree=Ldegr,vertex.size=Vsize|Aopts] ).
 	% % r_call( plot.igraph(lp_coords[*,1],lp_coords[*,2]), [layout=lp_coords,vertex.color=Clrs,vertex.label=Labels,vertex.label.dist=Ldist|Opts] ).
 	% <- Qgraph.
 

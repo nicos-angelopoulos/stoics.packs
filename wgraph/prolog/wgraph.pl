@@ -16,7 +16,7 @@
 
 For now the emphasis is on plotting via igraph and qgraph R libraries via Real. 
 
-A weighted graphs is reepresented as a list of From-To:W edges or Node entries
+A weighted graphs is represented as a list of From-To:W edges or Node entries
 for orphans.
 
 See wgraph_plot/2.
