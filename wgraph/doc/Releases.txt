@@ -1,0 +1,6 @@
+---Releases---
+--------------
+
+0.4 
+      17.08.10   DOC:     typos  (weighed -> weighted)
+                 FIXED:   post_call/1 option in igraph plotter
