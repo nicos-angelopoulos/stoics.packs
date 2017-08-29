@@ -1,22 +1,29 @@
 
 :- lib( stoics_lib:en_list/2 ).
 :- lib( stoics_lib:kv_decompose/3 ).
+:- lib( stoics_lib:current_call/1 ).
+:- lib( stoics_lib:list_frequency/2 ).
+
+:- lib( suggests(real) ).
+:- lib( suggests(b_real) ).
 
 mlu_frequency_plot_defaults( Defs ) :-
-    ( catch(use_module(library(b_real)),_,fail) ->
+    ( current_predicate(r_version/3) -> 
+        Ifce = gg_bar
+        ;
+        ( current_predicate(b_real_version/2) ->
             Ifce = gg_bar
             ;
-        ( catch(use_module(library(real)),_,fail) ->
-            Ifce = barplot
-            ;
             throw( either_of_required(lib(real),lib(b_real)) )
+
         )
     ),
     Defs = [ interface(Ifce), sort(false), pop_line(false), pop_breaks(false) ].
 
-/** mlu_frequency_plot( +Freq, +Opts ).
+/** mlu_frequency_plot( +FreqOrVec, +Opts ).
 
-Make a plot for pairlist Freq: Item-Times. 
+Make a plot for pairlist or vector, FreqOrVec. FreqOrVec is either a pairlist of the form, Item-Times, or
+a vector as recognised by pl_vector/3 (pack(b_real), if installed).
 
 Opts
   * interface(Iface)
@@ -45,26 +52,49 @@ Other options are passed to either gg_bar_plot/2 (if Iface == gg_bar) or to r_ca
 ?- lib(pepl).
 ?- sload_pe( coin ).
 ?- mlu_sample( scall(coin(Side)), 100, Side, Freqs ), mlu_frequency_plot( Freqs, [interface(barplot),outputs([pdf]),las=2] ).
+% ouput produced on real_plot.pdf
+
 ?- mlu_sample( scall(coin(Side)), 100, Side, Freqs ), mlu_frequency_plot( Freqs, [interface(gg_bar),output(pdf("naku.pdf"))] ).
+% ouput produced on naku.pdf
 
 ?- [pack(mlu/examples/grouped_freqs)].
 ?- grouped_freqs.
 % a plot with 9 bars and 3 groups should appear on screen
+
+?- mlu_frequency_plot( [1,1,1,2,2,3], true ).
+?- mlu_frequency_plot( [1,1,1,2,2,3], interface(barplot) ).
+
+
 ==
 
 @author nicos angelopoulos
 @version  0.1 2016/8/31
 @version  0.2 2017/1/13, added option sort(false)
+@version  0.3 2017/8/29, added vectors as inputs via b_real:pl_vector/3
 
 */
 
-mlu_frequency_plot( InFreq, Args ) :-
+mlu_frequency_plot( InFreqPrv, Args ) :-
     options_append( mlu_frequency_plot, Args, Opts ),
+    mlu_frequency_plot_pairs( InFreqPrv, InFreq, Opts ),
     options( sort(Sort), Opts ),
     ground( Sort ),  % fixme: type check
     mlu_frequency_plot_sort( Sort, InFreq, Freq ),
     options( interface(Iface), Opts, rem_opts(Ropts) ),
     mlu_frequency_interface( Iface, Freq, Ropts ).
+
+mlu_frequency_plot_pairs( InFreqPrv, InFreq, _Opts ) :-
+    \+ var( InFreqPrv ),
+    InFreqPrv = [_-_|_],
+    !,
+    InFreqPrv = InFreq.
+mlu_frequency_plot_pairs( InFreqPrv, InFreq, Opts ) :-
+    current_call( mlu:pl_vector(InFreqPrv,InVect,Opts) ),
+    !,
+    list_frequency( InVect, InFreq ).
+
+mlu_frequency_plot_pairs( InFreqPrv, _InFreq, _Opts ) :-
+    throw( pack_error(mlu,mlu_requency_plot/2,arg_enumerate(1,[pairlist,pl_vector],InFreqPrv)) ).
 
 mlu_frequency_interface( barplot, Freqs, Opts ) :-
     kv_decompose( Freqs, Lbls, Vals ),
