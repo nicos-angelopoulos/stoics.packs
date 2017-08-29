@@ -234,9 +234,10 @@ wgraph_plotter( igraph, Self, Ws, HclS, Labels, Clrs, Ldist, Ldegr, Opts ) :-
 	append( OutputL, Opts, Aopts ),
 	en_list( EClrS, EClrs ),
 	% maplist( en_plus, EnpClrs, EClrs ),
+    Ropts = [edge.color=EClrs,edge.width=Ws,layout=lp_coords,vertex.color=Clrs,vertex.label=Labels,vertex.label.dist=Ldist,vertex.label.degree=Ldegr,vertex.size=Vsize|Aopts],
 	debug( wgraph_plot, 'igraph R options: ~w', [Ropts] ),
 	options( node_size(Vsize), Opts ),
-	r_call( plot.igraph(ilp), [edge.color=EClrs,edge.width=Ws,layout=lp_coords,vertex.color=Clrs,vertex.label=Labels,vertex.label.dist=Ldist,vertex.label.degree=Ldegr,vertex.size=Vsize|Aopts] ).
+	r_call( plot.igraph(ilp),  Ropts ).
 	% % r_call( plot.igraph(lp_coords[*,1],lp_coords[*,2]), [layout=lp_coords,vertex.color=Clrs,vertex.label=Labels,vertex.label.dist=Ldist|Opts] ).
 	% <- Qgraph.
 

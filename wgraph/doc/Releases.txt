@@ -2,5 +2,6 @@
 --------------
 
 0.4 
+      17.08.29   FIXED:   Ropts singleton in wgraph_plotter/9.
       17.08.10   DOC:     typos  (weighed -> weighted)
                  FIXED:   post_call/1 option in igraph plotter
