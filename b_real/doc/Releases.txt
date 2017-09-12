@@ -1,6 +1,7 @@
 ---   Releases   ---
 --------------------
 0.5   
+      2017/09/12   IFACE:    quantiles/3
       2017/05/09   FIXED:    b_real_lazy was loading ../src/b_real_core.pl
 0.4   2017/04/25   VERSION:  0.4
                    DOC:      include svgs in r_hist/2 module's html file

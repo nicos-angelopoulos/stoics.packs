@@ -13,7 +13,8 @@
                     r_hist/2,              % +Vect, +Opts 
                     columns_fisher_test/5,
                     dot/3,
-                    mtx_df/2, mtx_df/3
+                    mtx_df/2, mtx_df/3,
+                    quantiles/3
                 ] 
     ).
 
@@ -46,5 +47,6 @@
 :- lib(dot/3).
 :- lib(r_unique/2).
 :- lib(r_hist/2).
+:- lib(quantiles/3).
 
 :- lib(end(b_real)).
