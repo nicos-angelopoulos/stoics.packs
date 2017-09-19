@@ -74,7 +74,7 @@ wgraph_plot_defaults( All, Defs ) :-
 	wgraph_plot_weights_widths( Ws, Wis, Hus, ArgsLim ),
 	maplist( en_list, [Ws,Wis,Hus], [WsL,WisL,HusL] ),
 	debug_call( wgraph_plot, length, [ws,wis,hus]/[WsL,WisL,HusL] ),
-	Defs = [orphan_edge_weight(0),label_distance(Ldist),label_degree(Ldegree),save(Save),stem(Stem),colours(Clrs),labels(Lbls),x(Xs),y(Ys),plotter(qgraph),w(Wis),edge_colours(Hus),node_size(8)|Tail].
+	Defs = [useDingbats('TRUE'),orphan_edge_weight(0),label_distance(Ldist),label_degree(Ldegree),save(Save),stem(Stem),colours(Clrs),labels(Lbls),x(Xs),y(Ys),plotter(qgraph),w(Wis),edge_colours(Hus),node_size(8)|Tail].
 
 wgraph_plot_test( Args ) :-
 	Wg = [a-b:1,a-c:2,b-c:1,a-d:3,e],
@@ -148,6 +148,8 @@ wgraph_plot_test( Args ) :-
 %    the matrix from which to extract the graph if one is not given by Wgraph
 %  * w_threshold(Thres=1)
 %    values below that are not ajusted for width
+%  * useDingbats(DingB='TRUE')
+%    when format is pdf, setting this to FALSE, turns the homonym R option for pdf() function
 %
 % Also see wgraph/2 options for saving the graph (save/1 and stem/1).
 %
@@ -347,7 +349,8 @@ lp_option_r_call_output( pdf, W, H, Opts, Self, Output ) :-
 		)
 	),
 	*/
-	Output = [outputs(pdf(width=W,height=H)), stem(Stem) ].
+    options( useDingbats(UseD), Opts ),
+	Output = [outputs(pdf(width=W,height=H,'useDingbats'=UseD)), stem(Stem) ].
 lp_option_r_call_output( ps, W, H, Opts, Self, Output ) :-
 	lp_option_stem( Self, Stem, Opts ),
 	Output = [outputs(postscript(fonts=c("serif"),width=W,height=H)), stem(Stem) ].
