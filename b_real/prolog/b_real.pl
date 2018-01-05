@@ -10,11 +10,13 @@
                     pl_vector/3, vector_scale/3,
                     pl_plot_on/2,
                     r_mtx/2, r_mtx/3, r_data_frame/2, r_unique/2,
-                    r_hist/2,              % +Vect, +Opts 
+                    r_hist/2,                                           % +Vect, +Opts 
                     columns_fisher_test/5,
                     dot/3,
                     mtx_df/2, mtx_df/3,
-                    quantiles/3
+                    quantiles/3,
+                    symboled_graph_display/5,
+                    string_symbols_graph/3                              % +Symbols, -Graph, +Opts
                 ] 
     ).
 
