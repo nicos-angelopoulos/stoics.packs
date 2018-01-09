@@ -1,6 +1,8 @@
 ---   Releases   ---
 --------------------
-0.5   
+0.5   18.01.09     IFACE:    symboled_graph_display/4   
+                   IFACE:    string_symbols_graph/3
+                   ADDED:    private pack poly_graph
       2017/09/12   IFACE:    quantiles/3
       2017/05/09   FIXED:    b_real_lazy was loading ../src/b_real_core.pl
 0.4   2017/04/25   VERSION:  0.4

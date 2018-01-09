@@ -1,5 +1,5 @@
 
-:- lib(bio_db).     % edge_string_hs_symb/3
+:- lib(suggests(bio_db)).     % edge_string_hs_symb/3
 :- lib(options).
 
 string_symbols_graph_defaults( Defs ) :-

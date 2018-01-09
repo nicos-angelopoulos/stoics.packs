@@ -15,7 +15,7 @@
                     dot/3,
                     mtx_df/2, mtx_df/3,
                     quantiles/3,
-                    symboled_graph_display/5,
+                    symboled_graph_display/4,
                     string_symbols_graph/3                              % +Symbols, -Graph, +Opts
                 ] 
     ).
@@ -29,7 +29,7 @@
 :- lib(stoics_lib).
 :- lib(suggests(mtx)).
 
-:- lib(poly_graph).
+:- lib(poly_graph).  % private for now
 
 :- lib(b_real/0).
 :- lib(b_real_version/2).
@@ -52,5 +52,7 @@
 :- lib(r_unique/2).
 :- lib(r_hist/2).
 :- lib(quantiles/3).
+:- lib(symboled_graph_display/4 ).
+:- lib(string_symbols_graph/3 ).
 
 :- lib(end(b_real)).
