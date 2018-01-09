@@ -65,6 +65,13 @@ ERROR: procedure `graph_direction_neighbour' does not exist (DWIM could not corr
 --- % because the specialised version by-passes this step in the interest of performance
 ==
 
+==
+?- graph_k_sub( [1-2,1-5,2-3,3-4,5-6,6-7], [1], 2, Sub ).
+Sub = [1-2, 1-5, 2-3, 5-6].
+
+
+
+==
 
 @author nicos angelopoulos
 @version  0.1 2018/01/08
