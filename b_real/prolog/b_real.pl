@@ -25,9 +25,11 @@
 :- lib(source(b_real), homonyms(true)).
 
 :- lib(real).
-:- lib(stoics_lib).
 :- lib(options).
+:- lib(stoics_lib).
 :- lib(suggests(mtx)).
+
+:- lib(poly_graph).
 
 :- lib(b_real/0).
 :- lib(b_real_version/2).
