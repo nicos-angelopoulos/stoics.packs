@@ -1,7 +1,6 @@
 
 :- lib(real).
-:- lib(suggests(term_type)).
-% :- requires( term_atom/2 ).
+% :- lib(suggests(term_type)).  % term_atom() -> term_to_atom()
 
 %% palette_n_colours( Palette, N, Colours ).
 % 
@@ -20,13 +19,13 @@ palette_n_colours( brewer(Bpal), K, PalClrs ) :-
 palette_n_colours( ramp(A,B,C), K, PalClrs ) :-
 	CRP = colorRampPalette,
 	maplist( wrap_string_as_atom, [A,B,C], [Ar,Br,Cr] ),
-	term_atom( c(Ar,Br,Cr), ABC ),
+	term_to_atom( c(Ar,Br,Cr), ABC ),
 	atomic_list_concat( [CRP,'(',ABC,')(',K,')'], Rcall ),
 	PalClrs <- Rcall.
 palette_n_colours( ramp(A,B), K, PalClrs ) :-
 	CRP = colorRampPalette,
 	maplist( wrap_string_as_atom, [A,B], [Ar,Br] ),
-	term_atom( c(Ar,Br), ABC ),
+	term_to_atom( c(Ar,Br), ABC ),
 	atomic_list_concat( [CRP,'(',ABC,')(',K,')'], Rcall ),
 	PalClrs <- Rcall.
 

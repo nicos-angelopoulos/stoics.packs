@@ -1,6 +1,10 @@
 ---   Releases   ---
 --------------------
-0.5   18.01.09     IFACE:    symboled_graph_display/4   
+0.5   
+      18.01.24     LOAD:     _lazy was not loading pack(lib) or _version/2.
+                   DEPEND:   removed suggestion of lib(term_type) in r_mtx/2
+                   DEPEND:   removed suggestion of lib(term_type) in /palette_n_colours/3
+      18.01.09     IFACE:    symboled_graph_display/4   
                    IFACE:    string_symbols_graph/3
                    ADDED:    private pack poly_graph
       2017/09/12   IFACE:    quantiles/3
