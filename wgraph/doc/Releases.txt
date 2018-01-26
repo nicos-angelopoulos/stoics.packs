@@ -1,8 +1,14 @@
----Releases---
---------------
+---   Releases   ---
+--------------------
 
 0.4 
-      17.09.19   OPT:     useDingbats() in wgraph_plot (only pdf output)
-      17.08.29   FIXED:   Ropts singleton in wgraph_plotter/9.
-      17.08.10   DOC:     typos  (weighed -> weighted)
-                 FIXED:   post_call/1 option in igraph plotter
+   17.09.19   OPT:      useDingbats() in wgraph_plot (only pdf output)
+   17.08.29   FIXED:    Ropts singleton in wgraph_plotter/9.
+   17.08.10   DOC:      typos  (weighed -> weighted)
+              FIXED:    post_call/1 option in igraph plotter
+
+0.3 17.03.12
+
+0.2 16.01.23
+
+0.1 15.06.12

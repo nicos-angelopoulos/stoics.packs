@@ -2,14 +2,15 @@
 --------------------
 
 TBD
-    2017.05.04       TBD: bootstrapping
+    17.05.04       bootstrapping
 
 0.3 
-    17.08.29     ADDED: vectors in mlu_frequency_plot/2 via b_real:pl_vector/3
-0.2 17.03.11   UPDATED: for pack(lib) v1.1
-                 FIXED: protected some dotted atoms passed to Real
-    17.02.22   UPDATED: to factorised lib/1 with dependencies to stoics_lib.
-    16.11.08     ADDED: Separated pred: mlu_mtx_header_rows/4.
-                 ADDED: separated interface k_fold_segments/3.
+   17.08.29   ADDED:    vectors in mlu_frequency_plot/2 via b_real:pl_vector/3
 
-0.1 16.03.05   VERSION: First public release
+0.2       @   17.03.11  for pack(lib) v1.1
+   17.03.11   FIXED:    protected some dotted atoms passed to Real
+   17.02.22   UPDATE:   to factorised lib/1 with dependencies to stoics_lib
+   16.11.08   ADDED:    separated pred: mlu_mtx_header_rows/4
+              ADDED:    separated interface k_fold_segments/3
+
+0.1       @   16.03.05  first public release

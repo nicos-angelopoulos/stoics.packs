@@ -1,13 +1,16 @@
-0.1.7                            
-											Added cd/1 to documentation for cd/2.
-											Introduced &/1 with threads implementation (SWI's detached(true) aint working).
-                                 Some more support for environment variables in args.
-                                 Added password example.
-											Load ~/.pl/by_unix.pl if it exists.
-											Prolog flags, 
-											  by_unix_shell, Shell
-											  by_unix_shell_com_arg, Arg
-											Now library plays with other shells. 
-											Fixed @ cd( pack(by_unix) ).
+---   Releases   ---
+--------------------
 
-0.1.6          2013/12/26      
+0.1.7                            
+   YY.MM.DD   DOC:      cd/1 to documentation for cd/2.
+              IFACE:    introduced &/1 with threads implementation (SWI's detached(true) aint working)
+              IFACE:    some more support for environment variables in args.
+              DOC:      new password example
+              IFACE:    load ~/.pl/by_unix.pl if it exists
+              ADDED:    Prolog flags, 
+                              by_unix_shell, Shell
+                              by_unix_shell_com_arg, Arg
+              ADDED:     Now library plays with other shells. 
+              FIXED:    @ cd( pack(by_unix) ).
+
+0.1.6      @ 13.12.26      
