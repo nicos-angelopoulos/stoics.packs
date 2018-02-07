@@ -2,6 +2,7 @@
 --------------------
 
 0.1.7                            
+   18.02.07   IFACE:    allow for lists in arguments (they get flattened)
    YY.MM.DD   DOC:      cd/1 to documentation for cd/2.
               IFACE:    introduced &/1 with threads implementation (SWI's detached(true) aint working)
               IFACE:    some more support for environment variables in args.

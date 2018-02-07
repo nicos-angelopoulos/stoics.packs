@@ -24,7 +24,7 @@
 
 /** <module> by_unix
 
-	An elegance layer to calling unix commands.
+An elegance layer to calling unix commands.
 
 This library provides primitives that allow programmers and users
 to embed calls to process_create/3. The aim is to keep application
@@ -156,13 +156,13 @@ Pwd = ['/home/nicos'].
 
 ==
 
-	@author Nicos Angelopoulos
-	@version 0.1.7   2014/06/09
-	@see http://stoics.org.uk/~nicos/sware/by_unix
-	@tbd error handling via message/3.
-	@tbd aliases in .pl/by_unix.pl
-	@tbd pick process_create options from the library declarations
-     @tbd ?- Files = ['by_unix.pl'], maplist( @@ wc(-l) , Files, Wcs ).  ie. fix syntax error on this
+@author Nicos Angelopoulos
+@version 0.1.7   2014/06/09
+@see http://stoics.org.uk/~nicos/sware/by_unix
+@tbd error handling via message/3.
+@tbd aliases in .pl/by_unix.pl
+@tbd pick process_create options from the library declarations
+@tbd ?- Files = ['by_unix.pl'], maplist( @@ wc(-l) , Files, Wcs ).  ie. fix syntax error on this
 
 */
 
@@ -243,7 +243,8 @@ by_unix_separate( Goal, Name, TArgs, Opts ) :-
 	compound( Goal, Name, GArgs ),
 	% which_cmd( Name ),
 	which( Name, _Wch ), %fixme add error
-	partition( pc_option, GArgs, Opts, Args ),
+	partition( pc_option, GArgs, Opts, ArgsNest ),
+    flatten( ArgsNest, Args ),
 	maplist( by_unix_term_to_serial, Args, NesTArgs ),
 	flatten( NesTArgs, TArgs ).
 
@@ -356,6 +357,7 @@ by_unix_shell_com_arg_args( '', [] ) :- !.
 by_unix_shell_com_arg_args( CmA, [CmA] ).
 
 pc_option( Term ) :-
+    \+ is_list( Term ),
 	compound( Term, Name, Args ),
 	length( Args, 1 ),
 	% functor( Term, Name, 1 ),
