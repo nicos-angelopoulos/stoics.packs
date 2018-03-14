@@ -1,24 +1,26 @@
 :- module( db_facts,
-               [  db_create/2,          % +Conn, +Fact 
-                  db_assert/1,          % +Fact
-                  db_assert/2,          % +Fact, -Aff
-                  db_assert/3,          % +Conn, +Fact, -Aff
-                  db_holds/1,           % +Conn, -Fact
-                  db_holds/2,           % +Conn, -Fact
-                  db_retractall/1,      % +Fact
-                  db_retractall/2,      % +Fact, -Aff
-                  db_retractall/3,      % +Conn, +Fact, -Aff
-                  db_query/3,           % +Conn, +SQL, -Res
-                  db_table/2,           % +Conn, +Table
-                  db_table/3,           % +Conn, +Table, -Facet
-                  db_table_column/3,           % +Conn, ?Table, ?Col
-                  db_table_column/4,           % +Conn, ?Table, ?Col, ?Facet
-                  db_enabled_library/1, % ?Lib
+               [  db_create/2,              % +Conn, +Fact 
+                  db_assert/1,              % +Fact
+                  db_assert/2,              % +Fact, -Aff
+                  db_assert/3,              % +Conn, +Fact, -Aff
+                  db_holds/1,               % +Conn, -Fact
+                  db_holds/2,               % +Conn, -Fact
+                  db_retractall/1,          % +Fact
+                  db_retractall/2,          % +Fact, -Aff
+                  db_retractall/3,          % +Conn, +Fact, -Aff
+                  db_query/3,               % +Conn, +SQL, -Res
+                  db_table/2,               % +Conn, +Table
+                  db_table/3,               % +Conn, +Table, -Facet
+                  db_table_column/3,        % +Conn, ?Table, ?Col
+                  db_table_column/4,        % +Conn, ?Table, ?Col, ?Facet
+                  db_enabled_library/1,     % ?Lib
                   db_current_connection/1,  % ?Conn
                   db_current_connection/2,  % ?Conn, -Type
-                  db_disconnect/1,      % +Conn
+                  db_disconnect/1,          % +Conn
                   db_date_sql_atom/2,       % ?Date, ?SQLatom
-                  db_goal_connection/2, % +Goal, -Conn
+                  db_goal_connection/2,     % +Goal, -Conn
+                  db_max/4,                 % +Conn, +Table, +Arg, -Max
+                  db_min/4,                 % +Conn, +Table, +Arg, -Min
                   db_version/2
                ] ).
 
@@ -35,7 +37,7 @@ the SQL engine.
 @version 0.4 + 0.3, 2016/12/22, fix code-list and enable strings as db fact arguments (and wrap of back-end loading)
 @version 0.2, 2016/9/18, allow mass asserts in prosqlite interface
 @version 0.1.0, 2013/11/1
-@license	Perl Artistic License
+@license Perl Artistic License
 @author Nicos Angelopoulos, 
 @see http://stoics.org.uk/~nicos/sware/db_facts/
 @see files in examples/ directory
@@ -103,9 +105,8 @@ db_create( Conn, Goal ) :-
      Cre = 'Create Table', 
      PrimK  = 'Primary Key',
      atomic_list_concat( [Cre,Name,'(',Fields,',',PrimK,'(',Primary,') );'], ' ', Create ),
-	debug( db_facts, 'Create statement: ~w', Create ),
+     debug( db_facts, 'Create statement: ~w', Create ),
      sqlite_query( Conn, Create, _Res ).
-
 
 create_pairs_atoms_keys( [], [], [] ).
 create_pairs_atoms_keys( [H|T], [A|As], Keys ) :-
@@ -114,16 +115,16 @@ create_pairs_atoms_keys( [H|T], [A|As], Keys ) :-
      create_pairs_atoms_keys( T, As, TKeys ).
 
 create_pair_atom( H, A ) :-
-     ( H=N+T; H=N-T ),
-     !,
-	create_type_atom( T, Tatom ),
-     atomic_list_concat( [N,Tatom], ' ', A ).
+    ( H=N+T; H=N-T ),
+    !,
+    create_type_atom( T, Tatom ),
+    atomic_list_concat( [N,Tatom], ' ', A ).
 
 % fixme [] for enum() is untested, in addition it doesnt work in sqlite...
 create_type_atom( [H|T], Tatom ) :-
-	!,
-	atomic_list_concat( [H|T], ',', ValsAtom ),
-	atomic_list_concat( ['enum(',ValsAtom,')'], Tatom ).
+    !,
+    atomic_list_concat( [H|T], ',', ValsAtom ),
+    atomic_list_concat( ['enum(',ValsAtom,')'], Tatom ).
 create_type_atom( Atom, Atom ).
 
 create_key( K+_T, [K|TKeys], TKeys ) :- !.
@@ -163,15 +164,15 @@ all goals asserted in a single Instert operation.
 */
 
 db_assert( Conn, Goals, Affected ) :-   % fixme: this is is SQLITE specific for now, maybe we can assume ODBC allow multiple value() 
-	is_list( Goals ),
-	!,
-	%  see http://stackoverflow.com/questions/1609637/is-it-possible-to-insert-multiple-rows-at-a-time-in-an-sqlite-database
-	db_query(Conn,'BEGIN TRANSACTION', _ ),
-	maplist( db_assert(Conn), Goals, Affs ),
-	db_query( Conn, 'COMMIT', _ ),
-	maplist( arg(1), Affs, AffNs ),
-	sumlist( AffNs, AffectedNum ),
-	Affected = row(AffectedNum).
+    is_list( Goals ),
+    !,
+    %  see http://stackoverflow.com/questions/1609637/is-it-possible-to-insert-multiple-rows-at-a-time-in-an-sqlite-database
+    db_query(Conn,'BEGIN TRANSACTION', _ ),
+    maplist( db_assert(Conn), Goals, Affs ),
+    db_query( Conn, 'COMMIT', _ ),
+    maplist( arg(1), Affs, AffNs ),
+    sumlist( AffNs, AffectedNum ),
+    Affected = row(AffectedNum).
 
 db_assert( Conn, Goal, Affected ) :-
      ground( Goal ),
@@ -188,7 +189,7 @@ db_assert( Conn, Goal, Affected ) :-
 
      atomic_list_concat( KClms, ',', CClms ),
      atomic_list_concat( [Ins,Table,' (',CClms,') Values ','(',CVals,')'], Insert ),
-	debug( db_facts, 'Assert query: ~w', [Insert] ),
+    debug( db_facts, 'Assert query: ~w', [Insert] ),
      ( db_query(Conn,Insert,Affected) ->
           true
           ;
@@ -285,8 +286,8 @@ db_retractall( Conn, Goal, Affected ) :-
 
 */
 db_goal_connection( [Goal|_], Conn ) :-
-	!,
-	db_goal_connection( Goal, Conn ).
+    !,
+    db_goal_connection( Goal, Conn ).
 db_goal_connection( Goal, Conn ) :-
      functor( Goal, Pname, _Arity ),
      db_current_connection( Conn ),
@@ -323,51 +324,89 @@ db_goal_connection_arity( Goal, Conn ) :-
 %
 db_table( Conn, Table ) :-
      db_current_connection( Conn, Type ),
-	db_type_table( Type, Conn, Table ).
-	
+    db_type_table( Type, Conn, Table ).
+    
 db_type_table( sqlite, Conn, Table ) :-
-	sqlite_current_table( Conn, Table ).
+    sqlite_current_table( Conn, Table ).
 
 db_type_table( odbc, Conn, Table ) :-
-	odbc_current_table( Conn, Table ).
+    odbc_current_table( Conn, Table ).
 
 db_table( Conn, Table, Facet ) :-
      db_current_connection( Conn, Type ),
-	db_type_table( Type, Conn, Table, Facet ).
+    db_type_table( Type, Conn, Table, Facet ).
 
 db_type_table( sqlite, Conn, Table, Facet ) :-
-	sqlite_current_table( Conn, Table, Facet ).
-	
+    sqlite_current_table( Conn, Table, Facet ).
+    
 db_type_table( odbc, Conn, Table, Facet ) :-
-	odbc_current_table( Conn, Table, Facet ).
+    odbc_current_table( Conn, Table, Facet ).
 
 %% db_table_column( +Conn, -Table, -Column ).
 
 %% db_table_column( +Conn, -Table, -Column, -Facet ).
 % 
-% 	Table is a table in connection. Column is a column of Table and Facet
-% 	is an aspect of this Column as supported by the underlying
-% 	connection manager.
+%   Table is a table in connection. Column is a column of Table and Facet
+%   is an aspect of this Column as supported by the underlying
+%   connection manager.
 %
 db_table_column( Conn, Table, Column ) :-
      db_current_connection( Conn, Type ),
-	db_type_table_column( Type, Conn, Table, Column ).
-	
+    db_type_table_column( Type, Conn, Table, Column ).
+    
 db_type_table_column( sqlite, Conn, Table, Column ) :-
-	sqlite_table_column( Conn, Table, Column ).
+    sqlite_table_column( Conn, Table, Column ).
 
 db_type_table_column( odbc, Conn, Table, Column ) :-
-	odbc_table_column( Conn, Table, Column ).
+    odbc_table_column( Conn, Table, Column ).
 
 db_table_column( Conn, Table, Column, Facet ) :-
      db_current_connection( Conn, Type ),
-	db_type_table_column( Type, Conn, Table, Column, Facet ).
-	
+    db_type_table_column( Type, Conn, Table, Column, Facet ).
+    
 db_type_table_column( sqlite, Conn, Table, Column, Facet ) :-
-	sqlite_table_column( Conn, Table, Column, Facet ).
+    sqlite_table_column( Conn, Table, Column, Facet ).
 
 db_type_table_column( odbc, Conn, Table, Column, Facet ) :-
-	odbc_table_column( Conn, Table, Column, Facet ).
+    odbc_table_column( Conn, Table, Column, Facet ).
+
+/** db_max( +Conn, +Table, +ArgOrClm, -Max ).
+
+Find the max value for a Table, at column ArgOrClm (see db_table_column_name/4).
+
+*/
+db_max( Conn, Table, ArgPrv, Max ) :-
+    db_table_column_name( Conn, Table, ArgPrv, Cnm ),
+    atomic_list_concat( ['SELECT MAX(',Cnm,') FROM ',Table,';'], Sql ),
+    db_query( Conn, Sql, Row ),
+    Row = row(Max),
+    !.
+
+/** db_min( +Conn, +Table, +ArgOrClm, -Min ).
+
+Find the min value for a Table, at column ArgOrClm (see db_table_column_name/4).
+
+*/
+db_min( Conn, Table, ArgPrv, Min ) :-
+    db_table_column_name( Conn, Table, ArgPrv, Cnm ),
+    atomic_list_concat( ['SELECT MIN(',Cnm,') FROM ',Table,';'], Sql ),
+    db_query( Conn, Sql, Row ),
+    Row = row(Min),
+    !.
+
+/** db_table_column_name( +Conn, +Table, +ArgPosOrClm, -Clm )
+    
+    Get the column name, corresponding to the an integer, indicating position of column in Table's arity,
+    or a column name.
+*/
+db_table_column_name( Conn, Table, ArgPrv, Clm ) :-
+    ( integer(ArgPrv) -> 
+        findall( Clm, db_table_column(Conn,Table,Clm), Clms ),
+        nth1(ArgPrv,Clms,Clm)
+        ;
+        Clm = ArgPrv
+    ).
+
 
 /**  db_query( +Conn, +Sql, -Row ).
 
@@ -606,12 +645,12 @@ dquote( ConT, Val, Quoted ) :-
      atomic_list_concat( ['"',Esc,'"'], Quoted ).
 dquote( _ConT, Val, Quoted ) :-
      is_list( Val ),
-	!,
+    !,
      append( [0'"|Val], [0'"], QuotedCs ),
      atom_codes( Quoted, QuotedCs ).
 dquote( ConT, Val, Quoted ) :-
-	string( Val ),
-	atom_string( Atm, Val ),
+    string( Val ),
+    atom_string( Atm, Val ),
      ( ConT == sqlite -> atom_replace( Atm, '"', '""', Esc );
                          Esc = Val ),
      atomic_list_concat( ['"',Esc,'"'], Quoted ).
@@ -674,7 +713,7 @@ db_error( Term ) :-
 :- multifile prolog:message//1.
 
 prolog:message(db(Message)) -->
-	message(Message).
+    message(Message).
 
 message( failed_to_get_columns(Conn,Tname) ) -->
      ['Failed to get columns for table ~q on connection ~q.' - [Tname,Conn] ].
