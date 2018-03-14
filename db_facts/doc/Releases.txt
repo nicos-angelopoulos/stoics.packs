@@ -10,6 +10,7 @@ TBD:
 
 0.5
      18.03.14   IFACE:    db_max/4  and db_min ges max/min values for a column
+                TEST:     new examples/exam1.pl
 
 0.4         @   16.12.22
      16.12.22   FIXED:    wrap use_module/1 call for backends in a catch so it fails, rather than error.
