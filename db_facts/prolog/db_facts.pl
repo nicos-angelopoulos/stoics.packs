@@ -163,7 +163,8 @@ all goals asserted in a single Instert operation.
 
 */
 
-db_assert( Conn, Goals, Affected ) :-   % fixme: this is is SQLITE specific for now, maybe we can assume ODBC allow multiple value() 
+db_assert( Conn, Goals, Affected ) :-   
+        % fixme: this is is SQLITE specific for now, maybe we can assume ODBC allow multiple value() 
     is_list( Goals ),
     !,
     %  see http://stackoverflow.com/questions/1609637/is-it-possible-to-insert-multiple-rows-at-a-time-in-an-sqlite-database
@@ -624,7 +625,9 @@ sql_clm_and_val_to_sql_equals_atom(K, V, KVAtm) :-
           atom_number(Vatm, V),
           atom_concat('=',Vatm,EqV)
           ;
-          atom_concat(V, '\'', VDsh),
+          atomic_list_concat( Parts, '\'', V ),
+          atomic_list_concat( Parts, '\'\'', Vdb ),
+          atom_concat(Vdb, '\'', VDsh),
           atom_concat('=\'',VDsh,EqV)
      ),
      atom_concat(K, EqV, KVAtm).
