@@ -34,6 +34,7 @@ layer for ODBC and proSQLite libraries of SWI-Prolog.
 This library is debug/1 aware: call =|debug(db_facts)|= to see what is sent to 
 the SQL engine.
 
+@version 0.5 2018/3/18, fix single quote in db_holds/3, added db_max/4  and db_min/4 and examples/exam1.pl
 @version 0.4 + 0.3, 2016/12/22, fix code-list and enable strings as db fact arguments (and wrap of back-end loading)
 @version 0.2, 2016/9/18, allow mass asserts in prosqlite interface
 @version 0.1.0, 2013/11/1
@@ -81,10 +82,13 @@ db_enable( _Lib, LibName, _Enabled ) :-
 
      The current version. Version is a Mj:Mn:Fx term, and date is a date(Y,M,D) term.
 
+==
+?- db_version( 0:5:0, date(2018,3,18) ).
+true.
+==
 */
-% db_version( 0:0:1, date(2012,10.18) ).
-% db_version( 0:1:0, date(2013,11.1) ).
-db_version( 0:4:0, date(2016,12,22) ).
+% db_version( 0:4:0, date(2016,12,22) ).
+db_version( 0:5:0, date(2018,3,18) ).
 
 /** db_create( +Conn, +Goal ).
 
