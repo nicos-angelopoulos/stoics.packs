@@ -358,7 +358,10 @@ gg_bar_plot_gg_arg( Pla, Gga ) :-
     gg_bar_plot_opt( Arg, Sub ),
     Gga = ( Name = Sub ).
 gg_bar_plot_gg_arg( Name = Value, (Name = ValArg) ) :-
+    !,
     gg_bar_plot_gg_arg_val( Value, ValArg ).
+gg_bar_plot_gg_arg( Pla, Gga ) :-
+    gg_bar_plot_opt( Pla, Gga ).
 
 gg_bar_plot_gg_arg_val( Value, ValArg ) :- 
     compound( Value, Name, Args ),
