@@ -2,6 +2,7 @@
 --------------------
 
 0.4 
+   18.04.16   REMOVE:   dependency of wgraph_plot to private (term_type)
    17.09.19   OPT:      useDingbats() in wgraph_plot (only pdf output)
    17.08.29   FIXED:    Ropts singleton in wgraph_plotter/9.
    17.08.10   DOC:      typos  (weighed -> weighted)

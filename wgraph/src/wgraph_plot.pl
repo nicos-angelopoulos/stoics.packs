@@ -2,7 +2,6 @@
 :- lib(mtx).
 :- lib(real).
 :- lib(options).  % /2, _append/4.
-:- lib(term_type).
 :- lib(debug_call).
 
 :- lib(init( r_library("qgraph") )).
@@ -365,7 +364,6 @@ lp_option_labels_vsize( prop(Min,Fact), Labels, Vsz ) :-
 lp_option_labels_vsize( Vsz, _Labels, Vsz ).
 
 label_name_proportional_vsize( Min, Fact, Label, Vsz ) :-
-	% term_length( Label, Len ),
     ( is_list(Label) -> length(Label,Len); functor(Label,_,Len) ),
 	Vsz is Min + (Len * Fact).
 
