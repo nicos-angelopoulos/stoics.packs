@@ -2,6 +2,7 @@
 --------------------
 
 0.1.7                            
+   18.07.23   SCRIPT:   xgrep, within these-extensions-only grep
    18.02.07   IFACE:    allow for lists in arguments (they get flattened)
    YY.MM.DD   DOC:      cd/1 to documentation for cd/2.
               IFACE:    introduced &/1 with threads implementation (SWI's detached(true) aint working)
@@ -14,4 +15,4 @@
               ADDED:     Now library plays with other shells. 
               FIXED:    @ cd( pack(by_unix) ).
 
-0.1.6      @ 13.12.26      
+0.1.6         @ 13.12.26
