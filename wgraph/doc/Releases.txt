@@ -2,6 +2,7 @@
 --------------------
 
 0.4 
+   19.04.11   CHANGE:   ensure weight is numeric when reading-in via mtx/2
    18.04.16   REMOVE:   dependency of wgraph_plot to private (term_type)
    17.09.19   OPT:      useDingbats() in wgraph_plot (only pdf output)
    17.08.29   FIXED:    Ropts singleton in wgraph_plotter/9.

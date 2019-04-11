@@ -134,7 +134,8 @@ wgraph_columns_graph( [[F|Fs],[T|Ts],[W|Ws]], [E|Es] ) :-
 	( T='' ->
 		E = F
 		;
-		E = F-T:W
+        ( number(W) -> Wnum = W; atom_number(W,Wnum) ),
+		E = F-T:Wnum
 	),
 	wgraph_columns_graph( [Fs,Ts,Ws], Es ).
 
