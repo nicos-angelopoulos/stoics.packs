@@ -4,8 +4,9 @@
 :- lib(options).  % /2, _append/4.
 :- lib(debug_call).
 
-:- lib(init( r_library("qgraph") )).
-:- lib(init( r_library("igraph") )).
+:- lib(init(r_library("qgraph") )).
+:- lib(init(r_library("igraph") )).
+:- lib(init(r_library("GGally") )).
 
 
 :- lib(stoics_lib:en_list/2).
@@ -33,14 +34,15 @@ wgraph_plot_defaults( All, Defs ) :-
 		% wgraph_weights( ... )
 		findall( W, member(_-_:W,Wgraph), Ws ),
 		( memberchk(layout_mtx(LayF),Args) ->
-			mtx( LayF, Lay ),
+			mtx( LayF, Lay, convert(true) ),
 			mtx_column_name_options( Lay, x, layout, Xs, Args ),
 			mtx_column_name_options( Lay, y, layout, Ys, Args )
 			;
 			Lay = [row(x)],
 			gnet <- graph.adjacency(lp_adj, weighted='T', mode ="undirected"),
 			( memberchk(layout_fun(LayFun),Args) -> true; 
-				LayFun = layout.fruchterman.reingold.grid ),
+				% LayFun = layout.fruchterman.reingold.grid ),
+				LayFun = layout.fruchterman.reingold ),
 			( memberchk(layout_args(LayArgS),Args) -> en_list(LayArgS,LayArgs);
 			     LayArgs = [] ),
 			FunCall =.. [LayFun,gnet|LayArgs], % fixme: parameters
@@ -97,10 +99,8 @@ wgraph_plot_test( Args ) :-
 % Opts 
 %  * Ropt=Rval 
 %    = paired options are passed to the plotter call, see r_call/2
-%  
 %  * cnm_colour(Clrs=colour)
 %    = (layout) colours column name
-%  
 %  * cnm_label(Lbs=label)
 %    (layout) labels column name
 %  * cnm_x(Xc=x)
@@ -202,6 +202,16 @@ wgraph_plot( WgraphIn, ArgS ) :-
 	options( save(Save), Opts ),
 	wgraph_layout_save( Save, Labels, Xs, Ys, Clrs, Ldist, Ldegree, Opts ),
 	wgraph_graph_save( Save, Wgraph, Opts ).
+
+% new 19.4.12
+wgraph_plotter( ggnet2, Self, _Ws, _Hus, Labels, Clrs, _Ldist, _Ldegr, Opts ) :-
+    debug( Self, 'Labels: ~w', [Labels] ),
+    debug( Self, 'Clrs: ~w', [Clrs] ),
+	debug( Self, 'ggnet2 options: ~w', [Opts] ),
+    memberchk( node_size(Nsz), Opts ),
+    write( memberchk( node_size(Nsz), Opts ) ), nl,
+    r_call( ggnet2(lp_adj, size=Nsz, label=Labels, color=Clrs, vjust= -1), [rvar(pltv)|Opts] ),
+    <- print( pltv ).
 
 wgraph_plotter( qgraph, Self, _Ws, _Hus, Labels, Clrs, _Ldist, _Ldegr, Opts ) :-
 	Qopts = [width(Width),height(Height),format(Form)],

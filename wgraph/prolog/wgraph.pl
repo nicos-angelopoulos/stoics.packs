@@ -40,7 +40,8 @@ See wgraph_plot/2.
 % V = 0:3:0
 % D = date(2017,3,2)
 %==
-wgraph_version( 0:3:0, date(2017,3,2) ).  % rebased to pack(lib)
+% wgraph_version( 0:3:0, date(2017,3,2) ).  % rebased to pack(lib)
+wgraph_version( 0:3:1, date(2019,4,12) ).   % include ggplot2 interface via ggnet2(/GGally).
 
 :- lib( source(wgraph), homonyms(true) ).
 :- lib(wgraph/2).
