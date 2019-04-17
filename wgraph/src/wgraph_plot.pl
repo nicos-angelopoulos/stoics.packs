@@ -116,7 +116,7 @@ wgraph_plot_test( Args ) :-
 %  * colours(Clrs="white")
 %    colours for the nodes - should be known to R
 %  * format(Form=x11)
-%    output format: _pdf_, _x11_ or _none_ (as x11 without explicit <- x11() call
+%    output format: _pdf_, _x11_ or _none_ (as x11 without explicit <- x11() call)
 %  * labels(Lbs=`nodes`)
 %    labels for the nodes, _[]_ for none, _false_ for leaving it unset
 %  * layout_call(LayG) 
@@ -127,7 +127,7 @@ wgraph_plot_test( Args ) :-
 %  * orphan_edge_weight(OEW)
 %    if present an edge is added for every orphan from a medianed node with this weight
 %  * plotter(Plotter=qgraph)
-%    or igraph
+%    also known: _igraph_ and _ggnet2_
 %  * save(Save=true)
 %    to save the layout and graph, defaults to false if no stem is given
 %  * stem(Stem)
