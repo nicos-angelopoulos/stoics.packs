@@ -39,10 +39,10 @@ wgraph_plot_defaults( All, Defs ) :-
 			mtx_column_name_options( Lay, y, layout, Ys, Args )
 			;
 			Lay = [row(x)],
-			gnet <- graph.adjacency(lp_adj, weighted='T', mode ="undirected"),
+			gnet <- 'graph.adjacency'(lp_adj, weighted='T', mode ="undirected"),
 			( memberchk(layout_fun(LayFun),Args) -> true; 
 				% LayFun = layout.fruchterman.reingold.grid ),
-				LayFun = layout.fruchterman.reingold ),
+				LayFun = 'layout.fruchterman.reingold' ),
 			( memberchk(layout_args(LayArgS),Args) -> en_list(LayArgS,LayArgs);
 			     LayArgs = [] ),
 			FunCall =.. [LayFun,gnet|LayArgs], % fixme: parameters
@@ -115,8 +115,10 @@ wgraph_plot_test( Args ) :-
 %    (graph) column name for edge weight
 %  * colours(Clrs="white")
 %    colours for the nodes - should be known to R
-%  * format(Form=x11)
-%    output format: _pdf_, _x11_ or _none_ (as x11 without explicit <- x11() call)
+%  * format(Frm=x11)
+%    output format: _pdf_, _x11_ or _none_ (as x11 without explicit <- x11() call).
+%    when Plotter is ggnet2 then Frm can x11 or any file extension recognised by
+%    your installation of ggsave().
 %  * labels(Lbs=`nodes`)
 %    labels for the nodes, _[]_ for none, _false_ for leaving it unset
 %  * layout_call(LayG) 
@@ -131,8 +133,7 @@ wgraph_plot_test( Args ) :-
 %  * save(Save=true)
 %    to save the layout and graph, defaults to false if no stem is given
 %  * stem(Stem)
-%    stem of the output file (def. replaces  .csv to .pdf if LayM is a file-
-%    else wgraph_plot)
+%    stem of the output file (def. replaces  .csv to .pdf if LayM is a file- else wgraph_plot)
 %  * height(H=7)
 %    height of the plot device
 %  * width(W=7)
@@ -211,7 +212,24 @@ wgraph_plotter( ggnet2, Self, _Ws, _Hus, Labels, Clrs, _Ldist, _Ldegr, Opts ) :-
     memberchk( node_size(Nsz), Opts ),
     write( memberchk( node_size(Nsz), Opts ) ), nl,
     r_call( ggnet2(lp_adj, size=Nsz, label=Labels, color=Clrs, vjust= -1), [rvar(pltv)|Opts] ),
-    <- print( pltv ).
+    options( format(Fmt), Opts ),
+    ( Fmt == none ->
+        <- print(pltv)
+        ;
+        ( Fmt == x11 -> 
+            <- x11(),
+            <- print(pltv)
+            ;
+            ( compound(Fmt) ->   % eg  x11(a,b,c)
+                <- Fmt
+                ;
+                options( [width(Wi),height(Hi)], Opts ),
+                options( stem(Stem), Opts ),
+                file_name_extension( Stem, Fmt, File ),
+                <- ggsave(file= +File, plot=pltv, width=Wi, height=Hi )
+            )
+        )
+    ).
 
 wgraph_plotter( qgraph, Self, _Ws, _Hus, Labels, Clrs, _Ldist, _Ldegr, Opts ) :-
 	Qopts = [width(Width),height(Height),format(Form)],
@@ -231,7 +249,7 @@ wgraph_plotter( qgraph, Self, _Ws, _Hus, Labels, Clrs, _Ldist, _Ldegr, Opts ) :-
 % fixme add tkplot & RBL
 wgraph_plotter( igraph, Self, Ws, HclS, Labels, Clrs, Ldist, Ldegr, Opts ) :-
 	% edge.width
-	ilp <- graph.adjacency(lp_adj, mode="undirected", weighted='TRUE' ),
+	ilp <- 'graph.adjacency'(lp_adj, mode="undirected", weighted='TRUE' ),
 	% findall( Arg=Val, member(Arg=Val,Opts), Pairs ),
 	en_list( HclS, Hcls ),
 	wgraph_igraph_hue_luminance_vectors( Hcls, 260, Hus, Lus ),
@@ -245,10 +263,10 @@ wgraph_plotter( igraph, Self, Ws, HclS, Labels, Clrs, Ldist, Ldegr, Opts ) :-
 	append( OutputL, Opts, Aopts ),
 	en_list( EClrS, EClrs ),
 	% maplist( en_plus, EnpClrs, EClrs ),
-    Ropts = [edge.color=EClrs,edge.width=Ws,layout=lp_coords,vertex.color=Clrs,vertex.label=Labels,vertex.label.dist=Ldist,vertex.label.degree=Ldegr,vertex.size=Vsize|Aopts],
+    Ropts = ['edge.color'=EClrs,'edge.width'=Ws,layout=lp_coords,'vertex.color'=Clrs,'vertex.label'=Labels,'vertex.label.dist'=Ldist,'vertex.label.degree'=Ldegr,'vertex.size'=Vsize|Aopts],
 	debug( wgraph_plot, 'igraph R options: ~w', [Ropts] ),
 	options( node_size(Vsize), Opts ),
-	r_call( plot.igraph(ilp),  Ropts ).
+	r_call( 'plot.igraph'(ilp),  Ropts ).
 	% % r_call( plot.igraph(lp_coords[*,1],lp_coords[*,2]), [layout=lp_coords,vertex.color=Clrs,vertex.label=Labels,vertex.label.dist=Ldist|Opts] ).
 	% <- Qgraph.
 
