@@ -12,12 +12,18 @@
                 ] 
                     ).
 
+:- use_module( library(lib) ).
+:- lib(real).
+
+:- lib(suggests(r(igraph))).
+:- lib(suggests(r(qgraph))).
+:- lib(suggests(r('GGally'))).
+
 /** <module> Weighted graphs, with plotting function via Real
 
-For now the emphasis is on plotting via igraph and qgraph R libraries via Real. 
+For now the emphasis is on plotting via igraph, qgraph and ggnet2, R libraries via Real. 
 
-A weighted graphs is represented as a list of From-To:W edges or Node entries
-for orphans.
+A weighted graphs is represented as a list of From-To:W edges or Node entries for orphans.
 
 See wgraph_plot/2.
 
@@ -25,11 +31,9 @@ See wgraph_plot/2.
 @version  0.1 2015/6/12
 @version  0:2 2016/1/23
 @version  0.3 2017/3/12
+@version  0.4 2019/4/18
 
 */
-
-:- use_module( library(lib) ).
-:- lib(real).
 
 %% wgraph_version( -Version, -Date ).
 %
@@ -37,11 +41,11 @@ See wgraph_plot/2.
 %
 %==
 % ?- wgraph_version( V, D ).
-% V = 0:3:0
-% D = date(2017,3,2)
+% V = 0:4:0
+% D = date(2019,4,18)
 %==
 % wgraph_version( 0:3:0, date(2017,3,2) ).  % rebased to pack(lib)
-wgraph_version( 0:3:1, date(2019,4,12) ).   % include ggplot2 interface via ggnet2(/GGally).
+wgraph_version( 0:4:0, date(2019,4,18) ).   % include ggplot2 interface via ggnet2(/GGally).
 
 :- lib( source(wgraph), homonyms(true) ).
 :- lib(wgraph/2).

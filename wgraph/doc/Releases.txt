@@ -1,7 +1,7 @@
 ---   Releases   ---
 --------------------
 
-0.4 
+0.4           19.04.18
    19.04.17   OPT:      plotter(ggnet2)
               OPT:      gnet image saves
    19.04.11   CHANGE:   ensure weight is numeric when reading-in via mtx/2
