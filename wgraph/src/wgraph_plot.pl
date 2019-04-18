@@ -210,7 +210,6 @@ wgraph_plotter( ggnet2, Self, _Ws, _Hus, Labels, Clrs, _Ldist, _Ldegr, Opts ) :-
     debug( Self, 'Clrs: ~w', [Clrs] ),
 	debug( Self, 'ggnet2 options: ~w', [Opts] ),
     memberchk( node_size(Nsz), Opts ),
-    write( memberchk( node_size(Nsz), Opts ) ), nl,
     r_call( ggnet2(lp_adj, size=Nsz, label=Labels, color=Clrs, vjust= -1), [rvar(pltv)|Opts] ),
     options( format(Fmt), Opts ),
     ( Fmt == none ->
