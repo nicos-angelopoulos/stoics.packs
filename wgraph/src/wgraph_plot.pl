@@ -4,11 +4,6 @@
 :- lib(options).  % /2, _append/4.
 :- lib(debug_call).
 
-:- lib(init(r_library("qgraph") )).
-:- lib(init(r_library("igraph") )).
-:- lib(init(r_library("GGally") )).
-
-
 :- lib(stoics_lib:en_list/2).
 :- lib(stoics_lib:kv_decompose/3).
 % :- lib(wgraph).

@@ -18,6 +18,9 @@
 :- lib(suggests(r(igraph))).
 :- lib(suggests(r(qgraph))).
 :- lib(suggests(r('GGally'))).
+:- lib(suggests(r(network))).   % silent required from GGally ? 
+:- lib(suggests(r(sna))).       % silent required from GGally ? 
+:- lib(suggests(r(svglite))).
 
 /** <module> Weighted graphs, with plotting function via Real
 
