@@ -205,12 +205,15 @@ wgraph_plot( WgraphIn, ArgS ) :-
 	wgraph_graph_save( Save, Wgraph, Opts ).
 
 % new 19.4.12
-wgraph_plotter( ggnet2, Self, _Ws, _Hus, Labels, Clrs, _Ldist, _Ldegr, Opts ) :-
+wgraph_plotter( ggnet2, Self, Ws, _Hus, Labels, Clrs, _Ldist, _Ldegr, Opts ) :-
     debug( Self, 'Labels: ~w', [Labels] ),
     debug( Self, 'Clrs: ~w', [Clrs] ),
 	debug( Self, 'ggnet2 options: ~w', [Opts] ),
     memberchk( node_size(Nsz), Opts ),
-    r_call( ggnet2(lp_adj, size=Nsz, label=Labels, color=Clrs, vjust= -1), [rvar(pltv)|Opts] ),
+    findall( Wxh, (member(Wx,Ws),Wxh is Wx / 2), Whs ),
+    GGopts = [size=Nsz, label=Labels, color=Clrs, vjust= -1, 'edge.size'=Whs, 'edge.color'="#BEAED4"],
+    append( Opts, GGopts, ROpts ),
+    r_call( ggnet2(lp_adj), [rvar(pltv)|ROpts] ),
     options( format(Fmt), Opts ),
     ( Fmt == none ->
         <- print(pltv)
