@@ -161,6 +161,7 @@ wgraph_plot_test( Args ) :-
 % ?- G = [1-2:200,2-3:400,4], assert(wg1(G) ).
 % ?- wg1(G1), wgraph_plot(G1,true).
 % ?- wg1(G1), wgraph_plot(G1,orphan_edge_weight(0.1) ).
+% ?- wg1(G1), wgraph_plot(G1,plotter(ggnet2) ).
 %==
 % @author nicos angelopoulos
 % @version  0.1 2014/11/21
