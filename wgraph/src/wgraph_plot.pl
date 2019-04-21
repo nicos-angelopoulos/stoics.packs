@@ -77,96 +77,103 @@ wgraph_plot_test( Args ) :-
 	Clrs = c("khaki"), Lbls = ["A","B","C","D","E"],
 	wgraph_plot( Wg, [colours(Clrs),labels(Lbls),width(3)|Args] ).
 	
-%% wgraph_plot( +Wgraph, +Opts ).
-%
-% Display weighted graph Wgraph from a layout that may include colours and labels.
-% Wgraph should be in a form accepted by wgraph/3.
-%
-% Layout (see below) should be an mtx/1 matrix with at least two columns: x, y defining
-% the positions of the nodes.
-%
-% In addition if columns: labels and colours are present but not given in Opts they will be used.
-%
-% Graph should be an mtx/1 matrix with at least 2 columns: from and to. 
-% In addition column `weight` is also processed. When missing and no weights option
-% is given, all weights are set to 1.
-% 
-% Opts 
-%  * Ropt=Rval 
-%    = paired options are passed to the plotter call, see r_call/2
-%  * cnm_colour(Clrs=colour)
-%    = (layout) colours column name
-%  * cnm_label(Lbs=label)
-%    (layout) labels column name
-%  * cnm_x(Xc=x)
-%    (layout) column name for X position coordinate
-%  * cnm_y(Yc=y)
-%   (layout) column name for Y position coordinate
-%  * cnm_from(From=from)
-%    (graph) column name for From column
-%  * cnm_to(To=to)
-%    (graph) column name for To column
-%  * cnm_weight(Wc=weight)
-%    (graph) column name for edge weight
-%  * colours(Clrs="white")
-%    colours for the nodes - should be known to R
-%  * format(Frm=x11)
-%    output format: _pdf_, _x11_ or _none_ (as x11 without explicit <- x11() call).
-%    when Plotter is ggnet2 then Frm can x11 or any file extension recognised by
-%    your installation of ggsave().
-%  * labels(Lbs=`nodes`)
-%    labels for the nodes, _[]_ for none, _false_ for leaving it unset
-%  * layout_call(LayG) 
-%    layout R/qgraph function to use for getting x,y coordinates.
-%    defaults to... which is only used if layout_mtx(LayM) is also missing
-%  * layout_mtx(LayM)
-%    used if layout_call(LayG) is not present
-%  * orphan_edge_weight(OEW)
-%    if present an edge is added for every orphan from a medianed node with this weight
-%  * plotter(Plotter=qgraph)
-%    also known: _igraph_ and _ggnet2_
-%  * save(Save=true)
-%    to save the layout and graph, defaults to false if no stem is given
-%  * stem(Stem)
-%    stem of the output file (def. replaces  .csv to .pdf if LayM is a file- else wgraph_plot)
-%  * height(H=7)
-%    height of the plot device
-%  * width(W=7)
-%    width of the plot device
-%  * label_distance(LbD=0.5)
-%    distance for vertex labels 
-%  * node_size(Vz)
-%    size of nodes, can be prop(Min,Mult)- size being proportional to label length
-%  * wgraph(Wgraph)
-%    the weighted graph (wgraph/1)
-%  * wgraph_mtx(WgMtx)
-%    the matrix from which to extract the graph if one is not given by Wgraph
-%  * w_threshold(Thres=1)
-%    values below that are not ajusted for width
-%  * useDingbats(DingB='TRUE')
-%    when format is pdf, setting this to FALSE, turns the homonym R option for pdf() function
-%
-% Also see wgraph/2 options for saving the graph (save/1 and stem/1).
-%
-%==
-% ?- G = [1-2:50,2-3:100], assert( wg(G) ),
-% ?- wg(M), wgraph_plot(M,[]).
-% 
-% ?- M = [row(from,to,weight),row(1,2,50),row(2,3,100)], assert(wg0(M) ).
-% ?- wg0(M), wgraph_plot(M,[]).
-% 
-% ?- G = [row(from,to,weight),row(1,2,50),row(2,3,100),row(4,'','')], assert(wg1(G) ).
-% ?- wg1(G1), wgraph_plot(G1,true).
-% 
-% ?- G = [1-2:200,2-3:400,4], assert(wg1(G) ).
-% ?- wg1(G1), wgraph_plot(G1,true).
-% ?- wg1(G1), wgraph_plot(G1,orphan_edge_weight(0.1) ).
-% ?- wg1(G1), wgraph_plot(G1,plotter(ggnet2) ).
-%==
-% @author nicos angelopoulos
-% @version  0.1 2014/11/21
-% @version  0.2 2016/01/23
-%
+/** wgraph_plot( +Wgraph, +Opts ).
+
+Display weighted graph Wgraph possibly from an existing layout that may include positions, 
+colours and labels.  Wgraph should be in a form accepted by wgraph/3.
+
+Layout (see below) should be an mtx/1 matrix with at least two columns: x, y defining
+the positions of the nodes. In addition if columns: labels and colours are present but
+not given in Opts they will be used.
+
+Graph can be an mtx/1 matrix with at least 2 columns: from and to. 
+In addition column `weight` is also processed. When missing and no weights option
+is given, all weights are set to 1.
+ 
+Opts 
+  * Ropt=Rval 
+    = paired options are passed to the plotter call, see r_call/2
+  * cnm_colour(Clrs=colour)
+    = (layout) colours column name
+  * cnm_label(Lbs=label)
+    (layout) labels column name
+  * cnm_x(Xc=x)
+    (layout) column name for X position coordinate
+  * cnm_y(Yc=y)
+    (layout) column name for Y position coordinate
+  * cnm_from(From=from)
+    (graph) column name for From column
+  * cnm_to(To=to)
+    (graph) column name for To column
+  * cnm_weight(Wc=weight)
+    (graph) column name for edge weight
+  * colours(Clrs="white")
+    colours for the nodes - should be known to R
+  * format(Frm=x11)
+    output format: _pdf_, _x11_ or _none_ (as x11 without explicit <- x11() call).
+    when Plotter is ggnet2 then Frm can x11 or any file extension recognised by
+    your installation of ggsave().
+  * labels(Lbs=`nodes`)
+    labels for the nodes, _[]_ for none, _false_ for leaving it unset
+  * layout_call(LayG) 
+    layout R/qgraph function to use for getting x,y coordinates.
+    defaults to... which is only used if layout_mtx(LayM) is also missing
+  * layout_mtx(LayM)
+    used if layout_call(LayG) is not present
+  * orphan_edge_weight(OEW)
+    if present an edge is added for every orphan from a medianed node with this weight
+  * plotter(Plotter=qgraph)
+    also known: _igraph_ and _ggnet2_
+  * save(Save=true)
+    to save the layout and graph, defaults to false if no stem is given
+  * stem(Stem)
+    stem of the output file (def. replaces  .csv to .pdf if LayM is a file- else wgraph_plot)
+  * height(H=7)
+    height of the plot device
+  * width(W=7)
+    width of the plot device
+  * label_distance(LbD=0.5)
+    distance for vertex labels 
+  * node_size(Vz)
+    size of nodes, can be prop(Min,Mult)- size being proportional to label length
+  * wgraph(Wgraph)
+    the weighted graph (wgraph/1)
+  * wgraph_mtx(WgMtx)
+    the matrix from which to extract the graph if one is not given by Wgraph
+  * w_threshold(Thres=1)
+    values below that are not ajusted for width
+  * useDingbats(DingB='TRUE')
+    when format is pdf, setting this to FALSE, turns the homonym R option for pdf() function
+
+Also see wgraph/2 options for saving the graph (save/1 and stem/1).
+==
+?- G = [1-2:50,2-3:100], assert( wg(G) ),
+?- wg(M), wgraph_plot(M,[]).
+
+?- M = [row(from,to,weight),row(1,2,50),row(2,3,100)], assert(wg0(M) ).
+?- wg0(M), wgraph_plot(M,[]).
+
+?- G = [row(from,to,weight),row(1,2,50),row(2,3,100),row(4,'','')], assert(wg1(G) ).
+?- wg1(G1), wgraph_plot(G1,true).
+
+?- G = [1-2:200,2-3:400,4], assert(wg1(G) ).
+?- wg1(G1), wgraph_plot(G1,true).
+?- wg1(G1), wgraph_plot(G1,orphan_edge_weight(0.1) ).
+?- wg1(G1), wgraph_plot(G1,plotter(ggnet2) ).
+==
+ 
+==
+?- G1=[1-2:200,2-3:400,4], wgraph_plot(G1, [format(svg),stem(g1),save(false),plotter(ggnet2)] ).
+==
+Produces file: g1.svg
+
+[[../doc/images/g1.svg]]
+
+@author nicos angelopoulos
+@version  0.1 2014/11/21
+@version  0.2 2016/01/23
+@version  0.3 2019/04/21, added ggnet2
+*/
 wgraph_plot( ArgS ) :-
 	en_list( ArgS, Args ),
 	Args = [Wgraph|Rest],
@@ -207,7 +214,7 @@ wgraph_plotter( ggnet2, Self, Ws, _Hus, Labels, Clrs, _Ldist, _Ldegr, Opts ) :-
 	debug( Self, 'ggnet2 options: ~w', [Opts] ),
     memberchk( node_size(Nsz), Opts ),
     findall( Wxh, (member(Wx,Ws),Wxh is Wx / 2), Whs ),
-    GGopts = [size=Nsz, label=Labels, color=Clrs, vjust= -1, 'edge.size'=Whs, 'edge.color'="#BEAED4"],
+    GGopts = [size=Nsz, label=Labels, color=Clrs, 'edge.size'=Whs, 'edge.color'="#BEAED4"],
     append( Opts, GGopts, ROpts ),
     r_call( ggnet2(lp_adj), [rvar(pltv)|ROpts] ),
     options( format(Fmt), Opts ),

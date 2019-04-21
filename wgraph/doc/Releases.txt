@@ -3,6 +3,7 @@
 
 0.5           19.04.21
    19.04.21   DEPENDS:  added R library dependencies for GGally
+              DOC:      example with image for web-page doc
 0.4           19.04.18
    19.04.17   OPT:      plotter(ggnet2)
               OPT:      gnet image saves
