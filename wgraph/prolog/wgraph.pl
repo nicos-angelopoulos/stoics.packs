@@ -34,8 +34,7 @@ See wgraph_plot/2.
 @version  0.1 2015/6/12
 @version  0:2 2016/1/23
 @version  0.3 2017/3/12
-@version  0.4 2019/4/18
-@version  0.5 2019/4/21
+@version  0.4 2019/4/21
 
 */
 
@@ -45,12 +44,10 @@ See wgraph_plot/2.
 %
 %==
 % ?- wgraph_version( V, D ).
-% V = 0:5:0
+% V = 0:4:0
 % D = date(2019,4,21)
 %==
-% wgraph_version( 0:3:0, date(2017,3,2) ).   % rebased to pack(lib)
-% wgraph_version( 0:4:0, date(2019,4,18) ).  % include ggplot2 interface via ggnet2(/GGally).
-wgraph_version( 0:5:0, date(2019,4,21) ).
+wgraph_version( 0:4:0, date(2019,4,21) ).
 
 :- lib( source(wgraph), homonyms(true) ).
 :- lib(wgraph/2).
