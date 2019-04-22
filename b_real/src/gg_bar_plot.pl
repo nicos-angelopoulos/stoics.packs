@@ -20,7 +20,7 @@ gg_bar_plot_defaults( ArgS, Defs ) :-
     DefFlip = false,
     ( memberchk(flip(Flip),Args) -> true; Flip = DefFlip ),
     ( Flip == true -> Rev = true; Rev = false ),
-    Defs = [    debug(false),
+    Defs = [    
                 df_rvar(gbp_df), df_rvar_rmv(true), 
                 fill_colours(false),
                 geom_bar(true), geom_bar_draw_colour(white),
@@ -133,6 +133,7 @@ gg_bar_plot( Pairs, Args ) :-
     GBs =[geom_bar_draw_colour(Gbc),geom_bar(Gbb),geom_bar_position(Gbp)],  
     options( GBs, Opts ),
     options( fill_colours(Fclrs), Opts ),
+    debug( gg_bar_plot, 'fill_colours(~w)', [Fclrs] ),
     options( legend_title(Ltitle), Opts ),
     options( legend_labels(LLbls), Opts ),
     gg_bar_plot_geom_bar( Nest, Gbb, Gbp, Gbc, Fclrs, GGlrev, GGgb ),
@@ -163,18 +164,18 @@ gg_bar_plot_extra_legend_plots( [H|T], Xn, Xx, Yn, Yx, _OutTerm, GG ) :-
     <- library( "gtable" ),
     length( Clrs, Len ),
     CClrs =.. [c|Clrs],
-    tmp_df <- data.frame( x=1:Len, y=1:Len, 'X.label'=factor(Labels) ),
+    tmp_df <- 'data.frame'( x=1:Len, y=1:Len, 'X.label'=factor(Labels) ),
     tmp_plot1 <- ggplot( data = tmp_df, aes(x=x,y=y))
                  + geom_point( aes(colour='X.label') )
                + scale_colour_manual(values=CClrs)
-               + theme(legend.position="right"),
+               + theme('legend.position'="right"),
     tmp_leg1 <- gtable_filter(ggplot_gtable(ggplot_build(tmp_plot1)), "guide-box"),
     % fixme make the following x+ys in to options
     tmp_plot_new <- GG + annotation_custom( grob=tmp_leg1, xmin=Xn, xmax=Xx, ymin=Yn, ymax=Yx ),
     tmp_plot_new <- arrangeGrob( tmp_leg1, tmp_plot_new, 
-                      heights = unit.c( tmp_leg1$height,unit(1,"npc") - tmp_leg1$height), ncol=1 ),
-    <- grid.newpage(),
-    <- grid.draw(tmp_plot_new).
+                      heights = 'unit.c'( tmp_leg1$height,unit(1,"npc") - tmp_leg1$height), ncol=1 ),
+    <- 'grid.newpage'(),
+    <- 'grid.draw'(tmp_plot_new).
 
 gg_bar_plot_open_dev( false ) :- !.
 gg_bar_plot_open_dev( R ) :- 
@@ -182,7 +183,7 @@ gg_bar_plot_open_dev( R ) :-
 
 gg_bar_plot_close_dev( false ) :- !.
 gg_bar_plot_close_dev( _R ) :- 
-    <- dev.off().
+    <- 'dev.off'().
 
 /** gg_bar_plot_base( +Pairs, -Df, -Len, -GGbase, -Nest, +Opts )
 
@@ -241,7 +242,7 @@ gg_bar_plot_base_level_colours( LvlClrs, Occs, Lvls, Pairs, Df, GGbase, Opts ) :
     */
     options( level_colours_title(ClrsTitle), Opts ),
     findall( Clr, (member(Lvl-Tms,Pairs),memberchk(Lvl-Clr,LvlClrs),between(1,Tms,_)), Clrs ),
-    Df <- data.frame( occ = factor( Occs, levels= Lvls ), ClrsTitle=Clrs ),
+    Df <- 'data.frame'( occ = factor( Occs, levels= Lvls ), ClrsTitle=Clrs ),
     % here: options( keep_order(Kord), Opts ),
     % GGbase = ggplot( Df, aes(factor(occ), fill=as.factor(ClrsLbl)) ).
     GGbase = ggplot( Df, aes(factor(occ), fill=ClrsTitle) ).

@@ -63,8 +63,6 @@ Other options are passed to either gg_bar_plot/2 (if Iface == gg_bar) or to r_ca
 
 ?- mlu_frequency_plot( [1,1,1,2,2,3], true ).
 ?- mlu_frequency_plot( [1,1,1,2,2,3], interface(barplot) ).
-
-
 ==
 
 @author nicos angelopoulos
@@ -147,7 +145,6 @@ mlu_freq_interface_gg_bar_pop_line( false, _Freqs, Opts, POpts ) :-
     POpts = Opts.
 mlu_freq_interface_gg_bar_pop_line( PlineAt, Freqs, Opts, POpts ) :- 
     integer( PlineAt ),
-    write( freqs(Freqs) ), nl,
     nth1( NCnt, Freqs, _-Cnt ),
     Cnt < PlineAt,
     !,
