@@ -86,5 +86,5 @@ vectors_subed_gg_bar_plot_x_axis_theme( Goal, Orted, XaxisTxt, Xleg ) :-
 vector_val_subed_freqs( Val, Idxs, Udxs, Opts, VecSpec, Cnm-Counts ) :-
 	pl_vector( VecSpec, Vec, [cnm(Cnm)|Opts] ),
 	findall( Idx, (nth1(N,Vec,Val),nth1(N,Idxs,Idx)), IList ),
-	list_frequency( IList, Udxs, Freqs ),
+	list_frequency( IList, Freqs, zero(Udxs) ),
 	findall( Count, member(_-Count,Freqs), Counts ).

@@ -1,6 +1,8 @@
 ---   Releases   ---
 --------------------
 
+0.6            
+   19.05.07   FIXED:    avoid passing empty edge.size in ggnet2
 0.5           19.04.21
    19.04.21   DEPENDS:  added R library dependencies for GGally
               DOC:      example with image for web-page doc

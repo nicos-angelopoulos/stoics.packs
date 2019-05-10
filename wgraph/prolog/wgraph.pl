@@ -44,10 +44,10 @@ See wgraph_plot/2.
 %
 %==
 % ?- wgraph_version( V, D ).
-% V = 0:4:0
-% D = date(2019,4,21)
+% V = 0:5:0
+% D = date(2019,5,8)
 %==
-wgraph_version( 0:4:0, date(2019,4,21) ).
+wgraph_version( 0:5:0, date(2019,5,8) ).
 
 :- lib( source(wgraph), homonyms(true) ).
 :- lib(wgraph/2).

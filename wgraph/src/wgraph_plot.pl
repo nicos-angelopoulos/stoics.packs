@@ -214,7 +214,11 @@ wgraph_plotter( ggnet2, Self, Ws, _Hus, Labels, Clrs, _Ldist, _Ldegr, Opts ) :-
 	debug( Self, 'ggnet2 options: ~w', [Opts] ),
     memberchk( node_size(Nsz), Opts ),
     findall( Wxh, (member(Wx,Ws),Wxh is Wx / 2), Whs ),
-    GGopts = [size=Nsz, label=Labels, color=Clrs, 'edge.size'=Whs, 'edge.color'="#BEAED4"],
+    ( Whs == [] ->
+        GGopts = [size=Nsz, label=Labels, color=Clrs, 'edge.color'="#BEAED4"]
+        ;
+        GGopts = [size=Nsz, label=Labels, color=Clrs, 'edge.size'=Whs, 'edge.color'="#BEAED4"]
+    ),
     append( Opts, GGopts, ROpts ),
     r_call( ggnet2(lp_adj), [rvar(pltv)|ROpts] ),
     options( format(Fmt), Opts ),

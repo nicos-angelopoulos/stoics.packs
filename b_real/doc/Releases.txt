@@ -2,6 +2,7 @@
 --------------------
 
 0.5   
+   19.05.10     UPDATED:  call to list_frequency/3 to options version
    18.04.05     FIXED:    nested terms in gg_terms(Ggt): geom_segment(aes(x=0.6,y=0,xend=0.75,yend=0,colour=AClr))
    18.01.24     LOAD:     _lazy was not loading pack(lib) or _version/2.
                 DEPEND:   removed suggestion of lib(term_type) in r_mtx/2
