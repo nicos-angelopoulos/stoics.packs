@@ -1,6 +1,6 @@
 name( wgraph ).
 title( 'Weighted graphs, with plotting via Real' ).
-version( '0.5' ).
+version( '0.6' ).
 author( 'Nicos Angelopoulos', 'http://stoics.org.uk/~nicos' ).
 packager( 'Nicos Angelopoulos', 'http://stoics.org.uk/~nicos' ).
 maintainer( 'Nicos Angelopoulos', 'http://stoics.org.uk/~nicos' ).

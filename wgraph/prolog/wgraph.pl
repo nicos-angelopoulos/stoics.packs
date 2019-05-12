@@ -35,6 +35,8 @@ See wgraph_plot/2.
 @version  0:2 2016/1/23
 @version  0.3 2017/3/12
 @version  0.4 2019/4/21
+@version  0.5 2019/5/8
+@license  0.6 2019/5/12
 
 */
 
@@ -44,10 +46,10 @@ See wgraph_plot/2.
 %
 %==
 % ?- wgraph_version( V, D ).
-% V = 0:5:0
-% D = date(2019,5,8)
+% V = 0:6:0
+% D = date(2019,5,12)
 %==
-wgraph_version( 0:5:0, date(2019,5,8) ).
+wgraph_version( 0:6:0, date(2019,5,12) ).
 
 :- lib( source(wgraph), homonyms(true) ).
 :- lib(wgraph/2).

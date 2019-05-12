@@ -23,7 +23,8 @@ gg_bar_plot_defaults( ArgS, Defs ) :-
     Defs = [    
                 df_rvar(gbp_df), df_rvar_rmv(true), 
                 fill_colours(false),
-                geom_bar(true), geom_bar_draw_colour(white),
+                geom_bar(true), 
+                geom_bar_draw_colour(white),
                 geom_bar_position(dodge),
                 gg_terms([]),
                 flip(DefFlip), 
@@ -31,7 +32,7 @@ gg_bar_plot_defaults( ArgS, Defs ) :-
                 labels('','',''),
                 legend_labels([]),
                 legend_reverse(Rev),
-                legend_title([]),
+                legend_title("colours"),
                 level_colours(false),
                 level_colours_title('Group'),  % fixme: doesnt like spaces currently
                 output(false),
@@ -113,15 +114,18 @@ BoldTitle = theme(plot.title(element_text(face(+"bold")))),
 Pairs = [a-[1,2,3],b-[2,4,6]],
 gg_bar_plot( Pairs, [debug(true), geom_bar_draw_colour(black), labels(x,y,main), fill_colours(FClrs), gg_terms(BoldTitle),legend_title(leeg)] ).
 
-?- Pairs = [a-1,b-2,c-3,d-4], gg_bar_plot( Pairs, [flip(false),geom_bar(empty)] ).
-?-  FClrs = ["gold1", "#E31A1C"], Pairs = [a-1,b-2,c-3,d-4], 
+?-  FClrs = ["gold1", "#E31A1C","blue1","darkolivegreen"], Pairs = [a-1,b-2,c-3,d-4], 
 gg_bar_plot( Pairs, [flip(false),geom_bar(empty),fill_colours(FClrs)] ).
+
+?- Pairs = [a-1,b-2,c-3,d-4],
+   gg_bar_plot( Pairs, [flip(false),geom_bar(empty),fill_colours(true),df_rvar_rmv(false)] ).
 ==
 
 @author nicos angelopoulos
 @version  0.1 2014/10/21
 @version  0.2 2016/01/23
 @version  0.3 2016/08/31, added singleton groups as normal barplots
+
 */
 gg_bar_plot( Pairs, Args ) :-
     options_append( gg_bar_plot, Args, Opts, process(debug) ),
@@ -228,7 +232,7 @@ gg_bar_plot_base( Pairs, Df, Len, GGbase, false, Opts ) :-
 gg_bar_plot_base_level_colours( false, Occs, Lvls, _Pairs, Df, GGbase, _Opts ) :-
     !,
     Df <- data.frame( occ = factor( Occs, levels= Lvls ) ),
-    GGbase = ggplot( Df, aes(factor(occ)) ).
+    GGbase = ggplot( Df, aes(factor(occ),fill=occ) ).
 gg_bar_plot_base_level_colours( LvlClrs, Occs, Lvls, Pairs, Df, GGbase, Opts ) :-
     /*
     length( Lvls, Len ),
@@ -317,7 +321,7 @@ gg_bar_plot_fill_colours( CTerm, Title, _Len, Lbls, GG, (GG + scale_fill_manual(
 % gg_bar_plot_fill_colours( true, Title, _Len, Lbls, GG, (GG + scale_fill_discrete(+Title,positions=Lbls)) ).
 % gg_bar_plot_fill_colours( true, Title, Len, InLbls, GG, (GG + scale_fill_discrete(+Title,values=Clrs,labels=Lbls)) ) :-
     % gg_hue_colour_strings( 30, Clrs ),
-gg_bar_plot_fill_colours( true, Title, _Len, _InLbls, GG, (GG + scale_fill_discrete(+Title)) ).
+gg_bar_plot_fill_colours( true, Title, _Len, _InLbls, GG, (GG + scale_fill_discrete(name= +Title)) ).
 gg_bar_plot_fill_colours( false, _Title, _Len, _Lbls, GG, GG ).
 gg_bar_plot_fill_colours( [H|T], Title, _Len, Lbls, GG, (GG + scale_fill_manual(+Title,values=Vals,labels=FullLbls)) ) :-
     Vals =.. [c,H|T],
