@@ -73,6 +73,7 @@ pl_vector_defaults( if_rvar(true) ).
 % @tbd add to real ? but it needs mtx ...
 % @author  nicos angelopoulos
 % @version 0.2 2016/6/7,  added where() and k(),v() pairs
+% @version 0.3 2020/7/27, changed order of clauses (mtx with complex column name was matching as R variable)
 %
 pl_vector( VectSpec, Vect, Args ) :-
     options_append( pl_vector, Args, Opts ),
@@ -87,19 +88,24 @@ pl_vector_is_list( false, VectSpec, Vect, Opts ) :-
     holds( atomic(VectSpec), AtmVS ),
     pl_vector_non_list( AtmVS, VectSpec, Vect, Opts ).
 
+pl_vector_non_list( _, Cid, Vect, Opts ) :-
+	options( mtx(FullMtx), Opts ),
+	pl_vector_where( FullMtx, Mtx, Opts ),
+	catch( mtx_column( Mtx, Cid, MtxVect, Cnm, _Cpos ), _, fail ),
+    !,
+	options_return( cnm(Cnm), Opts ),
+	pl_vector_pair( AsPair, IsK, Mtx, PairVect, Opts ),
+	pl_vector_curtail( MtxVect, AsPair, IsK, PairVect, Vect, Opts ).
 pl_vector_non_list( true, RVect, Vect, Opts ) :-
     r_is_var( RVect ),
     options( if_rvar(IfRvar), Opts ),
     ground( IfRvar ),
     pl_vector_rvar( IfRvar, RVect, Vect, Opts ),
     !.
-pl_vector_non_list( _, Cid, Vect, Opts ) :-
-	options( mtx(FullMtx), Opts ),
-	pl_vector_where( FullMtx, Mtx, Opts ),
-	mtx_column( Mtx, Cid, MtxVect, Cnm, _Cpos ),
-	options_return( cnm(Cnm), Opts ),
-	pl_vector_pair( AsPair, IsK, Mtx, PairVect, Opts ),
-	pl_vector_curtail( MtxVect, AsPair, IsK, PairVect, Vect, Opts ).
+pl_vector_non_list( _, RVect, _Vect, _Opts ) :-
+    % fixme: 
+    throw( cannot_identify_pl_values_for_vector(RVect) ).
+
 
 % pl_vector_rvar( false, RVect, Vect, Opts ) :-  fail.  % default if 1st arg not in {false,true,prolog}
 % fixme: enable curtailing...

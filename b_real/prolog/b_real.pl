@@ -1,5 +1,6 @@
 :- module( b_real, [
                     b_real/0, b_real_version/2,
+                    c25/1,
                     aheatmap/1, aheatmap/2,
                     lm_plot/3,
                     gg_bar_plot/2,
@@ -54,7 +55,8 @@
 :- lib(r_unique/2).
 :- lib(r_hist/2).
 :- lib(quantiles/3).
-:- lib(symboled_graph_display/4 ).
-:- lib(string_symbols_graph/3 ).
+:- lib(symboled_graph_display/4).
+:- lib(string_symbols_graph/3).
+:- lib(c25/1 ).
 
 :- lib(end(b_real)).
