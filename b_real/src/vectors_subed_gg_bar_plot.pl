@@ -1,18 +1,19 @@
 % :- lib( options ).
 
-:- lib( stoics_lib:list_frequency/3 ).
+:- lib(stoics_lib:list_frequency/3).
 
-:- lib( vector_factor_indices/3 ).
-:- lib( freq_sort/3 ).
+:- lib(vector_factor_indices/3).
+:- lib(freq_sort/3).
 %
 % in b_real interface:
-:- lib( pl_vector/3 ).
-:- lib( gg_bar_plot/2 ).
+:- lib(pl_vector/3).
+:- lib(gg_bar_plot/2).
 
 vectors_subed_gg_bar_plot_defaults( Defs ) :-
-	Defs = [ sort_x(false), x_axis_colour(false), colours(Clrs)
-	       ],
-	       Clrs = ["#E32636","#FF7E00","#89CFF0","#5D8AA8"].
+	Clrs = ["#E32636","#FF7E00","#89CFF0","#5D8AA8"],
+	Defs = [ 
+                sort_x(false), x_axis_colour(false), colours(Clrs)
+	       ].
 
 /** vectors_subed_gg_bar_plot(+Vectors,+Val,+Vect2,+Opts).
 
@@ -20,11 +21,19 @@ Plot frequencies of a value in Vectors with subdivisions for each of the
 values apppearing in Vect2. All vectors are defined relative to Mtx.
 
 Opts 
-  * sort(Sort=false)
-     else true (lexicographical), or totals for total counts
+
+  * colours(Clrs=Clrs)
+     list of fill colours 
+     (default palettes has 4 colours: dark red (Alizarin), amber, baby blue and air force blue )
 
   * mtx(Mtx)
      matrix to extract the vectors from
+
+  * x_axis_colour(XaClrB=false)
+     whether to colour x-axis tick labels
+
+  * sort_x(SortX=false)
+     else true (lexicographical), or totals for total counts
 
 ==
 Mtx = [  row(v,x,y,z),
@@ -41,10 +50,13 @@ assert( ex1(Mtx) ).
 
 ==
 
+Opts are passed to 
+
 @author nicos angelopoulos
 @version  0.1 2015/11/25
 @see pl_vector/3
 @see vector_factor_indices/3
+@see gg_bar_plot/2
 
 */
 vectors_subed_gg_bar_plot( Vecs, Val, VecSpecA, Args ) :-
