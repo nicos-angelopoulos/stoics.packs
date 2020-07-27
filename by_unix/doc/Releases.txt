@@ -1,7 +1,11 @@
 ---   Releases   ---
 --------------------
 
-0.1.7                            
+TBD: change user initialistation (.pl/by_unix.pl) [see pack(mtx)].
+
+0.1.7
+   20.08.16   ADDED:    if shell fails, and exec not in path, print informational
+              CHANGED:  if shell call exits with non zero only an informational is printed (no error as before)
    18.07.23   SCRIPT:   xgrep, within these-extensions-only grep
    18.02.07   IFACE:    allow for lists in arguments (they get flattened)
    YY.MM.DD   DOC:      cd/1 to documentation for cd/2.

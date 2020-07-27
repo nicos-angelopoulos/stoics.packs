@@ -156,6 +156,21 @@ Pwd = ['/home/nicos'].
 
 ==
 
+As of version 0.1.7 (a) failure to locate a suitable executable results to an informational message,
+(b) non-zero exit on the process_create/3 does no longer produce an error, but an informational message
+followed by failure.
+
+==
+?- @what(else).
+% No 'what' executable could be found.
+false.
+
+?- @ ls(who).
+/bin/ls: cannot access 'who': No such file or directory
+% Failed shell call: ls with args: [who].
+false.
+==
+
 @author Nicos Angelopoulos
 @version 0.1.7   2014/06/09
 @see http://stoics.org.uk/~nicos/sware/by_unix
@@ -242,7 +257,12 @@ by_unix_separate( Goal, Name, TArgs, Opts ) :-
 	% Goal =.. [Name|GArgs],
 	compound( Goal, Name, GArgs ),
 	% which_cmd( Name ),
-	which( Name, _Wch ), %fixme add error
+	( which(Name,_Wch) ->
+        true
+        ;
+        by_unix_message( exec_miss(Name) ),
+        fail
+    ),
 	partition( pc_option, GArgs, Opts, ArgsNest ),
     flatten( ArgsNest, Args ),
 	maplist( by_unix_term_to_serial, Args, NesTArgs ),
@@ -268,8 +288,18 @@ unix_process( Name, _Goal, Args, Opts ) :-
 	shell_process( Shell, Name, Args, Opts ).
 unix_process( Name, _Goal, Args, Opts ) :-
 	debug( by_unix, 'Sending, name: ~w, args: ~w, opts:~w.', [Name,Args,Opts] ),
-	process_create( path(Name), Args, Opts ).
-
+	catch( process_create( path(Name), Args, Opts ), _, fail),
+    !.
+unix_process( Name, _Goal, _Args, _Opts ) :-
+    AbsOpts = [access(execute),file_errors(fail)],
+    \+ absolute_file_name( path(Name), _AbsExec, AbsOpts ),
+    by_unix_message( exec_miss(Name) ),
+    !,
+    fail.
+unix_process( Name, _Goal, Args, _Opts ) :-
+    by_unix_message( exec_fail(Name,Args) ),
+    fail.
+    
 unix_process_thread( Name, Goal, TArgs, Opts ) :-
 	unix_process( Name, Goal, TArgs, Opts ),
 	uniprocess_thread_loop.
@@ -522,5 +552,27 @@ by_unix_load_user_file :-
 	ensure_loaded( ByUnix ),
 	!.
 by_unix_load_user_file.
+
+                 /*******************************
+                 *            MESSAGES          *
+                 *******************************/
+% These print messages that are always on.
+% Different colour to debugging is used by the system (when colour in terminal is enabled).
+%
+by_unix_message( Mess ) :-
+    print_message( informational, by_unix(Mess) ).
+    
+:- multifile prolog:message//1.
+
+prolog:message(by_unix(Message)) -->
+    message(Message).
+
+:- discontiguous
+    message//1.
+
+message( exec_miss(Exec) ) -->
+    ['No \'~w\' executable could be found.'-[Exec] ].
+message( exec_fail(Exec,Args) ) -->
+    ['Failed shell call: ~w with args: ~w.'-[Exec,Args] ].
 
 :- initialization( by_unix_load_user_file, now ).
