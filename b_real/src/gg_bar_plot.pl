@@ -1,7 +1,9 @@
 
 :- lib(options).
 :- use_module( library(real) ).
-:- <- library("ggplot2").
+:- lib(r("ggplot2")).
+:- lib(r("ggpubr")).     % gscatter()
+:- lib(r("gridExtra")).  % arrangeGrob()
 
 % now from stoics
 :- lib( stoics_lib:positions/3 ).
@@ -171,8 +173,23 @@ gg_bar_plot_extra_legend_plots( false, _, _, _, _, OutTerm, GG ) :-
     gg_bar_plot_open_dev( OutTerm ),
     <- print( GG ),
     gg_bar_plot_close_dev( OutTerm ).
+gg_bar_plot_extra_legend_plots( bottom(Lbla,TopH,BotH,KVs), _Xn, _Xx, _Yn, _Yx, _OutTerm, GG ) :-
+    !,
+    % <- print( GG ),
+    gg_to_string( Lbla, Lbl ),
+    findall( I, nth1(I,KVs,_), Is ),
+    findall( K, member(K-_V,KVs), Ks ),
+    df   <- 'data.frame'( tmpx=Is, tmpy=Is, Lbl=Ks ),
+    findall( V, (member(_K-Va,KVs),gg_to_string(Va,V)), Vs ),
+    gs   <-  ggscatter(df, x="tmpx", y="tmpy", color=Lbl, palette = Vs, ggtheme = theme_minimal() + theme(legend.position="top")),
+    gslt <- as_ggplot(get_legend(gs)),
+    % ggp  <- as_ggplot(arrangeGrob(GG,gslt,heights=c(TopH,BotH))),
+    ggp <- ggarrange(GG, gslt, ncol = 1, nrow = 2, heights = c(TopH,BotH)),
+    <- print(ggp),
+    !.
 gg_bar_plot_extra_legend_plots( [H|T], Xn, Xx, Yn, Yx, _OutTerm, GG ) :-
     % fixme: use OutTerm to redirect output
+    % 2020.7.29: this no longer works: try the clause above...
     kv_decompose( [H|T], Labels, Clrs ),
     <- library( "gridExtra" ),
     <- library( "gtable" ),
@@ -394,3 +411,10 @@ pl_terms_gg_pairs( Arg, Pair ) :-
     compound( Arg, Name, Args ),
     maplist( pl_terms_gg_pairs, Args, Pairs ),
     Pair = (Name=Pairs). %
+
+gg_to_string( Either, String ) :-
+    ( atomic(Either) -> 
+        atom_string(Either,String)
+        ; 
+        Either = String
+    ).

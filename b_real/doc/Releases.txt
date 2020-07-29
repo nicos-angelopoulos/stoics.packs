@@ -2,6 +2,7 @@
 --------------------
 
 0.5   
+   20.07.29     FIXED:    interject new clause to manage broken extra legend
    20.07.27     DOC:      document all options in vectors_subed_gg_bar_plot/4
                 IFACE:    moved gg_panel_theme/2 from (private) hmrn
                 OPTS:     panel_theme(PnlTheme) option to gg_bar_plot/2
