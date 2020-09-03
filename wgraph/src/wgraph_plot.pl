@@ -203,6 +203,7 @@ wgraph_plot( WgraphIn, ArgS ) :-
 	options( edge_colours(EClrs), Opts ),
 	debug( wgraph_plot, 'Node colours: ~w', [Clrs] ),
 	wgraph_plotter( Plotter, Self, Ws, EClrs, Labels, Clrs, Ldist, Ldegree, Opts ),
+	debug( wgraph_plot, 'Plotter done.', [] ),
 	options( save(Save), Opts ),
 	wgraph_layout_save( Save, Labels, Xs, Ys, Clrs, Ldist, Ldegree, Opts ),
 	wgraph_graph_save( Save, Wgraph, Opts ).
@@ -214,6 +215,7 @@ wgraph_plotter( ggnet2, Self, Ws, _Hus, Labels, Clrs, _Ldist, _Ldegr, Opts ) :-
 	debug( Self, 'ggnet2 options: ~w', [Opts] ),
     memberchk( node_size(Nsz), Opts ),
     findall( Wxh, (member(Wx,Ws),Wxh is Wx / 2), Whs ),
+    debug_call( Self, length, widths/Whs ),
     ( Whs == [] ->
         GGopts = [size=Nsz, label=Labels, color=Clrs, 'edge.color'="#BEAED4"]
         ;

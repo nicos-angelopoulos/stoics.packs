@@ -12,7 +12,9 @@
                 ] 
                     ).
 
-:- use_module( library(lib) ).
+
+:- use_module(library(csv)).
+:- use_module(library(lib) ).
 :- lib(real).
 
 :- lib(suggests(r(igraph))).
@@ -36,7 +38,8 @@ See wgraph_plot/2.
 @version  0.3 2017/3/12
 @version  0.4 2019/4/21
 @version  0.5 2019/5/8
-@license  0.6 2019/5/12
+@version  0.6 2019/5/12
+@license  MIT
 
 */
 

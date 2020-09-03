@@ -1,11 +1,18 @@
 ---   Releases   ---
 --------------------
 
+0.7 
+   20.09.03   DEPS:     explicit dependency to library(csv)
+              DOC:      license 
+              DEBUG:    added length of widths
+
 0.6           @ 19.05.12
    19.05.07   FIXED:    avoid passing empty edge.size in ggnet2
+
 0.5           19.04.21
    19.04.21   DEPENDS:  added R library dependencies for GGally
               DOC:      example with image for web-page doc
+
 0.4           19.04.18
    19.04.17   OPT:      plotter(ggnet2)
               OPT:      gnet image saves
