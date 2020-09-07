@@ -14,6 +14,9 @@
 
 
 :- use_module(library(csv)).
+:- use_module(library(lists)).
+:- use_module(library(apply)).
+
 :- use_module(library(lib) ).
 :- lib(real).
 
