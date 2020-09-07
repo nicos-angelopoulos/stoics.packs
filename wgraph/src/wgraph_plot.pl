@@ -181,10 +181,21 @@ wgraph_plot( ArgS ) :-
 
 wgraph_plot( WgraphIn, ArgS ) :-
 	en_list( ArgS, Args ),
-	wgraph( WgraphIn, Wgraph ),
+    ( memberchk(plotter(PlrPrv),Args) -> true; PlrPrv = qgraph ),
+	wgraph( WgraphIn, WgraphPrv ),
+    ( (PlrPrv== ggnet2, WgraphPrv=[SingleNode], atomic(SingleNode)) ->
+            ( number(SingleNode) ->
+                Wgraph = [SingleNode,0]
+                ;
+                Wgraph = [SingleNode,null]
+            )
+            ;
+            WgraphPrv = Wgraph
+    ),
 	Self = wgraph_plot,
 	options_append( Self, [graph(Wgraph)|Args], Opts, process(debug) ),
 	debug( wgraph_plot, 'Options: ~w', [Opts] ),
+	options( plotter(Plotter), Opts ),
 	options( [x(Xs),y(Ys)], Opts ),
 	length( Xs, Len ),
 	lp_coords <- matrix( nrow=Len, ncol=2, 0 ),
@@ -193,7 +204,6 @@ wgraph_plot( WgraphIn, ArgS ) :-
 	options( labels(Labels), Opts ),
 	options( colours(Clr), Opts ),
 	elemental_list_template( Clr, Labels, Clrs ),
-	options( plotter(Plotter), Opts ),
 	wgraph( _WgFile, Wgraph, Opts ),
 
 	% wgraph_plot_save_layout
