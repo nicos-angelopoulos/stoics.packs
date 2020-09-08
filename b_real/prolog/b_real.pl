@@ -1,6 +1,8 @@
 :- module( b_real, [
                     b_real/0, b_real_version/2,
                     c25/1,
+                    colours_pie/1, colours_pie/2,
+                    colour_cb/1, colour_cbb/1,
                     aheatmap/1, aheatmap/2,
                     lm_plot/3,
                     gg_bar_plot/2,
@@ -58,5 +60,8 @@
 :- lib(symboled_graph_display/4).
 :- lib(string_symbols_graph/3).
 :- lib(c25/1 ).
+:- lib(colours_pie/2).
+:- lib(colour_cb/1).
+:- lib(colour_cbb/1).
 
 :- lib(end(b_real)).
