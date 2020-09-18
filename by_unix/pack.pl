@@ -1,5 +1,5 @@
 name(by_unix).
-version('0.1.7').
+version('0.2').
 title('An elegance layer to calling unix commands.').
 keywords([linux,unix,'operating systems']).
 author( 'Nicos Angelopoulos', 'http://stoics.org.uk/~nicos' ).
