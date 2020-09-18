@@ -3,7 +3,7 @@
 
 TBD: change user initialistation (.pl/by_unix.pl) [see pack(mtx)].
 
-0.1.7
+0.2       @   20.09.19
    20.08.16   ADDED:    if shell fails, and exec not in path, print informational
               CHANGED:  if shell call exits with non zero only an informational is printed (no error as before)
    18.07.23   SCRIPT:   xgrep, within these-extensions-only grep

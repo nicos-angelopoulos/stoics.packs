@@ -173,6 +173,7 @@ false.
 
 @author Nicos Angelopoulos
 @version 0.1.7   2014/06/09
+@version 0.2     2020/09/18
 @see http://stoics.org.uk/~nicos/sware/by_unix
 @tbd error handling via message/3.
 @tbd aliases in .pl/by_unix.pl
@@ -414,8 +415,14 @@ by_unix_term_to_serial( Term, Serial ) :-
 %
 %  Provides version and date of current release.
 %
-% by_unix_version( 0:1:6, date(2013,12,26) ).
-by_unix_version( 0:1:7, date(2014,6,9) ).
+%==
+% by_unix_version( 0:1:6, date(2013,12,26) ). 
+%==
+%
+%@author nicos angelopoulos
+%@version  0:2 2020/9/18
+%
+by_unix_version( 0:2:0, date(2014,6,9) ).
 
 %% by_unix_retract.
 %
