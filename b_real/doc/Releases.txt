@@ -1,6 +1,9 @@
 ---   Releases   ---
 --------------------
 
+0.6       @     21.01.23
+   20.01.23     IFACE:    made dependency to NMF a silent one
+
 0.5       @     20.09.18
    20.09.08     IFACE:    colours_pie/1,2, colour_cb/1 and colour_cbb/1
    20.07.29     FIXED:    interject new clause to manage broken extra legend

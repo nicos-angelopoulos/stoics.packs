@@ -3,8 +3,8 @@
 :- lib(real).
 :- lib(options).
 
-:- catch( r_library("NMF"), _, true).
-
+% :- catch( r_library("NMF"), _, true).
+:- lib( suggests(r('NMF'),suggests_warns(false)) ).
 
 :- lib( stoics_lib:kv_decompose/3 ).
 :- lib( stoics_lib:locate/3 ).
