@@ -37,7 +37,8 @@ wgraph_plot_defaults( All, Defs ) :-
 			gnet <- 'graph.adjacency'(lp_adj, weighted='T', mode ="undirected"),
 			( memberchk(layout_fun(LayFun),Args) -> true; 
 				% LayFun = layout.fruchterman.reingold.grid ),
-				LayFun = 'layout.fruchterman.reingold' ),
+				% LayFun = 'layout.fruchterman.reingold' ),  % older igraph
+				LayFun = 'layout_with_fr' ),
 			( memberchk(layout_args(LayArgS),Args) -> en_list(LayArgS,LayArgs);
 			     LayArgs = [] ),
 			FunCall =.. [LayFun,gnet|LayArgs], % fixme: parameters
@@ -116,8 +117,13 @@ Opts
   * labels(Lbs=`nodes`)
     labels for the nodes, _[]_ for none, _false_ for leaving it unset
   * layout_call(LayG) 
-    layout R/qgraph function to use for getting x,y coordinates.
-    defaults to... which is only used if layout_mtx(LayM) is also missing
+    layout call (R/qgraph) to use for getting x,y coordinates.
+    currently not implemented
+  * layout_fun(LayF)
+    name of function in R that can generate coordinates object 
+    (see https://www.rdocumentation.org/packages/igraph/versions/1.2.6/topics/layout_)
+    defaults to: layout_with_fr, other values include: 
+
   * layout_mtx(LayM)
     used if layout_call(LayG) is not present
   * orphan_edge_weight(OEW)
