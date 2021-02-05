@@ -7,6 +7,7 @@
                         wgraph_known_cliques_replace/4,
                         wgraph_vertices/2,
                         wgraph_del_vertices/3,
+                        wgraph_vertex_frequencies/2,
                         wgraph_plot/2,
                         wgraph_ugraph/2,
                         wgraph_version/2
@@ -44,7 +45,7 @@ See wgraph_plot/2.
 @version  0.4 2019/4/21
 @version  0.5 2019/5/8
 @version  0.6 2019/5/12
-@version  0.7 2021/..., added wgraph_del_vertices/3.
+@version  0.7 2021/..., added wgraph_del_vertices/3, wgraph_vertex_frequencies/2.
 @license  MIT
 
 */
@@ -72,4 +73,5 @@ wgraph_version( 0:6:0, date(2019,5,12) ).
 :- lib(wgraph_add_vertices/3).
 :- lib(wgraph_known_cliques_replace/4).
 :- lib(wgraph_del_vertices/3).
+:- lib(wgraph_vertex_frequencies/2).
 :- lib(end(wgraph)).

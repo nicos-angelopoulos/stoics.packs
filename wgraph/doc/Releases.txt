@@ -3,6 +3,7 @@
 
 0.7 
    21.02.05   IFACE:    added wgraph_del_vertices/3
+              IFACE:    added wgraph_vertex_frequencies/2
    21.02.03   FIXED:    clarify diffs between layout_call <-> layout_fun
    20.09.07   DEPS:     explicit dependencies to lists & apply
               FIXED:    single node graphs in ggnet2 (suboptimally, by adding extra node)
