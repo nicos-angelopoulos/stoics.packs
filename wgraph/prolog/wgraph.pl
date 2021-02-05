@@ -8,6 +8,7 @@
                         wgraph_vertices/2,
                         wgraph_del_vertices/3,
                         wgraph_vertex_frequencies/2,
+                        wgraph_nodes_collapse/4,
                         wgraph_plot/2,
                         wgraph_ugraph/2,
                         wgraph_version/2
@@ -74,4 +75,5 @@ wgraph_version( 0:6:0, date(2019,5,12) ).
 :- lib(wgraph_known_cliques_replace/4).
 :- lib(wgraph_del_vertices/3).
 :- lib(wgraph_vertex_frequencies/2).
+:- lib(wgraph_nodes_collapse/3).
 :- lib(end(wgraph)).
