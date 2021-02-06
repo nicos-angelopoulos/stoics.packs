@@ -2,6 +2,7 @@
 --------------------
 
 0.7 
+   21.02.05   IFACE:    wgraph_ugraph/3 and implementation of wgraph_ugraph(-,+)
    21.02.05   IFACE:    added wgraph_del_vertices/3
               IFACE:    added wgraph_vertex_frequencies/2
               IFACE:    added wgraph_nodes_collapse/4

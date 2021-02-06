@@ -1,20 +1,20 @@
 :- lib(stoics_lib:en_list/2).
 
-/** wgraph_nodes_collapse( +Graph, +Nodes, +Collapse, -NewGraph ).
+/** wgraph_vertices_collapse( +Graph, +Verts, +Collapse, -NewGraph ).
 
 
-Replace all Nodes in Graph with a single Collapsed node to produce
+Replace all Verts in Graph with a single Collapsed node to produce
 New Graph.
 
 Only 
 ==
 
 ?- 
-     wgraph_nodes_collapse( [a,b-c:1,b-d:2], [d,c], e, G1 ).
+     wgraph_vertices_collapse( [a,b-c:1,b-d:2], [d,c], e, G1 ).
 G1 = [a, b-e:2].
 
 ?-
-     wgraph_nodes_collapse( [a,b-c:1,b-d:2,e], [a,e], f, G2 ).
+     wgraph_vertices_collapse( [a,b-c:1,b-d:2,e], [a,e], f, G2 ).
 
 ==
 
@@ -23,11 +23,11 @@ G1 = [a, b-e:2].
 @tbd add rules or difference conflict resolution
 
 */
-wgraph_nodes_collapse( GraphIn, NodesIn, Coll, NewG ) :-
+wgraph_vertices_collapse( GraphIn, NodesIn, Coll, NewG ) :-
      wgraph( GraphIn, Graph ),
      en_list( NodesIn, NodesL ),
      sort( NodesL, Nodes ),
-     wgraph_nodes_collapse_1( Graph, Nodes, Coll, Gout ),
+     wgraph_vertices_collapse_1( Graph, Nodes, Coll, Gout ),
      sort( Gout, Sout ),  % remove multiple orphans
      wgraph_remove_dup_edges_ord( Sout, Uout ),
      wgraph( Uout, NewG ).
@@ -70,9 +70,9 @@ wgraph_remove_dup_edges_ord_3( [Itm|Itms], Prv, Out ) :-
      ),
      wgraph_remove_dup_edges_ord_3( Itms, NxtPrv, Tut ).
 
-wgraph_nodes_collapse_1( [], _Nodes, _Coll, Gout ) :-
+wgraph_vertices_collapse_1( [], _Nodes, _Coll, Gout ) :-
      Gout = [].
-wgraph_nodes_collapse_1( [Itm|Itms], Nodes, Coll, Gout ) :-
+wgraph_vertices_collapse_1( [Itm|Itms], Nodes, Coll, Gout ) :-
      ( atomic(Itm) -> 
           ( memberchk(Itm,Nodes) ->
                Gout = [Coll|Tout]
@@ -90,4 +90,4 @@ wgraph_nodes_collapse_1( [Itm|Itms], Nodes, Coll, Gout ) :-
                Gout = [NdA-NdB:Wgt|Tout]
           )
      ),
-     wgraph_nodes_collapse_1( Itms, Nodes, Coll, Tout ).
+     wgraph_vertices_collapse_1( Itms, Nodes, Coll, Tout ).
