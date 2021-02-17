@@ -1,6 +1,6 @@
-/** wgraph_vertex_in_item( ?Vert, +Item, ).
+/** wgraph_vertex_in_item( ?Vert, +Elem ).
 
-True iff Vert is reference in Item. 
+True iff Vert is a vertex referenced in graph element Elem. 
 
 This can be either because Item is an edge of the form Vert1-Vert2:Weight, 
 or Item is the vertex itself. The order of the arguments is unconventional,
