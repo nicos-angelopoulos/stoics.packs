@@ -1,6 +1,10 @@
 ---   Releases   ---
 --------------------
 
+0.7
+   21.08.26     DEPS:     moved lib(debug_call) to main load file and removed some of the central ones from subfiles
+                DEPS:     reposition Opts, in NMF call
+
 0.6       @     21.01.23
    20.01.23     IFACE:    made dependency to NMF a silent one
 

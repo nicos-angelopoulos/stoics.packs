@@ -6,11 +6,11 @@
 :- lib(r("gridExtra")).  % arrangeGrob()
 
 % now from stoics
-:- lib( stoics_lib:positions/3 ).
-:- lib( stoics_lib:en_list/2 ).
-:- lib( stoics_lib:compound/3 ).
-:- lib( stoics_lib:kv_decompose/3 ).
-:- lib( stoics_lib:kv_ks/2 ).
+:- lib(stoics_lib:positions/3).
+:- lib(stoics_lib:en_list/2).
+:- lib(stoics_lib:compound/3).
+:- lib(stoics_lib:kv_decompose/3).
+:- lib(stoics_lib:kv_ks/2).
 
 % local:
 :- lib( head/2 ).
@@ -144,11 +144,11 @@ gg_bar_plot( Pairs, Args ) :-
     GBs =[geom_bar_draw_colour(Gbc),geom_bar(Gbb),geom_bar_position(Gbp)],  
     options( GBs, Opts ),
     options( fill_colours(Fclrs), Opts ),
-    debug( gg_bar_plot, 'fill_colours(~w)', [Fclrs] ),
+    debuc( gg_bar_plot, 'fill_colours(~w)', [Fclrs] ),
     options( legend_title(Ltitle), Opts ),
     options( legend_labels(LLbls), Opts ),
     gg_bar_plot_geom_bar( Nest, Gbb, Gbp, Gbc, Fclrs, GGlrev, GGgb ),
-    debug( gg_bar_plot, 'Legend labels: ~w', [LLbls] ),
+    debuc( gg_bar_plot, 'Legend labels: ~w', [LLbls] ),
     gg_bar_plot_fill_colours( Fclrs, Ltitle, Len, LLbls, GGgb, GGfill ),
     options( labels(Xlbl,Ylbl,Mlbl), Opts ),
     GGlbl = ( GGfill + labs( x=+Xlbl, y=+Ylbl, title=+Mlbl ) ),
@@ -161,7 +161,7 @@ gg_bar_plot( Pairs, Args ) :-
     en_list( PlTermS, PlTerms ),
     gg_bar_plot_opts( PlTerms, GGtheme, GG ),
 
-    debug( gg_bar_plot, 'GG bar plot term: ~w', [GG] ),
+    debuc( gg_bar_plot, 'GG bar plot term: ~w', [GG] ),
     % <- print( GG + theme( panel.background='element_blank()', panel.grid='element_blank()', axis.text.x = element_text(colour="black"), axis.text.y = element_text(colour="black") ) ),
     options( [extra_legend(XtraLeg),extra_legend_position(Xn,Xx,Yn,Yx)], Opts ),  % experimental
     options( output(OutTerm), Opts ),

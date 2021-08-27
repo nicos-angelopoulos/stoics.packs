@@ -1,10 +1,5 @@
 
-:- use_module( library(lib) ).
-:- lib(real).
-:- lib(options).
-
-% :- catch( r_library("NMF"), _, true).
-:- lib( suggests(r('NMF'),suggests_warns(false)) ).
+:- lib( suggests(r('NMF')), suggests_warns(false) ).
 
 :- lib( stoics_lib:kv_decompose/3 ).
 :- lib( stoics_lib:locate/3 ).
@@ -13,9 +8,6 @@
 :- lib( heatmap_breaks/4 ).
 :- lib( head/2 ).
 :- lib( term_args/2 ).
-
-% :- debug( aheatmap ).
-% brewer_ryb
 
 aheatmap_defaults( [  rvar(hm_data),
                       % hp_token(pastel_ryg),

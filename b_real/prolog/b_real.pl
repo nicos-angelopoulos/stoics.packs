@@ -31,6 +31,7 @@
 :- lib(real).
 :- lib(options).
 :- lib(stoics_lib).
+:- lib(debug_call).
 :- lib(suggests(mtx)).
 
 :- lib(poly_graph).  % private for now
