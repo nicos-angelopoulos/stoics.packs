@@ -1,0 +1,12 @@
+The pack_dnloads_config_stoics.pl file in this directory is an 
+example of passing options (see pack(options):options_append/3) 
+via a file. 
+
+Copy pack_dnloads_stoics.pl to user_profile('stoics/options/pack_dnloads.pl')
+and edit it to list the packs you are interested in.
+Each time pack(b_real):src/pack_dnloads.pl is called, it will operate on this
+set of packs.
+
+The file: user_profile('stoics/options/pack_dnloads.pl') on linux unfold to something like
+/home/nicos/.config/swi-prolog/stoics/options/pack_dnloads.pl
+where "nicos" would be replaced by your own username.

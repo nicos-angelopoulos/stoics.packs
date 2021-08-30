@@ -2,7 +2,7 @@
 :- lib(options).
 :- use_module( library(real) ).
 :- lib(r("ggplot2")).
-:- lib(r("ggpubr")).     % gscatter()
+% :- lib(r("ggpubr")).     % gscatter()- removing in 0.4
 :- lib(r("gridExtra")).  % arrangeGrob()
 
 % now from stoics
@@ -132,6 +132,7 @@ gg_bar_plot( Pairs, [flip(false),geom_bar(empty),fill_colours(FClrs)] ).
 @version  0.1 2014/10/21
 @version  0.2 2016/01/23
 @version  0.3 2016/08/31, added singleton groups as normal barplots
+@version  0.4 2021/08/30, removing dependency to ggpubr, doesnt seem to be used, and has too many dependencis in R
 
 */
 gg_bar_plot( Pairs, Args ) :-

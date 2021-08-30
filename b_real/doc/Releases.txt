@@ -2,7 +2,8 @@
 --------------------
 
 0.7
-   21.08.30     SCRIPT:   added scripts/pack_dnloads.pl
+   21.08.30     SCRIPT:   added scripts/pack_dnloads.pl and example config file pack_dnloads_config_stoics.pl
+                DEPS:     removed dependency to ggpubr, it doesnt seem to be needed
    21.08.26     DEPS:     moved lib(debug_call) to main load file and removed some of the central ones from subfiles
                 DEPS:     reposition Opts, in NMF call
 
