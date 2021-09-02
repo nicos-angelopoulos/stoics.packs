@@ -10,7 +10,7 @@ Dependancies
   * aheatmap/2 
      depends on R library "NMF"
   * pack(mtx)
-     some side predicates depend on private pack _mtx_ which should become public soon
+     some predicates depend on pack _mtx_ which is useful if working with matrices
 
 @author nicos angelopoulos
 @version  0.1.0 2015/6/17
@@ -18,6 +18,7 @@ Dependancies
 @version  0.2   2016/1/23  
 @version  0.3   2017/3/11, works with lib 2.0 and stoics_lib
 @version  0.4   2017/4/25, fixes + r_hist/2.
+@version  0.7   2021/9/2,  scripts/pack_dnloads.pl
 
 */
 
