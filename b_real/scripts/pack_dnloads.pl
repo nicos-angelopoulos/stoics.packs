@@ -148,6 +148,8 @@ The remaining packs will be installed interactively on first loading of library(
 
 @author nicos angelopoulos
 @version  0:1 2021/9/2
+@tbd  date constraining and name altering goals
+@tbd per month/per week, yearly pre-canned plots
 
 */
 pack_dnloads( Args ) :-

@@ -2,7 +2,7 @@
 --------------------
 
 0.8
-   21.09.02     
+   21.09.02     TBD:      note for date constraining and name altering goals, and per month yearly plot
                 SCRIPT:   chron examples added
 
 0.7
