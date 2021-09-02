@@ -4,6 +4,7 @@
 0.7
           @     21.09.02
    21.09.02     SCRIPT:   scripts/pack_dnloads/pack_dnloads.sh
+                DOC:      fine-tune scripts documentation
    21.08.30     SCRIPT:   added scripts/pack_dnloads.pl and example associated files in scripts/pack_dnloads/
                 DEPS:     removed dependency to ggpubr, it doesn't seem to be needed
    21.08.26     DEPS:     moved lib(debug_call) to main load file and removed some of the central ones from subfiles

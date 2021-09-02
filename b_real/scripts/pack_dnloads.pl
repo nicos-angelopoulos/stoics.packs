@@ -23,7 +23,7 @@ pack_dnloads_defaults( Defs ) :-
 
 /** pack_dnloads( Opts ).
 
-Plot and track the number downloads of a bunch of packs.
+Plot and track the number of downloads of a bunch of packs.
 
 The script has three main functionalities with regard to a number of target packs:
 (a) barplot the current number of downloads, (b) add the number of current downloads
@@ -37,16 +37,16 @@ Opts
   * debug(Dbg=true)
      see options_append/4
   * mode(Mode=current)
-     one of _current_, _update_ and _tracked_. See Modes below
+     one of _current_, _update_ and _tracked_. See section Modes below.
   * pack(Pack)
-     multiple can be given. 
+     multiple can be given
   * plot_all(Pall=true)
-     in Mode=tracked, plots all packs in tracker, else it constraints to those in pack/1 options
+     in Mode=tracked, plots all packs in tracker. When Pall=false, only plot those in pack/1 options (and profile depending on AppP).
   * stem_tracked(StemTrc=false)
      stem for when Mode=tracked, by default (StemTrc=false), stem is taken by basename of TrackerF
   * stem(Stem=pack_dnloads)
      stem to use for output file when Mode=current
-  * tracker(TrackerF=user_app_data('stoics/pack_dnloads/pack_dnloads_tracker.csv'))
+  * tracker(TrackerF=user_app_data('stoics/pack_dnloads/pack_dnloads_tracker.sv'))
      Tracking file- passed through absolute_file_name/2
 
 Modes
@@ -58,16 +58,18 @@ Modes
      plots contents of TrackerF
      
 ==
-% plot the current downloads numbers for packs: bims, prosqlite and real (output file)
+% Plot the current number of downloads for packs: bims, prosqlite and real
 
 ?- [pack('b_real/scripts/pack_dnloads')].
 ?- pack_dnloads([pack(bims),pack(prosqlite),pack(real)]).
 % produces file: 21.09.01-pack_downloads.pdf
 
-% The line below is equivalent to the call above, but run from linux command line via pack(upsh)
-> upsh pack_dnloads pack=by_unix pack=bims pack=prosqlite pack=real
+% The line below is equivalent to the call above, but ran from linux command line via pack(upsh)
+> upsh pack_dnloads pack=bims pack=prosqlite pack=real
 
-% you can your packs of interest (and other options) to file user_profile(stoics/options/pack_dnloads.pl), eg
+% You can put your packs of interest (and other options) to file user_profile(stoics/options/pack_dnloads.pl)
+%  - see options_append/4
+% eg file:
 pack(bims).
 pack(prosqlite).
 pack(real).
@@ -75,7 +77,7 @@ pack(real).
 % then the first example can be reduced to:
 ?- pack_dnloads([]).
 
-% this ignores any info in user_profile(stoics/options/pack_dnloads.pl)
+% The following ignores any info in user_profile(stoics/options/pack_dnloads.pl)
 ?-  pack_dnloads([pack(bims),pack(prosqlite),pack(stoics_lib),append_profile(false)]).
 
 ==
@@ -105,24 +107,24 @@ You can keep a number of tracker files
 > upsh pack_dnloads.pl mode=update tracker=user_app_data=stoics/pack_dnloads/pack_dnloads_daily.csv
 ==
 
-% and can keep them updated via cron jobs. An example bash script can be found at
-% b_real/scripts/pack_dnloads/pack_dnloads.sh
+These can be kept updated via cron jobs. An example bash script can be found at b_real/scripts/pack_dnloads/pack_dnloads.sh
 
-% Finally, tracked mode produces a plot (on screen and saved on file), from a tracker file. 
-% Assuming your tracker file has more than one tracking line, eg:
+Finally, tracked mode produces a plot (on screen and saved on file), from a tracker file. 
+Assuming your tracker file has more than one tracking line, eg:
 ==
-> cat 
+
+> cat .local/share/swi-prolog/stoics/pack_dnloads/pack_dnloads_tracker.csv 
+date,b_real,bims,bio_analytics,bio_db,bio_db_repo,by_unix,chess_db,db_facts,debug_call,disp_bn,gbn,lib,mlu,mtx,options,os_lib,pack_errors,pepl,pfd_meta,prosqlite,pub_graph,pubmed,r_session,real,spuds,stoics_lib,svg,upsh,wgraph
 ,b_real,bims,bio_analytics,bio_db,bio_db_repo,by_unix,chess_db,db_facts,debug_call,disp_bn,gbn,lib,mlu,mtx,options,os_lib,pack_errors,pepl,pfd_meta,prosqlite,pub_graph,pubmed,r_session,real,spuds,stoics_lib,svg,upsh,wgraph
 21.09.01,35,63,17,77,48,69,34,192,49,2,3,33,61,41,86,78,80,25,11,655,12,35,16,527,32,69,3,21,64
 21.09.02,37,64,20,87,50,70,44,210,69,8,6,43,69,43,96,92,83,28,18,755,15,45,19,547,38,77,8,27,69
 
 ?-  pack_dnloads(mode(tracked)).
 ?-  pack_dnloads([mode(tracked),pack(bims),pack(prosqlite),pack(real),append_profile(false)]).
-
 ==
 
 
-To plot only specific packs while ignoring any packs defined in profile file (user_profile(stoics/options/pack_dnloads.pl)), use:
+To plot only specific packs from a tracker file, while ignoring any packs defined in profile file (user_profile(stoics/options/pack_dnloads.pl)), use:
 ==
 ?- pack_dnloads( [mode(tracked),pack(bims),pack(prosqlite),pack(real),append_profile(false),plot_all(false)] ).
 ==
@@ -134,7 +136,7 @@ Dependencies, stoics packs:
   * pack(real)
   * pack(options)
   * pack(debug_call)
-  * R library ggplot2
+  * r_lib(ggplot2)
 
 You only need to install pack(b_real), with
 ==
@@ -145,7 +147,7 @@ The remaining packs will be installed interactively on first loading of library(
 
 
 @author nicos angelopoulos
-@version  0:1 2021/9/1
+@version  0:1 2021/9/2
 
 */
 pack_dnloads( Args ) :-
