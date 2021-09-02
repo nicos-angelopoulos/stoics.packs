@@ -15,13 +15,11 @@ pack_dnloads_defaults( Defs ) :-
                append_profile(true),
                debug(true), 
                mode(current), 
-               % this needs to go to some other alias? 
                plot_all(true),
                stem_tracked(false),
                stem(pack_downloads),
                tracker(user_app_data('stoics/pack_dnloads/pack_dnloads_tracker.csv'))
                ].
-              % pack(bims), pack(b_real), pack(bio_analytics)
 
 /** pack_dnloads( Opts ).
 
