@@ -1,6 +1,10 @@
 ---   Releases   ---
 --------------------
 
+0.8
+   21.09.02     
+                SCRIPT:   chron examples added
+
 0.7
           @     21.09.02
    21.09.02     SCRIPT:   scripts/pack_dnloads/pack_dnloads.sh

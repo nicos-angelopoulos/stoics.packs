@@ -1,6 +1,13 @@
 #!/bin/sh
 
 # you can call this script to perform chron jobs
+# # daily at 1 minute before midnight
+# 59 23 * * * /home/nicos/bin/pack_dnloads.sh daily >> /tmp/pack_dnloads_daily_log.txt 2>&1
+# # weekly 1 minute before Sunday (end of week = Saturday)
+# 59 23 * * 6 /home/nicos/bin/pack_dnloads.sh weekly >> /tmp/pack_dnloads_weekly_log.txt 2>&1
+# # monthly, at the very beginning (first min of first day) as i think is hard to pinpoint end of
+# 0 1 1 * *   /home/nicos/bin/pack_dnloads.sh monthly >> /tmp/pack_dnloads_monthly_log.txt 2>&1
+
 case $# in
 	0) tog=""
 	;;
