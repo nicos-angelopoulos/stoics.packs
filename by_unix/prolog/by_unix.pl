@@ -19,8 +19,9 @@
 					op( 600, yfx, '/../' )
 				] ).
 
-:- ensure_loaded( library(process) ).
-:- ensure_loaded( library(debug) ).
+:- use_module(library(apply)).      % partition/4, maplist/3, ...
+:- use_module(library(debug)).
+:- use_module(library(process)).
 
 /** <module> by_unix
 
