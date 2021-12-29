@@ -4,7 +4,6 @@
 %  From: http://stackoverflow.com/questions/9563711/r-color-palettes-for-many-data-classes
 %  
 %== 
-% ?- requires( colours_pie/1 ).
 % ?- c25( C25 ), colours_pie( C25 ).
 %==
 %
