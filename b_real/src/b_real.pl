@@ -7,8 +7,8 @@ or call any R functions explicitly.
 Dependancies
   * pack(real)
      obviously
-  * aheatmap/2 
-     depends on R library "NMF"
+  * r_lib('NMF')
+     aheatmap/2 depends on this R library
   * pack(mtx)
      some predicates depend on pack _mtx_ which is useful if working with matrices
 
