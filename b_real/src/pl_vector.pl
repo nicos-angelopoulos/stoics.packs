@@ -88,6 +88,12 @@ pl_vector_is_list( false, VectSpec, Vect, Opts ) :-
     holds( atomic(VectSpec), AtmVS ),
     pl_vector_non_list( AtmVS, VectSpec, Vect, Opts ).
 
+pl_vector_non_list( true, RVect, Vect, Opts ) :-
+    r_is_var( RVect ),
+    options( if_rvar(IfRvar), Opts ),
+    ground( IfRvar ),
+    pl_vector_rvar( IfRvar, RVect, Vect, Opts ),
+    !.
 pl_vector_non_list( _, Cid, Vect, Opts ) :-
 	options( mtx(FullMtx), Opts ),
 	pl_vector_where( FullMtx, Mtx, Opts ),
@@ -96,12 +102,6 @@ pl_vector_non_list( _, Cid, Vect, Opts ) :-
 	options_return( cnm(Cnm), Opts ),
 	pl_vector_pair( AsPair, IsK, Mtx, PairVect, Opts ),
 	pl_vector_curtail( MtxVect, AsPair, IsK, PairVect, Vect, Opts ).
-pl_vector_non_list( true, RVect, Vect, Opts ) :-
-    r_is_var( RVect ),
-    options( if_rvar(IfRvar), Opts ),
-    ground( IfRvar ),
-    pl_vector_rvar( IfRvar, RVect, Vect, Opts ),
-    !.
 pl_vector_non_list( _, RVect, _Vect, _Opts ) :-
     % fixme: 
     throw( cannot_identify_pl_values_for_vector(RVect) ).
