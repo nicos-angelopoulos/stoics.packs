@@ -33,7 +33,7 @@ Opts
 ==
 Produces file: rh1.svg
 
-[[../doc/images/rh1.svg]]
+[[doc/html/images/rh1.svg]]
 
 ==
 ?- rnsm <- rnorm(10000), r_hist( rnsm, true ).
@@ -45,7 +45,7 @@ Produces file: rh1.svg
 Produces file: rh2.svg
 
 
-[[../doc/images/rh2.svg]]
+[[doc/html/images/rh2.svg]]
 
 @author nicos angelopoulos
 @version  0.1 2017/4/25

@@ -5,6 +5,7 @@
    21.12.29     FIXED:    pl_vector/3 order of clauses, so options without mtx() can be processed first
    21.09.02     TBD:      note for date constraining and name altering goals, and per month yearly plot
                 SCRIPT:   chron examples added
+                FIXED:    doc images
 
 0.7
           @     21.09.02
