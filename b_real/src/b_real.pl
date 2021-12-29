@@ -10,7 +10,7 @@ Dependancies
   * r_lib('NMF')
      aheatmap/2 depends on this R library
   * pack(mtx)
-     some predicates depend on pack _mtx_ which is useful if working with matrices
+     some predicates depend on pack _mtx_ which is useful when working with matrices
 
 @author nicos angelopoulos
 @version  0.1.0 2015/6/17
