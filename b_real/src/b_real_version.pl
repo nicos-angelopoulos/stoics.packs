@@ -3,7 +3,7 @@
 Version (Mj:Mn:Fx) and date and of publication (date(Y,M,D)).
 
 ==
-?- version( Vers, Date ).
+?- b_real_version( Vers, Date ).
 Vers = 0:8:0,
 Date = date(2021, 12, 30).
 ==
