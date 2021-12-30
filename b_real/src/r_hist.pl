@@ -12,16 +12,16 @@ Displaying is via r_call/2, so Opts can influence that call.
 
 Opts 
 
-  * as_density(AsDense=false)
+ * as_density(AsDense=false)
     when true it plots the density instead of the histogram
 
-  * name(Name) 
+ * name(Name) 
     set Name (string or +atom) default value for x-axis and main labels
 
-  * transparency_colour(TransClr="lightblue")
+ * transparency_colour(TransClr="lightblue")
     colour for the density, transparency colour
 
-  * transparent(Trans=true)
+ * transparent(Trans=true)
     use transparent colour to highlight density (currently only with AsDens=true)
 
 ==
@@ -43,7 +43,6 @@ Produces file: rh1.svg
 ?- r_hist( rnsm, [as_density(true),transparency_colour("lightgreen"),outputs(svg),stem(rh2)] ).
 ==
 Produces file: rh2.svg
-
 
 [[doc/html/images/rh2.svg]]
 

@@ -20,57 +20,56 @@ symboled_graph_display_defaults( [
 			   stem(symb_graph),title('')
                  ] ).
 
-% symboled_graph_display( SymbG, UpAtms, DwAtms, Gsymbs, Opts ).
-%
-% This is the graphviz version, SymbG is expected to be a ugraph 
-% and information about edges should be already in Opts. 
-%
-% We need to modernise this and add it is an alternative to wgraph_plot.
-% Modernise by dealing with widths within the predicate and letting SymbG 
-% be a wgraph.
-%
-% See string_symboled_display/4. 
-%
-% Used to have 2 more args, Stem & Title; 4+5, which are now in Opts.
-% 
-% Opts
-% 
-% * output(Dev)
-%    output device |
-% * symb_colours([])
-%    GeneSymb-ColourString pairs
-% * focus_k(Fk=2)
-%    the length of the focus chain
-% * focus_genes(Fgs=[])
-%    * genes to focus graph on. no focus when []
-% * edge_width(true)
-%    whether to use edge width
-% * edge_width_max(EWmax=2)
-%    maximum edge width
-% * edge_width_min(EWmin=1)
-%    minimum edge width
-% * range_max(RGmax=1000)
-%    maximum for range of weights
-% * range_min(RGmin=500)
-%    minimum for range of weights
-% * stem(Stem=symb_graph)
-%    stem for filename
-% * show_orphans(SwOrph=true)
-%    else _false_
-% * title(Title='')
-%    title for the graph
-%
-%==
-% ?- assert( g([a-b,b-c,c-a]) ), assert ns([a,b,c]).
-% ?- g(G), ns(Ns), symboled_graph_display( G, Ns, [], Ns, [] ).
-% ?- g(G), ns(Ns), symboled_graph_display( G, Ns, [], Ns, [output(svg)] ).
-% ?- @ eog( abc.svg ).
-%==
-%
-% @author nicos angelopoulos
-% @version  0.1 2015
-% @tbd allow flag that tells us the Graph is not a de_regulation graph (as to use a different colour for instance).
-% 
+/** symboled_graph_display( SymbG, UpAtms, DwAtms, Gsymbs, Opts ).
+
+This is the graphviz version, SymbG is expected to be a ugraph 
+and information about edges should be already in Opts. 
+
+We need to modernise this and add it is an alternative to wgraph_plot.
+Modernise by dealing with widths within the predicate and letting SymbG 
+be a wgraph.
+
+See string_symboled_display/4. 
+
+Used to have 2 more args, Stem & Title; 4+5, which are now in Opts.
+
+Opts
+ * output(Dev)
+    output device |
+ * symb_colours([])
+    GeneSymb-ColourString pairs
+ * focus_k(Fk=2)
+    the length of the focus chain
+ * focus_genes(Fgs=[])
+   genes to focus graph on. no focus when []
+ * edge_width(true)
+    whether to use edge width
+ * edge_width_max(EWmax=2)
+    maximum edge width
+ * edge_width_min(EWmin=1)
+    minimum edge width
+ * range_max(RGmax=1000)
+    maximum for range of weights
+ * range_min(RGmin=500)
+    minimum for range of weights
+ * stem(Stem=symb_graph)
+    stem for filename
+ * show_orphans(SwOrph=true)
+    else _false_
+ * title(Title='')
+    title for the graph
+
+==
+?- assert( g([a-b,b-c,c-a]) ), assert ns([a,b,c]).
+?- g(G), ns(Ns), symboled_graph_display( G, Ns, [], Ns, [] ).
+?- g(G), ns(Ns), symboled_graph_display( G, Ns, [], Ns, [output(svg)] ).
+?- @ eog( abc.svg ).
+==
+
+@author nicos angelopoulos
+@version  0.1 2015
+@tbd allow flag that tells us the Graph is not a de_regulation graph (as to use a different colour for instance).
+*/
 symboled_graph_display( SymbG, Ups, Dws, Args ) :-
 	options_append( symboled_graph_display, Args, Opts ),
 	Edgies = [edge_width(Ewidth),edge_width_min(EwMin),edge_width_max(EwMax)],

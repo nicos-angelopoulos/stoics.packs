@@ -9,59 +9,59 @@
 
 lm_plot_defaults( [max_frac(4)] ).
 
-%% lm_plot( +Vect1, +Vect2, +Opts ).
-%
-%  Create a scatter plot for vectors Vect1 and Vect2 (pl_vector/2) along with 
-%  fitting a linear model.
-%
-%  Pval is the anova p.value of Clm2 ~ Clm1, Coef is the coefficient of the
-%  regression, R2 is R squared (coefficient of determination). See options.
-%
-%  Opts
-%  * Ropt = Rval
-%    pairs are passed to the plot call (via r_call/2) (defaults for main, xlab, ylab and col provided)
-%  * coef(Coef) 
-%    return value of the coefficient
-%  * max_frac(MxFrac=4)
-%    maximum number of fractional part
-%  * mtx(Mtx)
-%    used if Vect1,2 are not lists, see pl_vector/2
-%  * outputs(Outs)
-%    outputs to produce, see r_call/2
-%  * pval(Pval) 
-%    return value of the p value
-%  * r2(R2) 
-%    return value of the R2 
-%  * stem(Stem)
-%    stem for any output files (see r_call/2)
-%  * RcallOpts
-%    options supported by r_call/2
-%
-%==
-%  ?- mtx_data( mtcars, Mt ), 
-%     lm_plot( mpg, disp, mtx(Mt) ).
-%  
-%  ?- assert( lm_mtx( [row(a,b,c),row(1,2,3),row(2,3,4),row(3,4,5)] ) ).
-%  ?- lm_mtx( Mtx ), lm_plot( a, b, C, R2, P, mtx(Mtx) ).
-%  C = 1.0,
-%  P = 0.0.
-%  
-%  ?- lm_mtx(Mtx),
-%     lm_plot(Mtx,a,b,C,R2,P,true,).
-%
-%  C = 1.0,
-%  P = 0.0.
-% 
-%  ?- ls.  
-%  what.png
-%  ?- use_module( library(by_unix) ).
-%  ?- @ eog(what.png).
-%==
-%
-% @author nicos angelopoulos
-% @version  0.1 2014/6/30
-% @version  0.1 2014/1/23, mtx updates + R2
-%
+/** lm_plot( +Vect1, +Vect2, +Opts ).
+
+Create a scatter plot for vectors Vect1 and Vect2 (pl_vector/2) along with 
+fitting a linear model.
+
+Pval is the anova p.value of Clm2 ~ Clm1, Coef is the coefficient of the
+regression, R2 is R squared (coefficient of determination). See options.
+
+Opts
+ * Ropt = Rval
+    pairs are passed to the plot call (via r_call/2) (defaults for main, xlab, ylab and col provided)
+ * coef(Coef) 
+    return value of the coefficient
+ * max_frac(MxFrac=4)
+    maximum number of fractional part
+ * mtx(Mtx)
+    used if Vect1,2 are not lists, see pl_vector/2
+ * outputs(Outs)
+    outputs to produce, see r_call/2
+ * pval(Pval) 
+    return value of the p value
+ * r2(R2) 
+    return value of the R2 
+ * stem(Stem)
+    stem for any output files (see r_call/2)
+ * RcallOpts
+    options supported by r_call/2
+
+==
+?- mtx_data( mtcars, Mt ), 
+   lm_plot( mpg, disp, mtx(Mt) ).
+
+?- assert( lm_mtx( [row(a,b,c),row(1,2,3),row(2,3,4),row(3,4,5)] ) ).
+?- lm_mtx( Mtx ), lm_plot( a, b, C, R2, P, mtx(Mtx) ).
+C = 1.0,
+P = 0.0.
+
+?- lm_mtx(Mtx),
+   lm_plot(Mtx,a,b,C,R2,P,true,).
+
+C = 1.0,
+P = 0.0.
+
+?- ls.  
+what.png
+?- use_module( library(by_unix) ).
+?- @ eog(what.png).
+==
+
+@author nicos angelopoulos
+@version  0.1 2014/6/30
+@version  0.1 2014/1/23, mtx updates + R2
+*/
 lm_plot( Cid1, Cid2, OptsIn ) :-
 	options_append( lm_plot, OptsIn, Opts ),
 	pl_vector( Cid1, Clm1, [cnm(Cnm1)|Opts] ),

@@ -8,73 +8,72 @@
 
 pl_vector_defaults( if_rvar(true) ).
 
-%% pl_vector( +VectSpec, -Vect, +Opts ).
-%
-% True iff VectSpec is a regognisable representation of a vector
-% whose canonical representation (a list) is Vect. 
-% Through Options you can also control max and min values.
-%
-% Recognisable represenation are:
-%  * list
-%     which is also the canonical representation
-%  * Cid
-%     when memberchk(mtx(MTx),Opts) and mtx_column( Mtx, Cid, Vect )
-%
-% Opts 
-%  * cnm(Cnm)
-%     the column name of the vector (return value)
-%  * cnm_def(Def)
-%     use Def as Cnm when VectSpec is a prolog list. Leaves free if none is given.
-%  * k(Kid)
-%     return a paired vector where K is taken from Kid column of Mtx (below)- 
-%     and V from VectSpec
-%  * max(Max)
-%     curtail values > Max to Max
-%  * min(Min) 
-%     curtail values < Min to Min
-%  * mtx(Mtx)
-%     a matrix 
-%  * if_rvar(Rvar=true)
-%    how to treat R variables in VectSpec. true: allows them by passing them to Vect, 
-%    false: dissallows R variables, and prolog: allows them by passing their Prolog representation to Vect.
-%  * v(Vid)
-%     return a paired vector where V is taken from Vid column of Mtx (below)- 
-%     and K from VectSpec. Only used if k(Kid) is not present
-%  * where(Cid(Val))
-%     restrict matrix to those rows that have in Cid value Val
-%
-%  Currently, k() and v() are inompatible to max() and min().
-%
-%==
-% ?- pl_vector( [1,2,3], V, true ).
-% V = [1, 2, 3].
-% 
-% ?- mtx_data( mtcars, Mc ),
-%    pl_vector( 1, Vect, [mtx(Mc),cnm(Cnm)] ),
-%    max_list( Vect, Max ).
-%
-% Mc = [row(mpg, cyl, disp, hp, drat, wt, qsec, vs, am, gear, carb), row(21.0, 6.0|...],
-% Vect = [21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8|...],
-% Cnm = mpg,
-% Max = 33.9.
-% 
-% ?- mtx_data( mtcars, Mc ), 
-%    pl_vector( 1, Vect, [mtx(Mc),cnm(Cnm),max(30)] ),
-%    max_list( Vect, Max ).
-% 
-% Mc = [row(mpg, cyl, disp, hp, drat, wt, qsec, vs, am, gear, carb), row(21.0, 6.0|...],
-% Vect = [21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8|...],
-% Cnm = mpg,
-% Max = 30.
-%
-%==
-%
-% @see pl_vector_curtail/3,4
-% @tbd add to real ? but it needs mtx ...
-% @author  nicos angelopoulos
-% @version 0.2 2016/6/7,  added where() and k(),v() pairs
-% @version 0.3 2020/7/27, changed order of clauses (mtx with complex column name was matching as R variable)
-%
+/** pl_vector( +VectSpec, -Vect, +Opts ).
+
+True iff VectSpec is a regognisable representation of a vector
+whose canonical representation (a list) is Vect. 
+Through Options you can also control max and min values.
+
+Recognisable represenation are:
+ * list
+    which is also the canonical representation
+ * Cid
+    when memberchk(mtx(MTx),Opts) and mtx_column( Mtx, Cid, Vect )
+
+Opts 
+ * cnm(Cnm)
+    the column name of the vector (return value)
+ * cnm_def(Def)
+    use Def as Cnm when VectSpec is a prolog list. Leaves free if none is given.
+ * k(Kid)
+    return a paired vector where K is taken from Kid column of Mtx (below)- and V from VectSpec
+ * max(Max)
+    curtail values > Max to Max
+ * min(Min) 
+    curtail values < Min to Min
+ * mtx(Mtx)
+    a matrix 
+ * if_rvar(Rvar=true)
+    how to treat R variables in VectSpec. true: allows them by passing them to Vect, 
+    false: dissallows R variables, and prolog: allows them by passing their Prolog representation to Vect.
+ * v(Vid)
+    return a paired vector where V is taken from Vid column of Mtx (below)- 
+    and K from VectSpec. Only used if k(Kid) is not present
+ * where(Cid(Val))
+    restrict matrix to those rows that have in Cid value Val
+
+Currently, k() and v() are inompatible to max() and min().
+
+==
+?- pl_vector( [1,2,3], V, true ).
+V = [1, 2, 3].
+
+?- mtx_data( mtcars, Mc ),
+   pl_vector( 1, Vect, [mtx(Mc),cnm(Cnm)] ),
+   max_list( Vect, Max ).
+
+Mc = [row(mpg, cyl, disp, hp, drat, wt, qsec, vs, am, gear, carb), row(21.0, 6.0|...],
+Vect = [21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8|...],
+Cnm = mpg,
+Max = 33.9.
+
+?- mtx_data( mtcars, Mc ), 
+   pl_vector( 1, Vect, [mtx(Mc),cnm(Cnm),max(30)] ),
+   max_list( Vect, Max ).
+
+Mc = [row(mpg, cyl, disp, hp, drat, wt, qsec, vs, am, gear, carb), row(21.0, 6.0|...],
+Vect = [21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8|...],
+Cnm = mpg,
+Max = 30.
+
+==
+
+@see pl_vector_curtail/3,4
+@tbd add to real ? but it needs mtx ...
+@author  nicos angelopoulos
+@version 0.2 2016/6/7,  added where() and k(),v() pairs
+@version 0.3 2020/7/27, changed order of clauses (mtx with complex column name was matching as R variable)
+*/
 pl_vector( VectSpec, Vect, Args ) :-
     options_append( pl_vector, Args, Opts ),
     holds( is_list(VectSpec), IsList ),

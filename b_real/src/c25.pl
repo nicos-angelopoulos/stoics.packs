@@ -1,12 +1,12 @@
-%% c25( -Colours ).
-%
-%  A pallete of 25 colours. Colours is a c/25 term.
-%  From: http://stackoverflow.com/questions/9563711/r-color-palettes-for-many-data-classes
-%  
-%== 
-% ?- c25( C25 ), colours_pie( C25 ).
-%==
-%
+/** c25( -Colours ).
+
+A pallete of 25 colours. Colours is a c/25 term.
+From: http://stackoverflow.com/questions/9563711/r-color-palettes-for-many-data-classes
+
+==
+?- c25( C25 ), colours_pie( C25 ).
+==
+*/
 c25(  c("dodgerblue2",              % 1
         "#E31A1C", % red            % 2
         "green4",                   % 3

@@ -8,22 +8,23 @@ string_symbols_graph_defaults( Defs ) :-
 			 catenator(';')
 	].
 
-%% string_symbols_graph( +Symbols, -Graph, +Opts ).
-%
-% Collect weight bearing edges among all Symbols as per string database.
-% string_graph/3 will become a generalisation of this
-% This version uses, bio_db for the string data.
-%
-% Opts
-%  * catenator(Cat=';')
-%    atom to use as catenator in multi-symbol splits
-% 
-%  * min_w(MinW=500)
-%    threshold below or at which edges are ignored (0 =< MinW =< 1000).
-%
-% @tbd cite string database location, and in the intereactions file we need meta-info
-% @see string_graph/3.
-% 
+/** string_symbols_graph( +Symbols, -Graph, +Opts ).
+
+Collect weight bearing edges among all Symbols as per string database.
+string_graph/3 will become a generalisation of this
+This version uses, bio_db for the string data.
+
+Opts
+ * catenator(Cat=';')
+    atom to use as catenator in multi-symbol splits
+
+ * min_w(MinW=500)
+    threshold below or at which edges are ignored (0 =< MinW =< 1000).
+
+@tbd cite string database location, and in the intereactions file we need meta-info
+@see string_graph/3.
+*/
+
 string_symbols_graph( Symbols, Graph, Args ) :-
 	options_append( string_symbols_graph, Args, Opts ),
 	options( min_w(MinW), Opts ),

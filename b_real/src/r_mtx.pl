@@ -10,37 +10,34 @@ r_mtx_defaults( [ rownames(integer),
                   header(true), colnames(header), debug(false)
                      ] ).
 
-%% r_mtx( +Rvar, ?Mtx ).
-%% r_mtx( +Rvar, ?Mtx, +Opts ).
-% 
-% Load Mtx onto Rvar and vice versa. Mtx is passed through mtx/2. It can also be an Real matrix, ie. a list of lists.
-% <br> Rows in mtx/2 are of the form of a list of n-ary compounds (as in csv/3).
-%
-% Opts
-% * rownames(Rnames=integer) 
-%    number indicates column position, list for given names and
-%    _integer_ for auto naming 1...n .
-% * header(Hdr=true)
-%    whether the file incorporates a header
-% * colnames(Cnames=header)
-%    or list for given names or _integer_ for 1...n. If Cnames
-%    is _header_ and Hdr is false, integer column names are used.
-% * debug(Dbg=false)
-%    or _true_ for self debugging call. Note that _false_ turns off, not just ignore
-%    and that in both cases original debugging status is re-instated at end of call.
-%
-%==
-% ?- mtx_data( mtcars, Mt ), r_mtx( rv, Mt, [debug(true),rownames(1)] ).
-% ...
-%==
-%
-% @author nicos angelopoulos
-% @version  0.1 2014/8/20
-% @tbd  add generic selection predicate(s) rows + columns
-%       with/out renames for columns and rows).
-% @tbd add reading through R's read.csv()/read.table()
-% @tbd the Rvar -> Mtx  mode !
-%
+/** r_mtx( +Rvar, ?Mtx ).
+   r_mtx( +Rvar, ?Mtx, +Opts ).
+
+Load Mtx onto Rvar and vice versa. Mtx is passed through mtx/2. It can also be an Real matrix, ie. a list of lists. <br>
+Rows in mtx/2 are of the form of a list of n-ary compounds (as in csv/3).
+
+Opts
+ * rownames(Rnames=integer) 
+    number indicates column position, list for given names and _integer_ for auto naming 1...n .
+ * header(Hdr=true)
+    whether the file incorporates a header
+ * colnames(Cnames=header)
+    or list for given names or _integer_ for 1...n. If Cnames
+    is _header_ and Hdr is false, integer column names are used.
+ * debug(Dbg=false)
+    or _true_ for self debugging call. Note that _false_ turns off, not just ignore
+    and that in both cases original debugging status is re-instated at end of call.
+
+==
+?- mtx_data( mtcars, Mt ), r_mtx( rv, Mt, [debug(true),rownames(1)] ).
+==
+
+@author nicos angelopoulos
+@version  0.1 2014/8/20
+@tbd  add generic selection predicate(s) rows + columns with/out renames for columns and rows
+@tbd add reading through R's read.csv()/read.table()
+@tbd the Rvar -> Mtx  mode !
+*/
 r_mtx( Rvar, Mtx ) :-
 	r_mtx( Rvar, Mtx, [] ).
 
