@@ -28,7 +28,7 @@ Dependencies
 ?- pack_install( real ).
 ?- use_module( library(real) ).
 ?- install.packages( "pheatmap" ).
-== 
+==
 
 Examples
 ==
