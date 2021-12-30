@@ -34,22 +34,22 @@ when breaks and colours are given: https://github.com/renozao/NMF/issues/12
 2014/08/12
 
 Opts 
- * centre(Centre=false)
+  * centre(Centre=false)
     1.0 or 0.0, or non number for not centering
- * cellheight(32)
+  * cellheight(32)
     height of the cell
- * cellwidth(8)
+  * cellwidth(8)
     width of the cell
- * rvar(hm_data)
+  * rvar(hm_data)
     the R variable on which to load the data (if Csv is not an R var itself
- * hp_token(pastel_ryg)
- * hmap([])
+  * hp_token(pastel_ryg)
+  * hmap([])
     aheatmap() call additional parameters given in Name(Value) syntax
- * scale(true)
+  * scale(true)
     should we scale ?
- * rowV(RowV=true)
+  * rowV(RowV=true)
     do not use a rows dendrogram 
- * colV(ColV=true)
+  * colV(ColV=true)
     do not use a columns dendrogram 
 ==  
 

@@ -1,7 +1,7 @@
 
 :- lib( stoics_lib:n_breaks/4 ).
 
-/* quantiles( List, Q, Qist ).
+/** quantiles( List, Q, Qist ).
 
 	Replace each element in List by an element in Q producing Qist,
     with the ith element in Q replacing for the elemnts in List on the ith quantile.
@@ -25,7 +25,6 @@ BinV = [1, 1, 1, 1, 1, 0].
 
 ?- quantiles( [6,6,6,6,6,6], [0,1], BinV ).
 BinV = [0, 0, 0, 0, 0, 0].
-
 ==
 
 

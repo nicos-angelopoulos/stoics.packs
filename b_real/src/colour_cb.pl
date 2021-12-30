@@ -39,11 +39,12 @@ colour_cb_r :-
 
 /** colour_cbb( -Cbb ).
 
- Colour blind palette with black. Cb is a c/8 term.
+ Colour blind palette with black (instead of grey when compared to colour_cb/1). Cbb is a c/8 term.
 
 ==
 ?- lib(b_real:colours_pie/1).
 ?- colour_cbb(Cbb), colours_pie(Cbb).
+Cbb = c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7").
 ==
 @author nicos angelopoulos
 @version 0.1 2014/02/10

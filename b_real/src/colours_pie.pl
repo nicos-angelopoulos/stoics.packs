@@ -20,17 +20,17 @@ c(c11,cl2,c3). This should be digestable by real as an
 input to a named argument. Requires library(real).
 
 Opts
- * cex(Cex=1)
+  * cex(Cex=1)
     size of the labels
- * main("")            
+  * main("")            
     main label
- * prefix(Pfx=number)
+  * prefix(Pfx=number)
     or false to exclude labels
- * radius(Radius=1)
+  * radius(Radius=1)
     radius for the pie
- * weights(Whg=1)
+  * weights(Whg=1)
     relative weights
- * labels(Lbs=Clrs)
+  * labels(Lbs=Clrs)
     labels for the portions
 
 ==

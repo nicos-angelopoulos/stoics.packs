@@ -19,6 +19,7 @@ Dependancies
 @version  0.3   2017/3/11, works with lib 2.0 and stoics_lib
 @version  0.4   2017/4/25, fixes + r_hist/2.
 @version  0.7   2021/9/2,  scripts/pack_dnloads.pl
+@version  0.8   2021/12/30, docs spruce up
 
 */
 

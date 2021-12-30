@@ -1,8 +1,10 @@
 ---   Releases   ---
 --------------------
 
-0.8
+0.8             @ 21.12.30
    21.12.29     FIXED:    pl_vector/3 order of clauses, so options without mtx() can be processed first
+                DOC:      make sure Opts on all predicates, and doc for all preds display correctly
+                DOC:      new image in colour_cb.pl and fixed all images to show in static
    21.09.02     TBD:      note for date constraining and name altering goals, and per month yearly plot
                 SCRIPT:   chron examples added
                 FIXED:    doc images

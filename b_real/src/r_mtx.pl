@@ -17,14 +17,14 @@ Load Mtx onto Rvar and vice versa. Mtx is passed through mtx/2. It can also be a
 Rows in mtx/2 are of the form of a list of n-ary compounds (as in csv/3).
 
 Opts
- * rownames(Rnames=integer) 
+  * rownames(Rnames=integer) 
     number indicates column position, list for given names and _integer_ for auto naming 1...n .
- * header(Hdr=true)
+  * header(Hdr=true)
     whether the file incorporates a header
- * colnames(Cnames=header)
+  * colnames(Cnames=header)
     or list for given names or _integer_ for 1...n. If Cnames
     is _header_ and Hdr is false, integer column names are used.
- * debug(Dbg=false)
+  * debug(Dbg=false)
     or _true_ for self debugging call. Note that _false_ turns off, not just ignore
     and that in both cases original debugging status is re-instated at end of call.
 

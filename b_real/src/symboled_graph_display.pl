@@ -20,7 +20,7 @@ symboled_graph_display_defaults( [
 			   stem(symb_graph),title('')
                  ] ).
 
-/** symboled_graph_display( SymbG, UpAtms, DwAtms, Gsymbs, Opts ).
+/** symboled_graph_display( +SymbG, +UpAtms, +DwAtms, +Opts ).
 
 This is the graphviz version, SymbG is expected to be a ugraph 
 and information about edges should be already in Opts. 
@@ -34,29 +34,29 @@ See string_symboled_display/4.
 Used to have 2 more args, Stem & Title; 4+5, which are now in Opts.
 
 Opts
- * output(Dev)
+  * output(Dev)
     output device |
- * symb_colours([])
+  * symb_colours([])
     GeneSymb-ColourString pairs
- * focus_k(Fk=2)
+  * focus_k(Fk=2)
     the length of the focus chain
- * focus_genes(Fgs=[])
+  * focus_genes(Fgs=[])
    genes to focus graph on. no focus when []
- * edge_width(true)
+  * edge_width(true)
     whether to use edge width
- * edge_width_max(EWmax=2)
+  * edge_width_max(EWmax=2)
     maximum edge width
- * edge_width_min(EWmin=1)
+  * edge_width_min(EWmin=1)
     minimum edge width
- * range_max(RGmax=1000)
+  * range_max(RGmax=1000)
     maximum for range of weights
- * range_min(RGmin=500)
+  * range_min(RGmin=500)
     minimum for range of weights
- * stem(Stem=symb_graph)
+  * stem(Stem=symb_graph)
     stem for filename
- * show_orphans(SwOrph=true)
+  * show_orphans(SwOrph=true)
     else _false_
- * title(Title='')
+  * title(Title='')
     title for the graph
 
 ==
@@ -69,6 +69,7 @@ Opts
 @author nicos angelopoulos
 @version  0.1 2015
 @tbd allow flag that tells us the Graph is not a de_regulation graph (as to use a different colour for instance).
+
 */
 symboled_graph_display( SymbG, Ups, Dws, Args ) :-
 	options_append( symboled_graph_display, Args, Opts ),
@@ -103,7 +104,7 @@ focus_genes_reduce_graph( Fenes, K, SymbG, FeneG ) :-
 	% edges_graph_vertex_k_graph( SymbG, Fenes, K, FeneG ).
 
 /*
-symboled_graph_display( SymbG, UpAtms, DwAtms, Stem, Title, Gsymbs, Mod, Opts ) :-
+old_symboled_graph_display( SymbG, UpAtms, DwAtms, Stem, Title, Gsymbs, Mod, Opts ) :-
 	SymbG \== [],  % this ensures that debug message in fgd/2 below is accurate
 	select_first( Opts, focus_k(_K), RemOpts ),
 	focused_graph_display( SymbG, UpAtms, DwAtms, '$$not_in_exec_path', Stem, Title, Gsymbs, Mod, RemOpts ).

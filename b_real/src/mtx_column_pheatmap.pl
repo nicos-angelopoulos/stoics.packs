@@ -40,54 +40,54 @@ This is mainly constructed as a demonstration of using R's pheatmap function
 from the omonymous library (http://cran.r-project.org/web/packages/pheatmap/pheatmap.pdf).
 
 Opts
- * Ropt=Rarg        
+  * Ropt=Rarg        
     pass Ropt=Rarg to the underlying  (see below for defaults)
- * breakpoints(Bkps=51)
+  * breakpoints(Bkps=51)
     number of breakpoints if Centre is a number (should be colours + 1)
- * centre(Centre=false) 
+  * centre(Centre=false) 
     when number is given, center breakpoints around this value
- * cname(Cnm)
+  * cname(Cnm)
     returns the column name of Cid
- * column(Clm)
+  * column(Clm)
     returns the values of Cid in Mtx (does not include Cnm)
- * cposition(Cps)
+  * cposition(Cps)
     returns the column position of Cid
- * mtx(Mtx)
+  * mtx(Mtx)
     returns the cannonical representation of Mtx
- * names(Names=[])
+  * names(Names=[])
     defines heatmap's columns names, either a list or a column identifier in Mtx
- * outputs(Outs=x11)
+  * outputs(Outs=x11)
     a single or list of [x11,pdf], see r_call/2
- * privates(Prv=false)
+  * privates(Prv=false)
     if true, include private Ropts
- * rvar(Rvar=mcp)
+  * rvar(Rvar=mcp)
     R variable to use for the data
- * rvar_rmv(Rdel=true)
+  * rvar_rmv(Rdel=true)
     delete the Rvariable at end of call   fixme: not implemented yet...
- * stem(Stem)
+  * stem(Stem)
     stem for output files. Default: atomic_list_concat([Cnm,phmap],'_',Stem).
 
 Ropt
- * breaks=
+  * breaks=
     allows specific colour index assignments
- * cellheight=8
- * cellwidth=8
- * cluster_rows='FALSE'
+  * cellheight=8
+  * cellwidth=8
+  * cluster_rows='FALSE'
     as this is for single row
- * cluster_cols='FALSE'
+  * cluster_cols='FALSE'
     ditto
- * fontsize_col=4
- * fontsize_row=4
- * fontsize=6
- * legend=Legend
+  * fontsize_col=4
+  * fontsize_row=4
+  * fontsize=6
+  * legend=Legend
     'TRUE' if Prv=true and 'FALSE' otherwise
- * legend_horiz='TRUE'
+  * legend_horiz='TRUE'
     private (only include if privates(true)
- * legend_hf=0.4
+  * legend_hf=0.4
     private
- * legend_wf=0.7
+  * legend_wf=0.7
     private
- * scale="none" 
+  * scale="none" 
 
 ==
 ?- use_module( library(real) ).

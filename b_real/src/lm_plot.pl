@@ -18,23 +18,23 @@ Pval is the anova p.value of Clm2 ~ Clm1, Coef is the coefficient of the
 regression, R2 is R squared (coefficient of determination). See options.
 
 Opts
- * Ropt = Rval
+  * Ropt = Rval
     pairs are passed to the plot call (via r_call/2) (defaults for main, xlab, ylab and col provided)
- * coef(Coef) 
+  * coef(Coef) 
     return value of the coefficient
- * max_frac(MxFrac=4)
+  * max_frac(MxFrac=4)
     maximum number of fractional part
- * mtx(Mtx)
+  * mtx(Mtx)
     used if Vect1,2 are not lists, see pl_vector/2
- * outputs(Outs)
+  * outputs(Outs)
     outputs to produce, see r_call/2
- * pval(Pval) 
+  * pval(Pval) 
     return value of the p value
- * r2(R2) 
+  * r2(R2) 
     return value of the R2 
- * stem(Stem)
+  * stem(Stem)
     stem for any output files (see r_call/2)
- * RcallOpts
+  * RcallOpts
     options supported by r_call/2
 
 ==

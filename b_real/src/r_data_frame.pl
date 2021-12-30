@@ -11,9 +11,9 @@ the result is passed through mtx_df/2. When Df is a variable in this context,
 a unique variable is generated that looks like tmp.df.N where N is an 
 integer.
 
-@ see mtx/2
-@ see mtx_df/2
-@ see r_mtx/3
+@see mtx/2
+@see mtx_df/2
+@see r_mtx/3
 
 */
 r_data_frame( In, Df ) :-

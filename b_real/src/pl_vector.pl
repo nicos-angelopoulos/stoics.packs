@@ -15,31 +15,31 @@ whose canonical representation (a list) is Vect.
 Through Options you can also control max and min values.
 
 Recognisable represenation are:
- * list
+  * list
     which is also the canonical representation
- * Cid
+  * Cid
     when memberchk(mtx(MTx),Opts) and mtx_column( Mtx, Cid, Vect )
 
 Opts 
- * cnm(Cnm)
+  * cnm(Cnm)
     the column name of the vector (return value)
- * cnm_def(Def)
+  * cnm_def(Def)
     use Def as Cnm when VectSpec is a prolog list. Leaves free if none is given.
- * k(Kid)
+  * k(Kid)
     return a paired vector where K is taken from Kid column of Mtx (below)- and V from VectSpec
- * max(Max)
+  * max(Max)
     curtail values > Max to Max
- * min(Min) 
+  * min(Min) 
     curtail values < Min to Min
- * mtx(Mtx)
+  * mtx(Mtx)
     a matrix 
- * if_rvar(Rvar=true)
+  * if_rvar(Rvar=true)
     how to treat R variables in VectSpec. true: allows them by passing them to Vect, 
     false: dissallows R variables, and prolog: allows them by passing their Prolog representation to Vect.
- * v(Vid)
+  * v(Vid)
     return a paired vector where V is taken from Vid column of Mtx (below)- 
     and K from VectSpec. Only used if k(Kid) is not present
- * where(Cid(Val))
+  * where(Cid(Val))
     restrict matrix to those rows that have in Cid value Val
 
 Currently, k() and v() are inompatible to max() and min().
@@ -73,6 +73,7 @@ Max = 30.
 @author  nicos angelopoulos
 @version 0.2 2016/6/7,  added where() and k(),v() pairs
 @version 0.3 2020/7/27, changed order of clauses (mtx with complex column name was matching as R variable)
+
 */
 pl_vector( VectSpec, Vect, Args ) :-
     options_append( pl_vector, Args, Opts ),

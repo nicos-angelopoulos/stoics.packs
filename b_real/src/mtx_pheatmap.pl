@@ -14,11 +14,11 @@ Plots the data in Mtx using pheatmap() from omonymous package.
 See mtx_column_pheatmap/3. Here we print vertically though.
 
 Opts
- * Ropt=Rarg
+  * Ropt=Rarg
     pass Ropt=Rarg to the pheatmap() R call
- * rvar(Rvar=mtx_heatmap)
+  * rvar(Rvar=mtx_heatmap)
     R variable to use
- * names(Names=[])
+  * names(Names=[])
     list of names or column id
 
 Predicate uses r_call/2 which takes its own options.

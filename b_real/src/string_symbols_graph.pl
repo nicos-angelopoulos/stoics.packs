@@ -15,10 +15,10 @@ string_graph/3 will become a generalisation of this
 This version uses, bio_db for the string data.
 
 Opts
- * catenator(Cat=';')
+  * catenator(Cat=';')
     atom to use as catenator in multi-symbol splits
 
- * min_w(MinW=500)
+  * min_w(MinW=500)
     threshold below or at which edges are ignored (0 =< MinW =< 1000).
 
 @tbd cite string database location, and in the intereactions file we need meta-info
