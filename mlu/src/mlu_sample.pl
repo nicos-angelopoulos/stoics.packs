@@ -21,6 +21,7 @@ Opts
 ?- sload_pe( coin ).
 ?- mlu_sample( scall(coin(Side)), 100, Side, Freqs ).
 Freqs = [head-47, tail-53].
+
 ?- mlu_sample( scall(coin(Side)), 100, Side, Freqs ).
 Freqs = [head-49, tail-51].
 

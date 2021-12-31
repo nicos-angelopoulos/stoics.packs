@@ -51,11 +51,7 @@ Other options are passed to either gg_bar_plot/2 (if Iface == gg_bar) or to r_ca
 ==
 ?- lib(pepl).
 ?- sload_pe( coin ).
-?- mlu_sample( scall(coin(Side)), 100, Side, Freqs ), mlu_frequency_plot( Freqs, [interface(barplot),outputs([pdf]),las=2] ).
-% ouput produced on real_plot.pdf
 
-?- mlu_sample( scall(coin(Side)), 100, Side, Freqs ), mlu_frequency_plot( Freqs, [interface(gg_bar),output(pdf("naku.pdf"))] ).
-% ouput produced on naku.pdf
 
 ?- [pack(mlu/examples/grouped_freqs)].
 ?- grouped_freqs.
@@ -64,6 +60,22 @@ Other options are passed to either gg_bar_plot/2 (if Iface == gg_bar) or to r_ca
 ?- mlu_frequency_plot( [1,1,1,2,2,3], true ).
 ?- mlu_frequency_plot( [1,1,1,2,2,3], interface(barplot) ).
 ==
+
+==
+?- lib(pepl).
+?- sload_pe( coin ).
+?- mlu_sample( scall(coin(Side)), 100, Side, Freqs ), mlu_frequency_plot( Freqs, [interface(barplot),outputs([svg]),las=2] ).
+==
+Produces file: real_plot.svg
+
+[[doc/html/images/real_plot.svg]]
+
+==
+?- mlu_sample( scall(coin(Side)), 100, Side, Freqs ), mlu_frequency_plot( Freqs, [interface(gg_bar),output(png("naku.png"))] ).
+==
+Produces file: naku.png
+
+[[doc/html/images/naku.png]]
 
 @author nicos angelopoulos
 @version  0.1 2016/8/31
