@@ -42,6 +42,7 @@ It is likely that bootstrapping will be added soon and also a couple of addition
 @author   nicos angelopoulos
 @version    0.1 2016/3/5
 @version    0.2 2017/3/11
+@version    0.3 2021/12/31
 @see http://stoics.org.uk/~nicos/sware/mlu
 @see http://stoics.org.uk/~nicos/sware/mlu/doc/html/mlu.html
 @see pack(mlu/examples/stoic.pl)
@@ -54,8 +55,8 @@ Current version and release date for the library.
 
 ==
 ?- mlu_version( V, D ).
-V = 0:2:0,
-D = date(2017, 3, 11).
+V = 0:3:0,
+D = date(2021, 12, 31).
 ==
 */
-mlu_version( 0:2:0, date(2017,3,11) ).
+mlu_version( 0:3:0, date(2021,12,31) ).

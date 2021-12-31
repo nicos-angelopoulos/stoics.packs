@@ -4,7 +4,8 @@
 TBD
     17.05.04       bootstrapping
 
-0.3 
+0.3           @ 21.12.31
+   21.12.31   DOC:      make example images show on the static doc
    17.08.29   ADDED:    vectors in mlu_frequency_plot/2 via b_real:pl_vector/3
 
 0.2       @   17.03.11  for pack(lib) v1.1
