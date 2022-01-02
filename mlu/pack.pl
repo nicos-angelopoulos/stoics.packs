@@ -1,6 +1,6 @@
 name( mlu ).
 title( 'Machine learning utilities' ).
-version( '0.3' ).
+version( '0.4' ).
 author( 'Nicos Angelopoulos', 'http://stoics.org.uk/~nicos' ).
 packager( 'Nicos Angelopoulos', 'http://stoics.org.uk/~nicos' ).
 maintainer( 'Nicos Angelopoulos', 'http://stoics.org.uk/~nicos' ).
