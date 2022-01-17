@@ -1,4 +1,6 @@
 
+:- use_module(library(real)).
+
 :- <- library( "RColorBrewer"  ).
 
 columns_fisher_test_defaults( plot(false) ).
@@ -43,16 +45,16 @@ columns_fisher_test( DataIn, Inters, Odds, Lods, Args ) :-
 	dot( Inters, bh, Intersbh ),
 	% Intersbh <- interactions,
 	Intersbh <- Inters,
-     Intersbh[lower.tri(Intersbh)] <- p.adjust(10^ - (abs(Intersbh[lower.tri(Intersbh)])), method="BH"),
-  	Intersbh[upper.tri(Intersbh)] <- p.adjust(10^ - abs(Intersbh[upper.tri(Intersbh)]), method="BH"),
+     Intersbh['lower.tri'(Intersbh)] <- 'p.adjust'(10^ - (abs(Intersbh['lower.tri'(Intersbh)])), method="BH"),
+  	Intersbh['upper.tri'(Intersbh)] <- 'p.adjust'(10^ - abs(Intersbh['upper.tri'(Intersbh)]), method="BH"),
   	diag(Intersbh) <- 1,
 	Odds[10^ -abs(Inters) > 0.05 ; Intersbh > 0.1] <- 1,
-	MinOdds <- min( Odds[Odds \= 0], na.rm='T' ),
+	MinOdds <- min( Odds[Odds \= 0], 'na.rm'='T' ),
 	Odds[Odds == 0] <- MinOdds,
 	% Odds[Odds == 0] <- min(Odds[Odds \= 0]),
 	% trace,
 	% fixme: we assume all NAs are from +Inf ... check and check again
-	Odds[is.na(Odds)] <- MinOdds,
+	Odds['is.na'(Odds)] <- MinOdds,
 	% atomic_list_concat( [log,Odds], '_', Lods ),
 	dot( log, Odds, Lods ),
 	Lods <- log(Odds),
@@ -70,7 +72,7 @@ cross_column_fisher_test( I, J, Cols, Data, Inters, Odds ) :-
 	/*
 	  interactions <- sapply(1:ncol(genomic_data), function(i) sapply(1:ncol(genomic_data), function(j) {f<- try(fisher.test(genomic_data[,i], genomic_data[,j]), silent=TRUE); if(class(f)=="try-error") 0 else ifelse(f$estimate>1, -log10(f$p.val),log10(f$p.val))} ))
 	*/
-	f <- try(fisher.test(Data[*,I], Data[*,J]), silent='TRUE'),
+	f <- try('fisher.test'(Data[*,I], Data[*,J]), silent='TRUE'),
 	% f <- try(fisher.test(Data[*,I], Data[*,J],workspace=800000,simulate.p.value='TRUE'), silent='TRUE'),
 	% write( try(fisher.test(Data[*,I], Data[*,J],workspace=800000,simulate.p.value='TRUE'), silent='TRUE') ),
 	% write( I:J ), nl,
@@ -78,7 +80,7 @@ cross_column_fisher_test( I, J, Cols, Data, Inters, Odds ) :-
 
 	fisher_log10_odds( f, I, J, Log10Val, OddVal ),
 	Inters[I,J] <- Log10Val,
-	IsInf <- is.infinite(OddVal),
+	IsInf <- 'is.infinite'(OddVal),
 	( IsInf == true ->
 		Odds[I,J]   <- 'NA'
 		;
@@ -96,15 +98,15 @@ columns_fisher_test_plot_on_option( false, _Data, _Inters, _Odds, _Lods, _Opts )
 cross_column_fisher_test_plot( Data, Inters, Odds, Lods, PdfF ) :-
 	<- pdf( +PdfF ),
 	cross_column_fisher_test_plot( Data, Inters, Odds, Lods ),
-	<- dev.off().
+	<- 'dev.off'().
 
 cross_column_fisher_test_plot( _Data, Inters, _Odds, Lods ) :-
-	old.par <- par(),
+	'old.par' <- par(),
 	<- par(bty="n", mgp = c(2,0.5,0), mar=c(3,3,2,2)+0.1, las=2, tcl= -0.33),
      ix <- colnames(Inters),
 	h <- hclust(dist(Inters[ix,ix])),
 	o <- h$order,
-    <- image(x=1:ncol(Lods), y=1:nrow(Lods), Lods[o,o], col=brewer.pal(11,"BrBG"), breaks = c(-200, seq(-3,3,2/3),  200), xaxt="n", yaxt="n", xlab="",ylab="", xlim=c(0, ncol(Lods)+3), ylim=c(0, ncol(Lods)+3)),
+    <- image(x=1:ncol(Lods), y=1:nrow(Lods), Lods[o,o], col='brewer.pal'(11,"BrBG"), breaks = c(-200, seq(-3,3,2/3),  200), xaxt="n", yaxt="n", xlab="",ylab="", xlim=c(0, ncol(Lods)+3), ylim=c(0, ncol(Lods)+3)),
   % #image(x=1:ncol(interactions), y=1:nrow(interactions), log10(odds[o,o]), scale="none", col=brewer.pal(11,"BrBG"), breaks = seq(-3,3,length.out=12), xaxt="n", yaxt="n", xlab="",ylab="", xlim=c(0, ncol(interactions)+1))
 	<- mtext(side=1, at=1:ncol(Inters), colnames(Inters)[o], cex=0.5, font=c(rep(3,ncol(Inters)))),
 	<- mtext(side=2, at=1:ncol(Inters), colnames(Inters)[o], cex=0.5, font=c(rep(3,ncol(Inters)))),
@@ -117,8 +119,8 @@ cross_column_fisher_test_plot( _Data, Inters, _Odds, Lods ) :-
   	<- points(w, pch=3, col="white", cex=0.25),
   	w <- arrayInd(which(Intersbh[o,o] <= 0.01), rep(nrow(Inters),2)),
   	<- points(w, pch=5, col="white", cex=0.25),
-  	<- image(y = 1:11, x=rep(ncol(Inters),2)+c(2,3), z=matrix(c(1:11), nrow=1), col=brewer.pal(11,"BrBG"), add='TRUE'),
-	<- axis( side=4, at = c(1,6,11), cex.axis=0.5, tcl= -0.15, label=c(signif(exp(min(Lods)), digits=1), "OR=1", signif(exp(max(Lods)), digits=2)), las=1, lwd=0.5),
+  	<- image(y = 1:11, x=rep(ncol(Inters),2)+c(2,3), z=matrix(c(1:11), nrow=1), col='brewer.pal'(11,"BrBG"), add='TRUE'),
+	<- axis( side=4, at = c(1,6,11), 'cex.axis'=0.5, tcl= -0.15, label=c(signif(exp(min(Lods)), digits=1), "OR=1", signif(exp(max(Lods)), digits=2)), las=1, lwd=0.5),
 	<- lines(rep(ncol(Inters),2)+c(1,4), c(6,6)+0.5, col="white"),
   	% <- mtext(side=5, at=0,  "Mutually\nexclusive", cex=0.5, line= -1),
   	<- mtext(side=4, at= -1,  "Mutually\nexclusive", cex=0.5, line= -1, adj=0),
@@ -139,7 +141,7 @@ fisher_log10_odds( Fvar, _I, _J, Log10Val, OddVal ) :-
 	Est > 1,
 	!,
 	% <- print(Fvar$estimate),
-	Pval <- Fvar$p.val,
+	Pval <- Fvar$'p.val',
 	% % PvalPrv <- Fvar$p.val,
 	% debug( _, 'Pval: ~w', PvalPrv ),
 	% % ( PvalPrv =:= 0 -> Pval is 10e-10; Pval = PvalPrv ),
@@ -148,7 +150,7 @@ fisher_log10_odds( Fvar, _I, _J, Log10Val, OddVal ) :-
 	OddVal = Fvar$estimate.
 	% OddVal <- Fvar$estimate.
 fisher_log10_odds( Fvar, _I, _J, Log10Val, OddVal ) :-
-	Pval <- Fvar$p.val,
+	Pval <- Fvar$'p.val',
 	Log10Val is log10(Pval),
 	% OddVal <- Fvar$estimate.
 	% <- print(Fvar$estimate),
