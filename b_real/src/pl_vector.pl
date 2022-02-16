@@ -32,7 +32,7 @@ Opts
   * min(Min) 
     curtail values < Min to Min
   * mtx(Mtx)
-    a matrix 
+    a matrix in which Cnm is a column header
   * if_rvar(Rvar=true)
     how to treat R variables in VectSpec. true: allows them by passing them to Vect, 
     false: dissallows R variables, and prolog: allows them by passing their Prolog representation to Vect.
@@ -73,6 +73,7 @@ Max = 30.
 @author  nicos angelopoulos
 @version 0.2 2016/6/7,  added where() and k(),v() pairs
 @version 0.3 2020/7/27, changed order of clauses (mtx with complex column name was matching as R variable)
+@version 0.4 2022/2/16, "complex" still tripped this, changed the order that if mtx/1 is given is tried first.
 
 */
 pl_vector( VectSpec, Vect, Args ) :-
@@ -81,27 +82,27 @@ pl_vector( VectSpec, Vect, Args ) :-
     pl_vector_is_list( IsList, VectSpec, Vect, Opts ).
 
 pl_vector_is_list( true, VectSpec, Vect, Opts ) :-
-	( memberchk(cnm_def(Cnm),Opts) -> options_return(cnm(Cnm),Opts); true ),
-	pl_vector_curtail( VectSpec, Vect, Opts ).
-	% Vect = VectSpec.
+    ( memberchk(cnm_def(Cnm),Opts) -> options_return(cnm(Cnm),Opts); true ),
+    pl_vector_curtail( VectSpec, Vect, Opts ).
+    % Vect = VectSpec.
 pl_vector_is_list( false, VectSpec, Vect, Opts ) :-
     holds( atomic(VectSpec), AtmVS ),
     pl_vector_non_list( AtmVS, VectSpec, Vect, Opts ).
 
+pl_vector_non_list( _, Cid, Vect, Opts ) :-
+    memberchk( mtx(FullMtx), Opts ),
+    pl_vector_where( FullMtx, Mtx, Opts ),
+    catch( mtx_column( Mtx, Cid, MtxVect, Cnm, _Cpos ), _, fail ),
+    !,
+    options_return( cnm(Cnm), Opts ),
+    pl_vector_pair( AsPair, IsK, Mtx, PairVect, Opts ),
+    pl_vector_curtail( MtxVect, AsPair, IsK, PairVect, Vect, Opts ).
 pl_vector_non_list( true, RVect, Vect, Opts ) :-
     r_is_var( RVect ),
     options( if_rvar(IfRvar), Opts ),
     ground( IfRvar ),
     pl_vector_rvar( IfRvar, RVect, Vect, Opts ),
     !.
-pl_vector_non_list( _, Cid, Vect, Opts ) :-
-	options( mtx(FullMtx), Opts ),
-	pl_vector_where( FullMtx, Mtx, Opts ),
-	catch( mtx_column( Mtx, Cid, MtxVect, Cnm, _Cpos ), _, fail ),
-    !,
-	options_return( cnm(Cnm), Opts ),
-	pl_vector_pair( AsPair, IsK, Mtx, PairVect, Opts ),
-	pl_vector_curtail( MtxVect, AsPair, IsK, PairVect, Vect, Opts ).
 pl_vector_non_list( _, RVect, _Vect, _Opts ) :-
     % fixme: 
     throw( cannot_identify_pl_values_for_vector(RVect) ).
@@ -116,53 +117,53 @@ pl_vector_rvar( prolog, RVect, Vect, _Opts ) :-
     Vect <- RVect.
 
 pl_vector_where( FullMtx, Mtx, Opts ) :-
-	holds( memberchk(where(Where),Opts), HasWhere ),
-	pl_vector_has_where( HasWhere, FullMtx, Where, Mtx ).
+    holds( memberchk(where(Where),Opts), HasWhere ),
+    pl_vector_has_where( HasWhere, FullMtx, Where, Mtx ).
 
 pl_vector_has_where( true, Full, Where, Mtx ) :-
-	Where =.. [Cid,Val],
-	mtx_subset( Full, Cid, ==(Val), Mtx ).
+    Where =.. [Cid,Val],
+    mtx_subset( Full, Cid, ==(Val), Mtx ).
 pl_vector_has_where( false, Mtx, _Where, Mtx ).
 
 pl_vector_pair( AsPair, IsK, Mtx, PairVect, Opts ) :-
-	( memberchk(k(Kid),Opts) ->
-		AsPair = true,
-		IsK    = false,
-		mtx_column( Mtx, Kid, PairVect )
-		;
-		( memberchk(v(Vid),Opts) ->
-			AsPair = true,
-			IsK    - true,
-			mtx_column( Mtx, Vid, PairVect )
-			;
-			AsPair = false,
-			IsK  = false,
-			PairVect = []
-		)
-	).
+    ( memberchk(k(Kid),Opts) ->
+        AsPair = true,
+        IsK    = false,
+        mtx_column( Mtx, Kid, PairVect )
+        ;
+        ( memberchk(v(Vid),Opts) ->
+            AsPair = true,
+            IsK    - true,
+            mtx_column( Mtx, Vid, PairVect )
+            ;
+            AsPair = false,
+            IsK  = false,
+            PairVect = []
+        )
+    ).
 
 pl_vector_curtail( VectIn, _AsPair, _IsK, _PairTo, Vect, Opts ) :-
-	( memberchk(max(_),Opts); memberchk(min(_),Opts) ),
-	!,
-	( memberchk(max(Max),Opts) -> true; 
-	                              pl_infinity(Max) ),
-	( memberchk(min(Min),Opts) -> true;
-	                              pl_infinity(PsvInf),
-							Min is - PsvInf
-	),
-	Min < Max, % else throw error
-	pl_vector_curtail( VectIn, Max, Min, Vect ).
+    ( memberchk(max(_),Opts); memberchk(min(_),Opts) ),
+    !,
+    ( memberchk(max(Max),Opts) -> true; 
+                                  pl_infinity(Max) ),
+    ( memberchk(min(Min),Opts) -> true;
+                                  pl_infinity(PsvInf),
+                            Min is - PsvInf
+    ),
+    Min < Max, % else throw error
+    pl_vector_curtail( VectIn, Max, Min, Vect ).
 pl_vector_curtail( Vect, AsPair, IsK, PairTo, Pairs, _Opts ) :-
-	pl_vector_curtail_pass( AsPair, IsK, Vect, PairTo, Pairs ).
+    pl_vector_curtail_pass( AsPair, IsK, Vect, PairTo, Pairs ).
 
 pl_vector_curtail_pass( false, _IsK, Vect, _PairTo, Vect ).
 pl_vector_curtail_pass( true, IsK, Vect, PairTo, Pairs ) :-
-	pl_vector_curtail_pass_combine( IsK, Vect, PairTo, Pairs ).
+    pl_vector_curtail_pass_combine( IsK, Vect, PairTo, Pairs ).
 
 pl_vector_curtail_pass_combine( true, Vect, PairTo, Pairs ) :-
-	kv_compose( Vect, PairTo, Pairs ).
+    kv_compose( Vect, PairTo, Pairs ).
 pl_vector_curtail_pass_combine( false, Vect, PairTo, Pairs ) :-
-	kv_compose( PairTo, Vect, Pairs ).
+    kv_compose( PairTo, Vect, Pairs ).
 
 /** pl_vector_curtail( +List, -Curtailed, +Opts )
 
@@ -200,21 +201,21 @@ The resulting list is Curtailed.
 */
 pl_vector_curtail( [], _Max, _Min, [] ).
 pl_vector_curtail( [V|Vs], Max, Min, [Val|Tvs] ) :-
-	( V > Max -> 
-		Val = Max
-		;
-		( V < Min -> 
-			Val = Min
-			;
-			Val = V
-		)
-	),
-	pl_vector_curtail( Vs, Max, Min, Tvs ).
-	
+    ( V > Max -> 
+        Val = Max
+        ;
+        ( V < Min -> 
+            Val = Min
+            ;
+            Val = V
+        )
+    ),
+    pl_vector_curtail( Vs, Max, Min, Tvs ).
+    
 
 pl_infinity( Inf ) :-
-	Inf is inf.
+    Inf is inf.
 /*
 pl_infinity( Inf ) :-
-	Inf <- 1 / 0.
-	*/
+    Inf <- 1 / 0.
+    */
