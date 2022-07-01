@@ -49,7 +49,8 @@ the SQL engine.
 
 */
 
-:- use_module( library(debug) ).
+:- use_module(library(lists)).      % append/3, nth1/3, ...
+:- use_module(library(debug)).      % debug/1,3.
 
 /* defaults and settings */
 
