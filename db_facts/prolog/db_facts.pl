@@ -177,7 +177,7 @@ db_assert( Conn, Goals, Affected ) :-
     maplist( db_assert(Conn), Goals, Affs ),
     db_query( Conn, 'COMMIT', _ ),
     maplist( arg(1), Affs, AffNs ),
-    sumlist( AffNs, AffectedNum ),
+    sum_list( AffNs, AffectedNum ),
     Affected = row(AffectedNum).
 
 db_assert( Conn, Goal, Affected ) :-
