@@ -19,6 +19,7 @@
 					op( 600, yfx, '/../' )
 				] ).
 
+:- use_module(library(lists)).      % flatten/2, ...
 :- use_module(library(apply)).      % partition/4, maplist/3, ...
 :- use_module(library(debug)).
 :- use_module(library(process)).
