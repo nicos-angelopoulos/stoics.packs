@@ -4,6 +4,7 @@
 TBD: change user initialistation (.pl/by_unix.pl) [see pack(mtx)].
 
 0.3
+     22.07.23  DEPS:      library(readutil), read_line_to_codes/2
      22.07.22  DEPS:      library(lists), flattten/2...
 
 0.2         @  20.09.19

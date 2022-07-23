@@ -23,6 +23,7 @@
 :- use_module(library(apply)).      % partition/4, maplist/3, ...
 :- use_module(library(debug)).
 :- use_module(library(process)).
+:- use_module(library(readutil)).   % read_line_to_codes/2.
 
 /** <module> by_unix
 
