@@ -9,7 +9,9 @@
                     mlu_version/2
     ] ).
 
+:- use_module( library(lists) ).
 :- use_module( library(lib) ).
+
 :- lib(source(mlu),homonyms(true)).
 
 :- lib(os_lib).

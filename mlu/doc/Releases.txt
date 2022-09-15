@@ -4,8 +4,13 @@
 TBD
     17.05.04       bootstrapping
 
+0.5
+
+   22.09.15   LIBS:     explicit load of library(lists)
+
 0.4           @ 22.01.02
    21.01.02   VERS:     SWI gives us grief about 0.3, trying to increase version          
+
 0.3           @ 21.12.31
    21.12.31   DOC:      make example images show on the static doc
    17.08.29   ADDED:    vectors in mlu_frequency_plot/2 via b_real:pl_vector/3
