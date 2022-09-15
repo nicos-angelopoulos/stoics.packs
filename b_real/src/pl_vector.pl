@@ -171,20 +171,36 @@ Calls =|pl_vector_list( List, Min, Max, Curtailed )|=
 with Min and Max picked from min(Min) and max(Max) terms in Opts,
 or the respective end points in List.
 
+The elements of List that are lower than Min, are replaced with Min
+and those larger than Max are replaced by Max, thus producing Curtailed.
+
+v.2 If both Min and Max are not in the list, do nothing-
+simply passing List to Curtailed. This has 2 benefits:
+ (1) it is faster when we don't need to curtail, and (2) it enables
+pl_vector/3 as to pass back non-arithmetic vectors.
+
 ==
-?- pl_vector_curtail( [1,2,5,4,3,6], Curt, [min(2),max(4)] ).
+?- b_real:pl_vector_curtail( [1,2,5,4,3,6], Curt, [min(2),max(4)] ).
+Curt = [2, 2, 4, 4, 3, 4].
 ?- pl_vector_curtail( [1,2,5,4,3,6], Curt, max(4) ).
+Curt = [1, 2, 4, 4, 3, 4].
 ==
 
 @author nicos angelopoulos
 @version  0.1 2017/4/24
+@version  0.2 2022/9/15
 
 */
 pl_vector_curtail( List, Curtailed, OptS ) :-
     en_list( OptS, Opts ),
-    ( memberchk(min(Min),Opts) -> true; min_list(List,Min) ),
-    ( memberchk(max(Max),Opts) -> true; max_list(List,Max) ),
-    pl_vector_curtail( List, Max, Min, Curtailed ).
+    ( \+ (memberchk(min(_Mn),Opts); memberchk(max(_Mx),Opts)) ->
+          List = Curtailed
+          ;
+          ( memberchk(min(Min),Opts) -> true; min_list(List,Min) ),
+          ( memberchk(max(Max),Opts) -> true; max_list(List,Max) ),
+          pl_vector_curtail( List, Max, Min, Curtailed )
+    ),
+    !.
 
 /** pl_vector_curtail( +List, +Max, +Min, -Curtailed ).
 

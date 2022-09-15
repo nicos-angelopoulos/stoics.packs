@@ -2,8 +2,9 @@
 --------------------
 
 0.9
+   22.09.15     IFACE:    pl_vector/3, can now funnel through with out curtailing if both Max and Min not given
    22.02.16     DEPS:     re-introduced dependency to ggpubr, call to ggscatter() is still in sources so we need ggpubr
-                IFACE:    pl_vector/2, try matrix column first if mtx/1 is given
+                IFACE:    pl_vector/3, try matrix column first if mtx/1 is given
                 IFACE:    gg_muts_by_pnms/3 add plot_width option.
    22.01.17     CHANGED:  quote '.' sepearated R calls in src/columns_fisher_test.pl
 
