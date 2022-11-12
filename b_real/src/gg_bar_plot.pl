@@ -130,7 +130,7 @@ gg_bar_plot( Pairs, [flip(false),geom_bar(empty),fill_colours(FClrs)] ).
 @version  0.1 2014/10/21
 @version  0.2 2016/01/23
 @version  0.3 2016/08/31, added singleton groups as normal barplots
-@version  0.4 2022/02/16, re-introductin dependency to ggpubr
+@version  0.4 2022/02/16, re-introduced dependency to ggpubr
 
 */
 gg_bar_plot( Pairs, Args ) :-
