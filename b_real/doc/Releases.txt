@@ -2,7 +2,7 @@
 --------------------
 
 0.9
-   22.11.12     FIXED:    rogue code paset at top of gg_bar_plot/2 comment
+   22.11.12     FIXED:    rogue code paste at top of gg_bar_plot/2 comment
    22.09.15     IFACE:    pl_vector/3, can now funnel through with out curtailing if both Max and Min not given
    22.02.16     DEPS:     re-introduced dependency to ggpubr, call to ggscatter() is still in sources so we need ggpubr
                 IFACE:    pl_vector/3, try matrix column first if mtx/1 is given
