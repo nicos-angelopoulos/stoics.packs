@@ -48,9 +48,7 @@ gg_bar_plot_defaults( ArgS, Defs ) :-
 Plot a bar plot of population Pairs (Name-Populations).
 
 Opts is a combination of options controlling the predicate as per normal
-Prolog convention, and term structures thmove( false, _Df ).
-gg_bar_plot_rvar_remove( true, Df ) :-
-    <- remove( Df )at translate to '+' ggplot2 terms.
+Prolog convention, and term structures that translate to '+' ggplot2 terms.
 
 Originally this only supported lists at the value part of Pairs. Now single 
 values make the predicate plot a non-grouped barplot.
