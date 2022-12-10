@@ -1,11 +1,11 @@
 
-:- lib( stoics_lib:en_list/2 ).
-:- lib( stoics_lib:kv_decompose/3 ).
-:- lib( stoics_lib:current_call/1 ).
-:- lib( stoics_lib:list_frequency/2 ).
+:- lib(stoics_lib:en_list/2).
+:- lib(stoics_lib:kv_decompose/3).
+:- lib(stoics_lib:current_call/1).
+:- lib(stoics_lib:list_frequency/3).
 
-:- lib( suggests(real) ).
-:- lib( suggests(b_real) ).
+:- lib(suggests(real) ).
+:- lib(suggests(b_real)).
 
 mlu_frequency_plot_defaults( Defs ) :-
     ( current_predicate(r_version/3) -> 
@@ -22,8 +22,16 @@ mlu_frequency_plot_defaults( Defs ) :-
 
 /** mlu_frequency_plot( +FreqOrVec, +Opts ).
 
-Make a plot for pairlist or vector, FreqOrVec. FreqOrVec is either a pairlist of the form, Item-Times, or
-a vector as recognised by pl_vector/3 (pack(b_real), if installed).
+Make a plot for pairlist or vector, Data. 
+
+Data is one of
+  * pairlist
+    of the form, Item-Times
+  * a list
+    that is passed, with Opts, to list_frequency/3
+  * a vector
+    the values of which are retrieved with b_real:pl_vector/3, and then\br
+    passed, with Opts, to list_frequency/3
 
 Opts
   * interface(Iface)
@@ -36,7 +44,7 @@ Opts
     =< so break points go to the left partition. (Currently only for _gg_bar_ interface.)
 
   * pop_line(PlineAt=false)
-    if integer draws a vertical line seperating columns with counts less than PlineAt to those with more.
+    if integer draws a vertical line separating columns with counts less than PlineAt to those with more.
     Only makes sense if Sort is set to _frequency_. (Currently only for _gg_bar_ interface.)
 
   * sort(Sort=false)
@@ -60,6 +68,12 @@ Other options are passed to either gg_bar_plot/2 (if Iface == gg_bar) or to r_ca
 ?- mlu_frequency_plot( [1,1,1,2,2,3], true ).
 ?- mlu_frequency_plot( [1,1,1,2,2,3], interface(barplot) ).
 ==
+
+==
+?- mlu_frequency_plot( [1,1,2,11,12,21,31,33,41], [bins([10,20]),interface(gg_bar)] ).
+==
+
+The plot produced has binned Data into 3 bins.
 
 ==
 ?- lib(pepl).
@@ -99,10 +113,13 @@ mlu_frequency_plot_pairs( InFreqPrv, InFreq, _Opts ) :-
     !,
     InFreqPrv = InFreq.
 mlu_frequency_plot_pairs( InFreqPrv, InFreq, Opts ) :-
+     is_list( InFreqPrv ),
+     !,
+     list_frequency( InFreqPrv, InFreq, Opts ).
+mlu_frequency_plot_pairs( InFreqPrv, InFreq, Opts ) :-
     current_call( mlu:pl_vector(InFreqPrv,InVect,Opts) ),
     !,
-    list_frequency( InVect, InFreq ).
-
+    list_frequency( InVect, InFreq, Opts ).
 mlu_frequency_plot_pairs( InFreqPrv, _InFreq, _Opts ) :-
     throw( pack_error(mlu,mlu_requency_plot/2,arg_enumerate(1,[pairlist,pl_vector],InFreqPrv)) ).
 

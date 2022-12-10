@@ -6,6 +6,7 @@ TBD
 
 0.5
 
+   22.10.10   IFACE:    mlu_frequncy_plot/2 binned vectors via new list_frequency/2
    22.09.15   LIBS:     explicit load of library(lists)
 
 0.4           @ 22.01.02
