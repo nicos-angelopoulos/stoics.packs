@@ -22,15 +22,15 @@ mlu_frequency_plot_defaults( Defs ) :-
 
 /** mlu_frequency_plot( +FreqOrVec, +Opts ).
 
-Make a plot for pairlist or vector, Data. 
+Make a plot for Data, a pairlist, list or R vector.
 
 Data is one of
   * pairlist
     of the form, Item-Times
-  * a list
+  * list
     that is passed, with Opts, to list_frequency/3
-  * a vector
-    the values of which are retrieved with b_real:pl_vector/3, and then\br
+  * vector
+    the values of which are retrieved with b_real:pl_vector/3, and then \br
     passed, with Opts, to list_frequency/3
 
 Opts
