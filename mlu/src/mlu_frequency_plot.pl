@@ -76,6 +76,12 @@ Other options are passed to either gg_bar_plot/2 (if Iface == gg_bar) or to r_ca
 The plot produced has binned Data into 3 bins.
 
 ==
+?- mlu_frequency_plot( [1,1,2,11,12,21,31,33,41], [bins([bin1-10,bin2-20,bin3-inf]),interface(gg_bar)] ).
+==
+
+As previous example, but x tics are custom labelled.
+
+==
 ?- lib(pepl).
 ?- sload_pe( coin ).
 ?- mlu_sample( scall(coin(Side)), 100, Side, Freqs ), mlu_frequency_plot( Freqs, [interface(barplot),outputs([svg]),las=2] ).
