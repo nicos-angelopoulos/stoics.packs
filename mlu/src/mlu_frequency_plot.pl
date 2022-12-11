@@ -82,6 +82,10 @@ The plot produced has binned Data into 3 bins.
 As previous example, but x tics are custom labelled.
 
 ==
+?- mlu_frequency_plot( [1,2,10,11,12,21,31,33,41], [bins([0-10]),interface(gg_bar)] ).
+==
+
+==
 ?- lib(pepl).
 ?- sload_pe( coin ).
 ?- mlu_sample( scall(coin(Side)), 100, Side, Freqs ), mlu_frequency_plot( Freqs, [interface(barplot),outputs([svg]),las=2] ).
