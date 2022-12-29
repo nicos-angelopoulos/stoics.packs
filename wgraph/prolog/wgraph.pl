@@ -48,7 +48,7 @@ See wgraph_plot/2.
 @version  0.4 2019/4/21
 @version  0.5 2019/5/8
 @version  0.6 2019/5/12
-@version  0.7 2021/..., added wgraph_del_vertices/3, wgraph_vertex_frequencies/2.
+@version  0.7 2022/12/29, added wgraph_del_vertices/3, wgraph_vertex_frequencies/2.
 @license  MIT
 
 */
@@ -59,10 +59,10 @@ See wgraph_plot/2.
 %
 %==
 % ?- wgraph_version( V, D ).
-% V = 0:6:0
-% D = date(2019,5,12)
+% V = 0:7:0
+% D = date(2022, 12, 29)
 %==
-wgraph_version( 0:6:0, date(2019,5,12) ).
+wgraph_version( 0:7:0, date(2022,12,29) ).
 
 :- lib( source(wgraph), homonyms(true) ).
 :- lib(wgraph/2).
