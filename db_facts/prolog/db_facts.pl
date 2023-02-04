@@ -182,25 +182,32 @@ db_assert( Conn, Goals, Affected ) :-
     Affected = row(AffectedNum).
 
 db_assert( Conn, Goal, Affected ) :-
-     ground( Goal ),
-
      Goal =.. [Table|Args],
      db_table_columns( Conn, Table, Clms ),
      db_current_connection( Conn, ConT ),
-     Ins = 'Insert into ',
 
      fact_args_term( Args, Clms, Goal, FATerm ),
      fa_value( known, FATerm, KClms, KVals ), 
+     fa_value( unown, FATerm, UClms, UVals ), 
      maplist( dquote(ConT), KVals, QVals ),
      atomic_list_concat( QVals, ',', CVals ),
-
      atomic_list_concat( KClms, ',', CClms ),
-     atomic_list_concat( [Ins,Table,' (',CClms,') Values ','(',CVals,')'], Insert ),
-    debug( db_facts, 'Assert query: ~w', [Insert] ),
-     ( db_query(Conn,Insert,Affected) ->
-          true
-          ;
-          db_error( db_assert_failure(Goal,Insert) )
+     atomic_list_concat( ['Insert into ',Table,' (',CClms,') Values ','(',CVals,')'], Insert ),
+
+     ( UClms == [] ->
+          ( debug( db_facts, 'Assert query: ~w', [Insert] ),
+            db_query( Conn, Insert, Affected ) ->
+               true
+               ;
+               db_error( db_assert_failure(Goal,Insert) )
+          )
+     ;	  
+          atomic_list_concat( UClms, ',', UnC ),
+          atomic_list_concat( [Insert, ' returning ', UnC], InsRet ),
+          debug( db_facts, 'Assert query: ~w', [InsRet] ),
+          Row =.. [row|UVals],
+          Affected = row( Nth ),
+          call_nth( db_query( Conn, InsRet, Row ), Nth )
      ).
 
 /** db_holds( +Goal ).
