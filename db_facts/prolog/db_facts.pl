@@ -30,16 +30,25 @@ This library serves two purposes. First, term structures can be used to
 interact with SQL databases and second, to provide a common abstraction
 layer for ODBC and proSQLite libraries of SWI-Prolog.
 
-
 This library is debug/1 aware: call =|debug(db_facts)|= to see what is sent to 
 the SQL engine.
 
-@version 0.5 2018/3/18, fix single quote in db_holds/3, added db_max/4  and db_min/4 and examples/exam1.pl
-@version 0.4 + 0.3, 2016/12/22, fix code-list and enable strings as db fact arguments (and wrap of back-end loading)
-@version 0.2, 2016/9/18, allow mass asserts in prosqlite interface
+Thanks to a patch by Coene, Willemijn, as of version 0.6 the library allows for variables
+in asserts to SQLite tables that have a unique integer key that can be autofilled by SQLite 
+(new in SQLite 3.35.0 dated 2021-03-12). 
+==
+        db_create(Conn, foo(id+integer, value-text)),
+        db_assert(Conn, foo(Id, "foo"), _)
+==
+See examples/sqlite_int_key_gen.pl.
+
 @version 0.1.0, 2013/11/1
+@version 0.2, 2016/9/18, allow mass asserts in prosqlite interface
+@version 0.4 + 0.3, 2016/12/22, fix code-list and enable strings as db fact arguments (and wrap of back-end loading)
+@version 0.5 2018/3/18, fix single quote in db_holds/3, added db_max/4  and db_min/4 and examples/exam1.pl
+@version 0.6 2023/2/5,  patch by Croene W. allow vars in integer keys inserts for sqlite tables (see examples/
 @license Perl Artistic License
-@author Nicos Angelopoulos, 
+@author Nicos Angelopoulos
 @see http://stoics.org.uk/~nicos/sware/db_facts/
 @see files in examples/ directory
 @see also available as a SWI pack http://www.swi-prolog.org/pack/list
@@ -52,6 +61,8 @@ the SQL engine.
 :- use_module(library(apply)).      % maplist/4.
 :- use_module(library(lists)).      % append/3, nth1/3, ...
 :- use_module(library(debug)).      % debug/1,3.
+:- use_module(library(solution_sequences)). % call_nth/2.
+
 
 /* defaults and settings */
 
@@ -85,12 +96,12 @@ db_enable( _Lib, LibName, _Enabled ) :-
      The current version. Version is a Mj:Mn:Fx term, and date is a date(Y,M,D) term.
 
 ==
-?- db_version( 0:5:0, date(2018,3,18) ).
+?- db_version(0:6:0, date(2023,2,5)).
 true.
 ==
 */
-% db_version( 0:4:0, date(2016,12,22) ).
-db_version( 0:5:0, date(2018,3,18) ).
+% db_version( 0:5:0, date(2018,3,18) ).
+db_version(0:6:0, date(2022,2,4)).
 
 /** db_create( +Conn, +Goal ).
 
