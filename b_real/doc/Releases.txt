@@ -1,6 +1,10 @@
 ---   Releases   ---
 --------------------
 
+1.0
+   23.08.31  DEPS:     added dependencies to lists and apply
+             IFACE:    added predicate gg_outputs/2
+
 0.9       @  22.12.29
    22.12.16  IFACE:    options_rvar_rmv/2 Rvar can now be a list of R variables
    22.11.12  FIXED:    rogue code paste at top of gg_bar_plot/2 comment
