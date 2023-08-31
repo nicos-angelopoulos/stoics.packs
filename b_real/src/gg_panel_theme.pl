@@ -32,8 +32,8 @@ gg_panel_theme( axes, List ) :-
     List = [ theme(panel.background=element_blank(),
                    panel.grid.major=element_blank(),
                    panel.grid.minor=element_blank(),
-                   axis.line.x = element_line(colour = "black", size=0.5, linetype="solid"),
-                   axis.line.y = element_line(colour = "black", size=0.5, linetype="solid")
+                   axis.line.x = element_line(colour = "black", linewidth=0.5, linetype="solid"),
+                   axis.line.y = element_line(colour = "black", linewidth=0.5, linetype="solid")
                   ) 
            ].
 gg_panel_theme( blank, List ) :-
