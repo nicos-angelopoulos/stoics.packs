@@ -1,8 +1,5 @@
 % :- lib(stoics_lib:en_list/2).
 
-
-gg_terms_defaults([]).
-
 /** src/lib/gg_terms(+Gplot, +GtermS, -Hplot ).
 
 Add a term or list of Gterms to a Gplot, producing Hplot.
