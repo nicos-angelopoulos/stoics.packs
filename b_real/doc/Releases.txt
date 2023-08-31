@@ -4,6 +4,7 @@
 1.0
    23.08.31  DEPS:     added dependencies to lists and apply
              IFACE:    added predicate gg_outputs/2
+             LIB:      dependencies of gg_bar_plot/2 are now promised at load and only loaded at run time
 
 0.9       @  22.12.29
    22.12.16  IFACE:    options_rvar_rmv/2 Rvar can now be a list of R variables
