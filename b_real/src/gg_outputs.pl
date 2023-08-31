@@ -99,18 +99,18 @@ gg_outputs_on( Ggp, Self, Width, Height, Stem, Out ) :-
      gg_outputs_args( Defs, Args, Nrgs ),
      ( Func == x11 -> 
           ( Args == [] ->
-               debug( Self, 'Sending to Real: ~w', [print(Ggp)] ),
+               debuc( Self, 'Sending to Real: ~w', [print(Ggp)] ),
                <- print( Ggp )
                ;
                compound( X11, x11, Nrgs ),
-               debug( Self, 'Sending to Real: ~w', [X11] ),
+               debuc( Self, 'Sending to Real: ~w', [X11] ),
                <- X11,
-               debug( Self, 'Sending to Real: ~w', [print(Ggp)] ),
+               debuc( Self, 'Sending to Real: ~w', [print(Ggp)] ),
                <- print(Ggp)
           )
           ;
           compound( GgSave, ggsave, [plot=Ggp|Nrgs] ),
-          debug( Self, 'Sending to Real: ~w', [GgSave] ),
+          debuc( Self, 'Sending to Real: ~w', [GgSave] ),
           <- GgSave
     ).
 
