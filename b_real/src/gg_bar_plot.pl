@@ -13,16 +13,14 @@
 
 % local:
 :- lib(head/2).
-% :- lib( kv_ks/2 ).  now in stoics_lib
 % :- requires( gg_hue_colour_strings/2 ).
-
 
 :- lib(stoics_lib:kv_decompose/3).
 
 gg_bar_plot_deps_load :-
-     lib(r("ggplot2")).
-     lib(r("ggpubr")).     % ggscatter()- was supposed to be removed in 0.4a but it is still there...
-     lib(r("gridExtra")).  % arrangeGrob()
+     lib(r("ggplot2")),
+     lib(r("ggpubr")),     % ggscatter()- was supposed to be removed in 0.4a but it is still there...
+     lib(r("gridExtra")),  % arrangeGrob()
      assert(gg_bar_plot_deps).
 
 gg_bar_plot_defaults( ArgS, Defs ) :-
