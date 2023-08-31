@@ -134,7 +134,6 @@ mapping:  x = ~x, y = ~y
 @version  0.1 2023/08/30
 @see gg_outputs/2
 @see gg_panel_theme/2
-@tbd example with different theme via g_terms()
 
 */
 
