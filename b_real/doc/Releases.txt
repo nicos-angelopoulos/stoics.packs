@@ -7,6 +7,7 @@
              LIB:      dependencies of gg_bar_plot/2 are now promised at load and only loaded at run time
              IFACE:    new theme lolli (gg_panel_theme/2), also added 'false' as alias to no theme changes ([])
              LIB:      local lib predicate gg_terms/3, changed gg_bar_plot to use this
+             IFACE:    new predicate gg_lollipop/2, using gg_outputs/2 and new theme
 
 0.9       @  22.12.29
    22.12.16  IFACE:    options_rvar_rmv/2 Rvar can now be a list of R variables
