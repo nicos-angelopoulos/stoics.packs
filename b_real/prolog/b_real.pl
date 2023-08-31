@@ -6,8 +6,9 @@
                     aheatmap/1, aheatmap/2,
                     lm_plot/3,
                     gg_bar_plot/2,
-                    gg_panel_theme/2,
+                    gg_lollipop/2,                                     % +Data,  +Opts
                     gg_outputs/2,                                      % +Gplot, +Opts
+                    gg_panel_theme/2,
                     vectors_subed_gg_bar_plot/4,
                     mtx_pheatmap/2,
                     mtx_column_pheatmap/3,
@@ -68,5 +69,6 @@
 :- lib(colour_cb/1).
 :- lib(colour_cbb/1).
 :- lib(gg_outputs/2).
+:- lib(gg_lollipop/2).
 
 :- lib(end(b_real)).

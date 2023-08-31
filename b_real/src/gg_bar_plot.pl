@@ -13,6 +13,7 @@
 
 % local:
 :- lib(head/2).
+:- lib(gg_terms/3).
 % :- requires( gg_hue_colour_strings/2 ).
 
 :- lib(stoics_lib:kv_decompose/3).
@@ -155,15 +156,16 @@ gg_bar_plot( Pairs, Args ) :-
     debuc( gg_bar_plot, 'Legend labels: ~w', [LLbls] ),
     gg_bar_plot_fill_colours( Fclrs, Ltitle, Len, LLbls, GGgb, GGfill ),
     options( labels(Xlbl,Ylbl,Mlbl), Opts ),
-    GGlbl = ( GGfill + labs( x=+Xlbl, y=+Ylbl, title=+Mlbl ) ),
+    GGlbl = ( GGfill + labs( x= +Xlbl, y= +Ylbl, title= +Mlbl ) ),
     options( panel_theme(PnlTheme), Opts ),
-    gg_panel_theme( PnlTheme, GGThemeL ),
-    gg_bar_plot_opts( GGThemeL, GGlbl, GGtheme ),
+    trace,
+    gg_panel_theme( PnlTheme, GGThemeTerms ),
+    gg_terms( GGlbl, GGThemeTerms, GGthemed ),
 
     % GG = ( GGlbl + theme(plot.title=element_text(face=+bold) ) ),
     options( gg_terms(PlTermS), Opts ),
     en_list( PlTermS, PlTerms ),
-    gg_bar_plot_opts( PlTerms, GGtheme, GG ),
+    gg_bar_plot_opts( PlTerms, GGthemed, GG ),
 
     debuc( gg_bar_plot, 'GG bar plot term: ~w', [GG] ),
     % <- print( GG + theme( panel.background='element_blank()', panel.grid='element_blank()', axis.text.x = element_text(colour="black"), axis.text.y = element_text(colour="black") ) ),
@@ -324,18 +326,18 @@ gg_bar_plot_geom_bar( true, Bar, Pos, Clr, _FClrs, GG, GGGeom ) :-
     gg_bar_plot_geom_bar( Bar, Pos, Clr, GG, GGGeom ).
 gg_bar_plot_geom_bar( false, _Bar, _Pos, Clr, FClrs, GG, (GG+Geom) ) :-
     ( compound(FClrs) ->
-        Geom = geom_bar(colour=+Clr, fill=FClrs )
+        Geom = geom_bar(colour= +Clr, fill=FClrs )
         ;
-        Geom = geom_bar(colour=+Clr)
+        Geom = geom_bar(colour= +Clr)
     ).
 
 gg_bar_plot_geom_bar( fill, _Pos, Clr, GG, (GG+Geom) ) :-
     % % Geom = geom_bar( position="fill", drop='F', stat=+identity, color=+Clr ).
-    Geom = geom_bar( position="fill", stat=+identity, color=+Clr ).
+    Geom = geom_bar( position="fill", stat= +identity, color= +Clr ).
 gg_bar_plot_geom_bar( true, Pos, Clr, GG, (GG+Geom) ) :-
     % fixme: Clr = false, then remove +Clr
     % % Geom = geom_bar( position=+Pos, drop='F', stat=+identity, color=+Clr ).
-    Geom = geom_bar( position=+Pos, stat=+identity, color=+Clr ).
+    Geom = geom_bar( position= +Pos, stat= +identity, color= +Clr ).
     % Geom = geom_bar( position=+Pos, stat=+identity ).
 gg_bar_plot_geom_bar( false, _Pos, _Clr, GG, GG ).
 gg_bar_plot_geom_bar( empty, _Pos, _Clr, GG, (GG+geom_bar()) ).
