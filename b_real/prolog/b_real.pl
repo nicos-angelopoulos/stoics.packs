@@ -25,7 +25,9 @@
     ).
 
 
-:- use_module( library(lib) ).
+:- use_module(library(lists)).  % append/3, flatten/2, member/2, memberchk/2, nth1/3,4.
+:- use_module(library(apply)).  % maplist/2,3.
+:- use_module(library(lib)).
 :- lib(source(b_real), homonyms(true)).
 
 :- lib(real).
