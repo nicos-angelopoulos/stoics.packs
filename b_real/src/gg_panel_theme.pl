@@ -4,14 +4,20 @@
 Expand a theme panel token to its corresponding ggplot terms.
 
 Panel
-  * standard
-  standard panel decorations (empty list)
+  * axes
+  as blank theme, but with black axes lines
 
   * blank
   produces a panel with white background, no grid lines and no axes lines
 
-  * axes
-  as blank theme, but with black axes lines
+  * false
+  no theme, (empty list of terms)
+
+  * lolli
+  theme suitable for lollipop plot (see gg_lollipop/2), light theme + no borders, no major and ticks on y 
+
+  * standard
+  standard panel decorations, i.e. no theme (empty list)
 
 ==
 ?- Pairs = [a-[1,2,3],b-[2,4,6]], gg_bar_plot( Pairs, true ).
