@@ -158,7 +158,6 @@ gg_bar_plot( Pairs, Args ) :-
     options( labels(Xlbl,Ylbl,Mlbl), Opts ),
     GGlbl = ( GGfill + labs( x= +Xlbl, y= +Ylbl, title= +Mlbl ) ),
     options( panel_theme(PnlTheme), Opts ),
-    trace,
     gg_panel_theme( PnlTheme, GGThemeTerms ),
     gg_terms( GGlbl, GGThemeTerms, GGthemed ),
 
