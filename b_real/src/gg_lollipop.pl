@@ -32,9 +32,9 @@ Plot a lollipop chart for the Data using ggplot2.
 Currently the expected format for Data is Label-Value KVPairs.
 
 Opts
-  * clr_point(CPoint="blue"),
+  * clr_point(CPoint="blue")
     colour for the head/point of the lollipops
-  * clr_stem(CStem="skyblue"),
+  * clr_stem(CStem="skyblue")
     colour for the stem/stick of the lollipops
   * debug(Dbg=false)
     informational, progress messages
@@ -51,8 +51,8 @@ Opts
     =|false|= displays according to ggplot2 
     =|reverse|= reverses it
     =|true|= keeps the order of labels in Data as is. 
-    =|size|= order in descending size of the numerical values of the Data
-    =|size_reverse|= order in ascending size of the numberical values of the Data
+    =|size|= order in descending size of the numerical values in Data, and
+    =|size_reverse|= orders elements in ascending size of the numerical values in Data
   * panel_theme(Theme=lolli)
     use some basic theme adjustments making the plots a bit starker (see gg_panel_theme/2)
   * rvar_rmv(DfR=true)
