@@ -23,10 +23,12 @@ gg_outputs_defaults( Defs ) :-
 
 /** gg_outputs(+Ggplot, +Opts).
 
-Display A Ggplot to a variety of formats via ggsave().
+Display a Ggplot to a variety of formats via ggsave().
 
+Ggplot should be an R variable holding a ggplot2 plot.
 In addition to be called directly by users, this predicate is also used in 
 a number of Prolog library predicates that interface to ggplot2 plots.
+
 
 Opts
   * debug(Dbg=false)

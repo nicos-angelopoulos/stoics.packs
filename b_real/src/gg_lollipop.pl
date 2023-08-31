@@ -45,6 +45,8 @@ Opts
     Use =|strict|= for not flipping and not turning, or a number (such as 90) for the actual degrees.
   * g_terms(Gterms=[])
     if given, terms in this list are appended (+) to the ggplot() call
+  * gplot_rvar(Gp=glp_gp)
+    ggplot R variable
   * labels(X='Category',Y='Quantity',M='')
     labels to use on x- and y-axes and main title
   * order(Ord=true)
@@ -55,7 +57,7 @@ Opts
     =|size_reverse|= orders elements in ascending size of the numerical values in Data
   * panel_theme(Theme=lolli)
     use some basic theme adjustments making the plots a bit starker (see gg_panel_theme/2)
-  * rvar_rmv(DfR=true)
+  * rvar_rmv(RvRmv=true)
     remove Df and Gp after call
   * stem(Stem=gg_lollipop)
     stem for any output files (overrides def of gg_outputs/2)
