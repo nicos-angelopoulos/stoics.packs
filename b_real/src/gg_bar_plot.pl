@@ -1,7 +1,7 @@
 
 :- lib(options).
 :- use_module( library(real) ).
-:- lib(promise(gg_bar_plot_deps/0,call(gg_bar_plot_deps_load))).
+:- lib(promise(gg_plot_dep/0,call(gg_plot_dep_load))).
 
 
 % now from stoics
@@ -17,11 +17,9 @@
 
 :- lib(stoics_lib:kv_decompose/3).
 
-gg_bar_plot_deps_load :-
+gg_plot_dep_load :-
      lib(r("ggplot2")),
-     lib(r("ggpubr")),     % ggscatter()- was supposed to be removed in 0.4a but it is still there...
-     lib(r("gridExtra")),  % arrangeGrob()
-     assert(gg_bar_plot_deps).
+     assert(gg_plot_dep).
 
 gg_bar_plot_defaults( ArgS, Defs ) :-
     ( is_list(ArgS) -> Args=ArgS; Args=[ArgS] ),
@@ -140,6 +138,7 @@ gg_bar_plot( Pairs, [flip(false),geom_bar(empty),fill_colours(FClrs)] ).
 
 */
 gg_bar_plot( Pairs, Args ) :-
+    gg_plot_dep_load,
     options_append( gg_bar_plot, Args, Opts, process(debug) ),
     gg_bar_plot_base( Pairs, Df, Len, GGbase, Nest, Opts ),
     options( flip(Flip), Opts ),
@@ -186,17 +185,18 @@ gg_bar_plot_extra_legend_plots( bottom(Lbla,TopH,BotH,KVs), _Xn, _Xx, _Yn, _Yx, 
     findall( K, member(K-_V,KVs), Ks ),
     df   <- 'data.frame'( tmpx=Is, tmpy=Is, Lbl=Ks ),
     findall( V, (member(_K-Va,KVs),gg_to_string(Va,V)), Vs ),
-    gs   <-  ggscatter(df, x="tmpx", y="tmpy", color=Lbl, palette = Vs, ggtheme = theme_minimal() + theme(legend.position="top")),
+         <- library("ggpubr"),     % ggarrange() + ggscatter()- was supposed to be removed in 0.4a but it is still there...
+    gs   <- ggscatter(df, x="tmpx", y="tmpy", color=Lbl, palette = Vs, ggtheme = theme_minimal() + theme(legend.position="top")),
     gslt <- as_ggplot(get_legend(gs)),
     % ggp  <- as_ggplot(arrangeGrob(GG,gslt,heights=c(TopH,BotH))),
-    ggp <- ggarrange(GG, gslt, ncol = 1, nrow = 2, heights = c(TopH,BotH)),
-    <- print(ggp),
+    ggp  <- ggarrange(GG, gslt, ncol = 1, nrow = 2, heights = c(TopH,BotH)),
+         <- print(ggp),
     !.
 gg_bar_plot_extra_legend_plots( [H|T], Xn, Xx, Yn, Yx, _OutTerm, GG ) :-
     % fixme: use OutTerm to redirect output
     % 2020.7.29: this no longer works: try the clause above...
     kv_decompose( [H|T], Labels, Clrs ),
-    <- library( "gridExtra" ),
+    <- library( "gridExtra" ),   % arrangeGrob()
     <- library( "gtable" ),
     length( Clrs, Len ),
     CClrs =.. [c|Clrs],

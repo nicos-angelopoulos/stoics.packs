@@ -10,7 +10,7 @@
 :- lib(stoics_lib:en_list/2).
 :- lib(stoics_lib:compound/3).
 
-:- lib(r(ggplot2)).
+% :- lib(r(ggplot2)).  % see gg_plot_dep_load/0.
 
 gg_outputs_defaults( Defs ) :-
           Defs =  [
@@ -21,9 +21,9 @@ gg_outputs_defaults( Defs ) :-
                        stem(gg_output)
                   ].
 
-/** gg_outputs(+Opts).
+/** gg_outputs(+Ggplot, +Opts).
 
-Display ggplots to a variety of formats via ggsave().
+Display A Ggplot to a variety of formats via ggsave().
 
 In addition to be called directly by users, this predicate is also used in 
 a number of Prolog library predicates that interface to ggplot2 plots.
@@ -76,6 +76,7 @@ In the example below, the pdf gets Width 8, from the =|plot_width|= parameter, w
 
 gg_outputs( Ggp, Args ) :-
      Self = gg_outputs,
+     gg_plot_dep_load,
      options_append( Self, Args, Opts ),
      options( plot_width(Width), Opts ),
      options( plot_height(Height), Opts ),
