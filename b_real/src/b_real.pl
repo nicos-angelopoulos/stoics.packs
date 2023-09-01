@@ -20,6 +20,8 @@ Dependancies
 @version  0.4   2017/4/25, fixes + r_hist/2.
 @version  0.7   2021/9/2,  scripts/pack_dnloads.pl
 @version  0.8   2021/12/30, docs spruce up
+@version  0:9 2022/12/29,  small fixes and imporements (eg pl_vector/3)
+@version  1:0 2023/9/1,    gg_lollipop/2, gg_outputs/2
 
 */
 
