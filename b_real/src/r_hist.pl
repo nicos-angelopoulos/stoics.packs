@@ -35,6 +35,7 @@ Produces file: rh1.svg
 [[doc/html/images/rh1.svg]]
 
 ==
+?- lib(real).
 ?- rnsm <- rnorm(10000), r_hist( rnsm, true ).
 ?- r_hist( rnsm, as_density(true) ).
 ?- pl_vector( rnsm, Rnsm, if_rvar(prolog) ), r_hist( Rnsm, name(+true) ).

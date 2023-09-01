@@ -71,11 +71,11 @@ Examples
 
 Options are passed to gg_outputs/2.
 ==
-?- gg_lollipop([a-2,b-5,c-1,d-3], outputs(png) ).
+?- gg_lollipop([a-2,b-5,c-1,d-3], outputs(svg)).
 ==
-Produces file:  gg_lollipop.png
+Produces file: gg_lollipop.svg
 
-[[doc/html/images/gg_lollipop.png]]
+[[doc/html/images/gg_lollipop.svg]]
 
 Change basic parameters of the plot
 ==

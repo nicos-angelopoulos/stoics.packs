@@ -59,13 +59,13 @@ Examples
 ?- lib(real), lib(r(ggplot2)).
 ?- ddf <- 'data.frame'(x='LETTERS'[1:26], y=abs(rnorm(26)) ).
 ?- ggp <-  ggplot(ddf, aes(x=x, y=y)) + geom_segment(aes(x=x,xend=x,y=0,yend=y)) + geom_point(size=4,alpha=0.6). 
-?- gg_outputs( ggp, outputs(png(file="abc.png")) ).
+?- gg_outputs( ggp, outputs(png(file="abc.svg")) ).
 ==
-Produces file: abc.png
+Produces file: abc.svg
 
-[[doc/html/images/abc.png]]
+[[doc/html/images/abc.svg]]
 
-Width, Height and Stem can be overridden  by *=* options within Outs.
+Width, Height and Stem can be overridden  by *|=|* options within Outs.
 In the example below, the pdf gets Width 8, from the =|plot_width|= parameter, while the png gets Width 9.
 ==
 ?- lib(real), lib(r(ggplot2)).
