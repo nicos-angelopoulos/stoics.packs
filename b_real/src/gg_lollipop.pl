@@ -9,7 +9,7 @@
 % :- lib(r(ggplot2)).  % see gg_plot_dep_load/0.
 :- lib(gg_terms/3).
 
-gg_lollipop_defaults( Defs ) :-
+gg_lollipop_defaults( Args, Defs ) :-
                Defs = [
                          clr_point("blue"),
                          clr_stem("skyblue"),
@@ -22,8 +22,9 @@ gg_lollipop_defaults( Defs ) :-
                          order(true),
                          rvar_rmv(true),
                          stem(gg_lollipop),
-                         theme(lolli)
-                      ].
+                         theme(Theme)
+                      ],
+     ( memberchk(flip(true),Args) -> Theme = lolly; Theme = lolli ).
 
 /** gg_lollipop( +Data, +Opts ).
 
@@ -56,7 +57,8 @@ Opts
     =|size|= order in descending size of the numerical values in Data, and
     =|size_reverse|= orders elements in ascending size of the numerical values in Data
   * theme(Theme=lolli)
-    use some basic theme adjustments making the plots a bit starker (see gg_theme/2)
+    use some basic theme adjustments making the plots a bit starker (see gg_theme/2).
+    The default changes to =|lolli|= if =|flip(true)|= is given in Opts.
   * rvar_rmv(RvRmv=true)
     remove Df and Gp after call
   * stem(Stem=gg_lollipop)

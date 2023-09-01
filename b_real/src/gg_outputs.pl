@@ -15,6 +15,7 @@
 gg_outputs_defaults( Defs ) :-
           Defs =  [
                        debug(false),
+                       dir('.'),
                        outputs(x11),
                        plot_width(7),
                        plot_height(7),
@@ -33,6 +34,8 @@ a number of Prolog library predicates that interface to ggplot2 plots.
 Opts
   * debug(Dbg=false)
     informational, progress messages
+  * dir(Dir='.')
+    output directory
   * outputs(Outs=x11)
     atoms which are taken to be either x11 (screen output), or filename extensions that dictate type of output.
     Terms can be given with functor as described in last sentence, and can include = pairs
@@ -88,12 +91,14 @@ gg_outputs( Ggp, Args ) :-
      options( stem(Stem), Opts ),
      options( outputs(OutsProv), Opts ),
      en_list( OutsProv, Outs ),
-     maplist( gg_outputs_on(Ggp,Self,Width,Height,Stem), Outs ).
+     options( dir(Dir), Opts ),
+     maplist( gg_outputs_on(Ggp,Self,Width,Height,Dir,Stem), Outs ).
 
-gg_outputs_on( Ggp, Self, Width, Height, Stem, Out ) :-
+gg_outputs_on( Ggp, Self, Width, Height, Dir, Stem, Out ) :-
      compound( Out, Func, Args ),
      ( Func == x11 -> Defs = [height-Height,width-Width]
-                    ; at_con( [Stem,Func], '.', Os ),
+                    ; at_con( [Stem,Func], '.', OsF ),
+                      at_con( [Dir,OsF], '/', Os ),
                       Defs = [file-(+Os),height-Height,width-Width]
      ),
      gg_outputs_args( Defs, Args, Nrgs ),
