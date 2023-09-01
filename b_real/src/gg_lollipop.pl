@@ -22,7 +22,7 @@ gg_lollipop_defaults( Defs ) :-
                          order(true),
                          rvar_rmv(true),
                          stem(gg_lollipop),
-                         panel_theme(lolli)
+                         theme(lolli)
                       ].
 
 /** gg_lollipop( +Data, +Opts ).
@@ -55,8 +55,8 @@ Opts
     =|true|= keeps the order of labels in Data as is. 
     =|size|= order in descending size of the numerical values in Data, and
     =|size_reverse|= orders elements in ascending size of the numerical values in Data
-  * panel_theme(Theme=lolli)
-    use some basic theme adjustments making the plots a bit starker (see gg_panel_theme/2)
+  * theme(Theme=lolli)
+    use some basic theme adjustments making the plots a bit starker (see gg_theme/2)
   * rvar_rmv(RvRmv=true)
     remove Df and Gp after call
   * stem(Stem=gg_lollipop)
@@ -77,8 +77,8 @@ Produces file:  gg_lollipop.png
 
 Change basic parameters of the plot
 ==
-?- gg_lollipop([a-2,b-5,c-1,d-3], [clr_point("red"),clr_stem("green"),panel_theme(false)] ).
-?- gg_lollipop( [a-2,b-5,c-1,d-3], panel_theme(blank) ).
+?- gg_lollipop([a-2,b-5,c-1,d-3], [clr_point("red"),clr_stem("green"),theme(false)] ).
+?- gg_lollipop( [a-2,b-5,c-1,d-3], theme(blank) ).
 ==
 
 Change the labels
@@ -88,8 +88,8 @@ Change the labels
 
 Inject arbitrary ggplot2 terms
 ==
-?- gg_lollipop( [a-2,b-5,c-1,d-3], panel_theme(false) ).
-?- gg_lollipop( [a-2,b-5,c-1,d-3], [panel_theme(false),g_terms(theme_light())] ).
+?- gg_lollipop( [a-2,b-5,c-1,d-3], theme(false) ).
+?- gg_lollipop( [a-2,b-5,c-1,d-3], [theme(false),g_terms(theme_light())] ).
 ==
 
 Adjust angle of tick labels, when not flipping
@@ -133,7 +133,7 @@ mapping:  x = ~x, y = ~y
 @author nicos angelopoulos
 @version  0.1 2023/08/30
 @see gg_outputs/2
-@see gg_panel_theme/2
+@see gg_theme/2
 
 */
 
@@ -153,8 +153,8 @@ gg_lollipop( Data, Args ) :-
                    + geom_segment( aes(x=x, xend=x, y=0, yend=y), color=Cstem)
                    + geom_point( color=Chead, size=4, alpha=0.6),
 
-     options( panel_theme(Thm), Opts ),
-     gg_panel_theme( Thm, ThemeL ),
+     options( theme(Thm), Opts ),
+     gg_theme( Thm, ThemeL ),
      gg_terms( Gp, ThemeL, Gp ),
      options( flip(Flip), Opts ),
      ( Flip == false -> 

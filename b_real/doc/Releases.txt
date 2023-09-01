@@ -2,6 +2,7 @@
 --------------------
 
 1.0
+   23.09.01  CHANGED:  rebranding panel_theme to theme (options and pred names)
    23.08.31  DEPS:     added dependencies to lists and apply
              IFACE:    added predicate gg_outputs/2
              LIB:      dependencies of gg_bar_plot/2 are now promised at load and only loaded at run time

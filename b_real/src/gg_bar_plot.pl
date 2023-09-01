@@ -43,7 +43,7 @@ gg_bar_plot_defaults( ArgS, Defs ) :-
                 level_colours(false),
                 level_colours_title('Group'),  % fixme: doesnt like spaces currently
                 output(false),
-                panel_theme(standard),
+                theme(standard),
                 extra_legend(false),
                 extra_legend_position(12,182,0,4)
            ].
@@ -113,8 +113,8 @@ Opts
   * output(Outp=false)
     else send a R command such as pdf("myfile.pdf")
 
-  * panel_theme(PnlTheme=standard)
-    theme for the whole panel (graph)- see gg_panel_theme/2
+  * theme(PnlTheme=standard)
+    theme for the whole panel (graph)- see gg_theme/2
 
 ==
 ?- Pairs = [a-[1,2,3],b-[2,4,6]], gg_bar_plot( Pairs, true ).
@@ -157,8 +157,8 @@ gg_bar_plot( Pairs, Args ) :-
     gg_bar_plot_fill_colours( Fclrs, Ltitle, Len, LLbls, GGgb, GGfill ),
     options( labels(Xlbl,Ylbl,Mlbl), Opts ),
     GGlbl = ( GGfill + labs( x= +Xlbl, y= +Ylbl, title= +Mlbl ) ),
-    options( panel_theme(PnlTheme), Opts ),
-    gg_panel_theme( PnlTheme, GGThemeTerms ),
+    options( theme(PnlTheme), Opts ),
+    gg_theme( PnlTheme, GGThemeTerms ),
     gg_terms( GGlbl, GGThemeTerms, GGthemed ),
 
     % GG = ( GGlbl + theme(plot.title=element_text(face=+bold) ) ),

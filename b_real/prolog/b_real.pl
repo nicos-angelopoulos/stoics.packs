@@ -8,7 +8,7 @@
                     gg_bar_plot/2,
                     gg_lollipop/2,                                     % +Data,  +Opts
                     gg_outputs/2,                                      % +Gplot, +Opts
-                    gg_panel_theme/2,
+                    gg_theme/2,
                     vectors_subed_gg_bar_plot/4,
                     mtx_pheatmap/2,
                     mtx_column_pheatmap/3,
@@ -54,7 +54,7 @@
 :- lib(aheatmap/2).
 :- lib(vector_scale/3).
 :- lib(gg_bar_plot/2).
-:- lib(gg_panel_theme/2).
+:- lib(gg_theme/2).
 :- lib(columns_fisher_test/5).
 :- lib(pl_plot_on/2).
 :- lib(vectors_subed_gg_bar_plot/4).

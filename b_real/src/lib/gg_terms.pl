@@ -1,6 +1,6 @@
 % :- lib(stoics_lib:en_list/2).
 
-/** src/lib/gg_terms(+Gplot, +GtermS, -Hplot ).
+/** gg_terms(+Gplot, +GtermS, -Hplot ).
 
 Add a term or list of Gterms to a Gplot, producing Hplot.
 
@@ -16,7 +16,7 @@ instantianted to Gplot.
           + geom_segment(aes(x=x,xend=x,y=0,yend=y),color=Cstem)
           + geom_point(color=Chead,size=4,alpha=0.6). 
 
-?- gg_panel_theme( axes, Gts ), gg_terms( glp, Gts ), <- print( summary( glp ) ).
+?- gg_theme( axes, Gts ), gg_terms( glp, Gts ), <- print( summary( glp ) ).
 ==
 
 @author nicos angelopoulos

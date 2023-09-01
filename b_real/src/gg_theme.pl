@@ -1,5 +1,5 @@
 
-/** gg_panel_theme( +Panel, -GgTerms ).
+/** gg_theme( +Panel, -GgTerms ).
 
 Expand a theme panel token to its corresponding ggplot terms.
 
@@ -22,9 +22,9 @@ Panel
 ==
 ?- Pairs = [a-[1,2,3],b-[2,4,6]], gg_bar_plot( Pairs, true ).
     % shows a plot with grid lines and axis lines
-?- Pairs = [a-[1,2,3],b-[2,4,6]], gg_bar_plot( Pairs, panel_theme(blank) ).
+?- Pairs = [a-[1,2,3],b-[2,4,6]], gg_bar_plot( Pairs, theme(blank) ).
     % shows a plot with neither grid lines and axis lines
-?- Pairs = [a-[1,2,3],b-[2,4,6]], gg_bar_plot( Pairs, panel_theme(axes) ).
+?- Pairs = [a-[1,2,3],b-[2,4,6]], gg_bar_plot( Pairs, theme(axes) ).
     % shows a plot with no-background colour and no grid lines, but with lines on both axes
 ==
 
@@ -34,7 +34,7 @@ Panel
 @version  0:3 2023/8/31, added lolli theme (and aliased false to [])
 
 */
-gg_panel_theme( axes, List ) :-
+gg_theme( axes, List ) :-
     List = [ theme(panel.background=element_blank(),
                    panel.grid.major=element_blank(),
                    panel.grid.minor=element_blank(),
@@ -42,19 +42,19 @@ gg_panel_theme( axes, List ) :-
                    axis.line.y = element_line(colour = "black", linewidth=0.5, linetype="solid")
                   ) 
            ].
-gg_panel_theme( blank, List ) :-
+gg_theme( blank, List ) :-
     List = [ theme(panel.background=element_blank(),
                    panel.grid.major=element_blank(),
                    panel.grid.minor=element_blank()
                   ) 
            ].
 % default theme for lollipop plots: see 
-gg_panel_theme( false, [] ).
-gg_panel_theme( lolli, List ) :-
+gg_theme( false, [] ).
+gg_theme( lolli, List ) :-
      List = [ theme_light(),
               theme( 'panel.grid.major.y'=element_blank(),
                      'panel.border'=element_blank(),
                      'axis.ticks.y'=element_blank()
                    )
             ].
-gg_panel_theme( standard, [] ).
+gg_theme( standard, [] ).
