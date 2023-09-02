@@ -36,7 +36,7 @@ Opts
   * min(Min) 
     curtail values < Min to Min
   * mtx(Mtx)
-    a matrix in which Cnm is a column header
+    a matrix in which Cnm is a column header, or if VectSpec=Cid:Mtx, this can be used to return the matrix
   * if_rvar(Rvar=true)
     how to treat R variables in VectSpec. true: allows them by passing them to Vect, 
     false: dissallows R variables, and prolog: allows them by passing their Prolog representation to Vect
@@ -113,7 +113,7 @@ pl_vector_is_list( false, VectSpec, Vect, Opts ) :-
 
 pl_vector_non_list( _, CidPrv, Vect, Opts ) :-
     ( CidPrv = Cid:FullMtx ->
-          true
+          options_return( mtx(FullMtx), Opts )
           ;
           memberchk( mtx(FullMtx), Opts )
     ),
