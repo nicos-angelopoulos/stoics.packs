@@ -18,13 +18,13 @@ Recognisable represenation are:
   * list
     which is also the canonical representation
   * Cid
-    when memberchk(mtx(MTx),Opts) and mtx_column( Mtx, Cid, Vect )
+    when memberchk(mtx(MTx),Opts) and mtx_column(Mtx, Cid, Vect)
 
 Opts 
   * cnm(Cnm)
     the column name of the vector (return value)
   * cnm_def(Def)
-    use Def as Cnm when VectSpec is a prolog list. Leaves free if none is given.
+    use Def as Cnm when VectSpec is a prolog list. Leaves free if none is given
   * k(Kid)
     return a paired vector where K is taken from Kid column of Mtx (below)- and V from VectSpec
   * max(Max)
@@ -35,12 +35,12 @@ Opts
     a matrix in which Cnm is a column header
   * if_rvar(Rvar=true)
     how to treat R variables in VectSpec. true: allows them by passing them to Vect, 
-    false: dissallows R variables, and prolog: allows them by passing their Prolog representation to Vect.
+    false: dissallows R variables, and prolog: allows them by passing their Prolog representation to Vect
   * v(Vid)
     return a paired vector where V is taken from Vid column of Mtx (below)- 
     and K from VectSpec. Only used if k(Kid) is not present
-  * where(Cid(Val))
-    restrict matrix to those rows that have in Cid value Val
+  * where(Where)
+    Where = Cid(Val)), restrict matrix to those rows that have in Cid value Val
 
 Currently, k() and v() are inompatible to max() and min().
 
