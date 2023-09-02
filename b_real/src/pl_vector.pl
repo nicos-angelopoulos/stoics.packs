@@ -19,12 +19,16 @@ Recognisable represenation are:
     which is also the canonical representation
   * Cid
     when memberchk(mtx(MTx),Opts) and mtx_column(Mtx, Cid, Vect)
+  * Cid:Mtx
+    (new in v0.5)
 
 Opts 
-  * cnm(Cnm)
-    the column name of the vector (return value)
   * cnm_def(Def)
     use Def as Cnm when VectSpec is a prolog list. Leaves free if none is given
+  * cnm(Cnm)
+    when matrix inputs, the column name of the vector (return value)
+  * cps(Cps)
+    when matrix inputs, the column number of the selected vector (return value)
   * k(Kid)
     return a paired vector where K is taken from Kid column of Mtx (below)- and V from VectSpec
   * max(Max)
@@ -68,12 +72,30 @@ Max = 30.
 
 ==
 
+As of v0.5
+==
+?- mtx_data( mtcars, Mc ), 
+   pl_vector( 1:Mc, Vect, true ),
+   max_list( Vect, Max ).
+...
+Vect = [21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8|...],
+Max = 33.9.
+
+?- mtx_data( mtcars, Mc ), 
+   pl_vector( mpg:Mc, Vect, cps(MpgPos) ),
+   max_list( Vect, Max ).
+...
+MpgPos = 1,
+...
+==
+
 @see pl_vector_curtail/3,4
 @tbd add to real ? but it needs mtx ...
 @author  nicos angelopoulos
 @version 0.2 2016/6/7,  added where() and k(),v() pairs
 @version 0.3 2020/7/27, changed order of clauses (mtx with complex column name was matching as R variable)
 @version 0.4 2022/2/16, "complex" still tripped this, changed the order that if mtx/1 is given is tried first.
+@version 0.5 2023/9/2,  Cid:Mtx notation introduced, added option cps(Cps)
 
 */
 pl_vector( VectSpec, Vect, Args ) :-
@@ -89,12 +111,17 @@ pl_vector_is_list( false, VectSpec, Vect, Opts ) :-
     holds( atomic(VectSpec), AtmVS ),
     pl_vector_non_list( AtmVS, VectSpec, Vect, Opts ).
 
-pl_vector_non_list( _, Cid, Vect, Opts ) :-
-    memberchk( mtx(FullMtx), Opts ),
+pl_vector_non_list( _, CidPrv, Vect, Opts ) :-
+    ( CidPrv = Cid:FullMtx ->
+          true
+          ;
+          memberchk( mtx(FullMtx), Opts )
+    ),
     pl_vector_where( FullMtx, Mtx, Opts ),
-    catch( mtx_column( Mtx, Cid, MtxVect, Cnm, _Cpos ), _, fail ),
+    catch( mtx_column( Mtx, Cid, MtxVect, Cnm, Cps ), _, fail ),
     !,
     options_return( cnm(Cnm), Opts ),
+    options_return( cps(Cps), Opts ),
     pl_vector_pair( AsPair, IsK, Mtx, PairVect, Opts ),
     pl_vector_curtail( MtxVect, AsPair, IsK, PairVect, Vect, Opts ).
 pl_vector_non_list( true, RVect, Vect, Opts ) :-
