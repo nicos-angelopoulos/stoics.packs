@@ -112,8 +112,9 @@ pl_vector_is_list( false, VectSpec, Vect, Opts ) :-
     pl_vector_non_list( AtmVS, VectSpec, Vect, Opts ).
 
 pl_vector_non_list( _, CidPrv, Vect, Opts ) :-
-    ( CidPrv = Cid:FullMtx ->
-          options_return( mtx(FullMtx), Opts )
+    ( CidPrv = Cid:FullMtxPrv ->
+          options_return( mtx(FullMtxPrv), Opts ),
+          mtx( FullMtxPrv, FullMtx )
           ;
           memberchk( mtx(FullMtx), Opts )
     ),

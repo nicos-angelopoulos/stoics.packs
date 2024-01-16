@@ -4,24 +4,26 @@
 TBD: change user initialistation (.pl/by_unix.pl) [see pack(mtx)].
 
 0.3
+     24.01.16  ERROR:     new flag by_unix_surpress_fail_message supresses failure message if set to true
+     23.12.01  IFACE:     ignore '' arguments
      22.07.23  DEPS:      library(readutil), read_line_to_codes/2
      22.07.22  DEPS:      library(lists), flattten/2...
 
 0.2         @  20.09.19
-     21.12.06   DEPS:     library(apply)
-     20.08.16   ADDED:    if shell fails, and exec not in path, print informational
-                CHANGED:  if shell call exits with non zero only an informational is printed (no error as before)
-     18.07.23   SCRIPT:   xgrep, within these-extensions-only grep
-     18.02.07   IFACE:    allow for lists in arguments (they get flattened)
-     YY.MM.DD   DOC:      cd/1 to documentation for cd/2.
-                IFACE:    introduced &/1 with threads implementation (SWI's detached(true) aint working)
-                IFACE:    some more support for environment variables in args.
-                DOC:      new password example
-                IFACE:    load ~/.pl/by_unix.pl if it exists
-                ADDED:    Prolog flags, 
+     21.12.06  DEPS:     library(apply)
+     20.08.16  ADDED:    if shell fails, and exec not in path, print informational
+               CHANGED:  if shell call exits with non zero only an informational is printed (no error as before)
+     18.07.23  SCRIPT:   xgrep, within these-extensions-only grep
+     18.02.07  IFACE:    allow for lists in arguments (they get flattened)
+     YY.MM.DD  DOC:      cd/1 to documentation for cd/2.
+               IFACE:    introduced &/1 with threads implementation (SWI's detached(true) aint working)
+               IFACE:    some more support for environment variables in args.
+               DOC:      new password example
+               IFACE:    load ~/.pl/by_unix.pl if it exists
+               ADDED:    Prolog flags, 
                               by_unix_shell, Shell
                               by_unix_shell_com_arg, Arg
-                ADDED:     Now library plays with other shells. 
-                FIXED:    @ cd( pack(by_unix) ).
+               ADDED:     Now library plays with other shells. 
+               FIXED:    @ cd( pack(by_unix) ).
 
 0.1.6      @ 13.12.26
