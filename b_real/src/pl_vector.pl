@@ -6,13 +6,15 @@
 :- lib( stoics_lib:holds/2 ).
 :- lib( stoics_lib:kv_compose/3 ).
 
-pl_vector_defaults( if_rvar(true) ).
+pl_vector_defaults( [if_rvar(true),multi(false)] ).
 
-/** pl_vector( +VectSpec, -Vect, +Opts ).
+/** pl_vector( +VectSpecS, -VectS, +Opts ).
 
-True iff VectSpec is a regognisable representation of a vector
+True iff VectSpecS is a regognisable representation of a vector
 whose canonical representation (a list) is Vect. 
+
 Through Options you can also control max and min values.
+As of version 0.6 option value Multi can be used to channel lists of vectors.
 
 Recognisable represenation are:
   * list
@@ -37,6 +39,8 @@ Opts
     curtail values < Min to Min
   * mtx(Mtx)
     a matrix in which Cnm is a column header, or if VectSpec=Cid:Mtx, this can be used to return the matrix
+  * multi(Multi=false)
+    when =|true|= it allows input of a list of representations and canonicals
   * if_rvar(Rvar=true)
     how to treat R variables in VectSpec. true: allows them by passing them to Vect, 
     false: dissallows R variables, and prolog: allows them by passing their Prolog representation to Vect
@@ -89,6 +93,15 @@ MpgPos = 1,
 ...
 ==
 
+As of v0.6
+==
+?- pl_vector( [1,2,3], V, multi(true) ).
+ERROR: Unhandled exception: Unknown message: cannot_identify_pl_values_for_vector(1)
+
+?- pl_vector( [[1,2,3]], V, multi(true) ).
+V = [[1, 2, 3]].
+==
+
 @see pl_vector_curtail/3,4
 @tbd add to real ? but it needs mtx ...
 @author  nicos angelopoulos
@@ -96,10 +109,17 @@ MpgPos = 1,
 @version 0.3 2020/7/27, changed order of clauses (mtx with complex column name was matching as R variable)
 @version 0.4 2022/2/16, "complex" still tripped this, changed the order that if mtx/1 is given is tried first.
 @version 0.5 2023/9/2,  Cid:Mtx notation introduced, added option cps(Cps)
+@version 0.6 2024/3/22, option multi()
 
 */
 pl_vector( VectSpec, Vect, Args ) :-
     options_append( pl_vector, Args, Opts ),
+    options( multi(Multi), Opts ),
+    pl_vector_multi( Multi, Opts, VectSpec, Vect ).
+
+pl_vector_multi( true, Opts, VectSpecs, Vects ) :-
+     maplist( pl_vector_multi(false,Opts), VectSpecs, Vects ).
+pl_vector_multi( false, Opts, VectSpec, Vect ) :-
     holds( is_list(VectSpec), IsList ),
     pl_vector_is_list( IsList, VectSpec, Vect, Opts ).
 
