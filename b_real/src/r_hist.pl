@@ -1,7 +1,12 @@
 
-r_hist_defaults( [as_density(false),transparent(true),transparency_colour("lightblue")] ).
+r_hist_defaults( Defs ) :-
+          Defs = [  as_density(false),
+                    multi(false),
+                    transparent(true),
+                    transparency_colour("lightblue")
+                 ].
 
-/** r_hist( +VectSpec, +Opts ).
+/** r_hist( +VectSpecS, +Opts ).
 
 Plots a histogram or density of an arithmetic vector.
 
@@ -17,11 +22,15 @@ Opts
   * name(Name) 
     set Name (string or +atom) default value for x-axis and main labels
 
+  * multi(Multi=false)
+    is this a multi plot ? It also affects pl_vector/3. When =true= VectSpec should be a list of 
+    vector specs. Currently only with =|AsDense=true|=
+
   * transparency_colour(TransClr="lightblue")
     colour for the density, transparency colour
 
   * transparent(Trans=true)
-    use transparent colour to highlight density (currently only with AsDens=true)
+    use transparent colour to highlight density (currently only with =|AsDense=true|=)
 
 ==
 ?- lib(real).
@@ -46,8 +55,24 @@ Produces file: rh2.svg
 
 [[doc/html/images/rh2.svg]]
 
+==
+?- lib(real).
+?- rnsm <- rnorm(1000), r_hist( rnsm, true ).
+?- rnsm2 <- rnorm(1000,2), r_hist(rnsm2, true).
+?- r_hist([rnsm2,rnsm],[multi(true),as_density(true),transparency_colour(["lightgreen","lightblue"])]).
+?- 
+     r_hist([rnsm2,rnsm],[multi(true),as_density(true),transparency_colour(["lightgreen","lightblue"])]).
+?-   
+     Fulls = [ multi(true), as_density(true), transparency_colour(["lightgreen","lightblue"]),
+               xlab="x_lab",ylab="y_lab",main="main", ylim=c(0,0.3)
+             ],
+     r_hist([rnsm2,rnsm],Fulls).
+==
+
 @author nicos angelopoulos
 @version  0.1 2017/4/25
+@version  0.2 2024/3/22,  added option multi(Multi)
+@see pl_vector/3
 
 */
 r_hist( VectIn, Args ) :-
@@ -57,15 +82,26 @@ r_hist( VectIn, Args ) :-
                                    ; RcOpts = Opts ),
     ( options(as_density(true),Opts) ->
         options( transparent(Trans), Opts ),
-        r_hist_density_post( Trans, Vect, Post, Opts ),
-        RCall = plot(density(Vect)),
-        RcaOpts = [post_call(Post)|RcOpts]
+        options( transparency_colour(Clrs), Opts ),
+        options( multi(Multi), Opts ),
+        r_dense( Multi, Trans, Clrs, Vect, Opts )
         ;
-        RCall = hist(Vect), RcaOpts = RcOpts
-    ),
-    r_call( RCall, RcaOpts ).
+        r_call( hist(Vect), RcOpts )
+    ).
 
-r_hist_density_post( true, Vect, Post, Opts ) :-
-    options( transparency_colour(Clr), Opts ),
+r_dense( true, Trans, ClrS, VectS, Opts ) :-
+     ClrS = [Clr|Clrs],
+     VectS = [Vect|Vects],
+     r_dense( false, Trans, Clr, Vect, Opts ),
+     maplist( r_dense_multi(Trans,Opts), Clrs, Vects ).
+r_dense( false, Trans, Clr, Vect, Opts ) :-
+     r_hist_density_post( Trans, Clr, Vect, Post ),
+     r_call( plot(density(Vect)), [post_call(Post)|Opts] ).
+
+r_dense_multi( Trans, Opts, Clr, Vect ) :-
+     r_hist_density_post( Trans, Clr, Vect, Post ),
+     r_call( lines(density(Vect)), [post_call(Post)|Opts] ).
+
+r_hist_density_post( true, Clr, Vect, Post ) :-
     Post  = ( <- polygon(density(Vect),col=adjustcolor(Clr,'alpha.f'=0.2),border=adjustcolor(Clr,alpha.f=0.8)) ).
-r_hist_density_post( false, _Vect, true, _Opts ).
+r_hist_density_post( false, _Clr, _Vect, true ).
