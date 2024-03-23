@@ -78,7 +78,7 @@ r_mtx_class_distros( CsvF, Args ) :-
 
 r_mtx_class_distro_columns( [], _Self, _ClassClm, _Classes, _Empty, _Opts ).
 r_mtx_class_distro_columns( [[Cid|Clm]|Clms], Self, ClassClm, Classes, Empty, Opts ) :-
-     debug( Self, 'Doing: ~w', [Cid] ),
+     debuc( Self, 'Doing column: ~w', [Cid] ),
      r_mtx_class_distro_column_classed( Clm, ClassClm, Empty, CVs ),
      kv_decompose( CVs, Cs, Vs ),
      ( Cs == Classes -> true; throw(mis_classes_in_cvs(Cs,Classes),b_real:Self/2) ),
