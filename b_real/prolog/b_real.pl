@@ -16,6 +16,7 @@
                     pl_vector/3, vector_scale/3,
                     pl_plot_on/2,
                     r_mtx/2, r_mtx/3, r_data_frame/2, r_unique/2,
+                    r_mtx_class_distros/2,                              % +Mtx, +Opts
                     r_hist/2,                                           % +Vect, +Opts 
                     columns_fisher_test/5,
                     dot/3,
@@ -71,4 +72,5 @@
 :- lib(gg_outputs/2).
 :- lib(gg_lollipop/2).
 :- lib(b_errors/0).
+:- lib(r_mtx_class_distros/2).
 :- lib(end(b_real)).
