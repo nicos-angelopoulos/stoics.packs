@@ -56,7 +56,7 @@ As above, but cuts Y max values to 2 and minimum of 0.
 ==
 ?- use_module(library(mtx)),
    mtx_data( iris, Iris ),
-   r_mtx_class_distros(Iris,dir(plots),ylim=c(0,2)).
+   r_mtx_class_distros(Iris,[dir(plots),ylim=c(0,2)]).
 ==
 
 @author nicos angelopoulos
