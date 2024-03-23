@@ -36,6 +36,7 @@
 :- lib(options).
 :- lib(stoics_lib).
 :- lib(debug_call).
+:- lib(pack_errors).
 :- lib(suggests(mtx)).
 
 :- lib(poly_graph).  % private for now
@@ -70,5 +71,5 @@
 :- lib(colour_cbb/1).
 :- lib(gg_outputs/2).
 :- lib(gg_lollipop/2).
-
+:- lib(b_errors/0).
 :- lib(end(b_real)).

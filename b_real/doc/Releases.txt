@@ -2,6 +2,7 @@
 --------------------
 
 1.1
+   24.03.23  DEPS:     start working pack(pack_errors)
    24.03.22  OPTS:     added multi(Multi) to both pl_vector/3 and r_hist/2.
 1.0       @  23.09.01
    23.09.02  IFACE:    pl_vector/3 allow Cid:Mtx notation and return option cps(Cps)
