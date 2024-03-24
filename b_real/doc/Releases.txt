@@ -2,6 +2,7 @@
 --------------------
 
 1.1
+   24.03.24  IFACE:    new pred r_mtx_columns_hist/2
    24.03.23  DEPS:     start working pack(pack_errors)
              IFACE:    new pred r_mtx_class_distros/2
    24.03.22  OPTS:     added multi(Multi) to both pl_vector/3 and r_hist/2.
