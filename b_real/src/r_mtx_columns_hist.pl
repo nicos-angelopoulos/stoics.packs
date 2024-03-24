@@ -86,8 +86,7 @@ r_mtx_columns_hist( CsvF, Args ) :-
      options( stem(Stem), Opts ),
      Prs = [debug-debug_r_mtx_class_distro_columns,debug_r_hist-debug],
      options_rename( Dpts, Prs, Rpts, replace(false) ),
-     r_mtx_columns_hist_lists( MtxL, Self, Dir, Cfx, Lbl, Stem, Rpts ),
-     debuc( Self, end, true ).
+     r_mtx_columns_hist_lists( MtxL, Self, Dir, Cfx, Lbl, Stem, Rpts ).
 
 r_mtx_columns_hist_lists( [], _Self, _Dir, _Cfx, _Lbl, _Otem, _Opts ).
 r_mtx_columns_hist_lists( [[Cnm|Vals]|Clms], Self, Dir, Cfx, Lbl, Otem, Opts ) :-
