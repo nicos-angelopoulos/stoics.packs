@@ -3,8 +3,8 @@
 
 r_mtx_class_distros_defaults( Defs ) :-
                Defs = [
-                         class_main(true),
-                         class_postfix(true),
+                         cid_main(true),
+                         cid_postfix(true),
                          debug(false),
                          debug_r_hist(false),
                          outputs(svg),
@@ -18,10 +18,10 @@ Draws a plot for each data column of Mtx- comprising of N distributions, where N
 classes in first column of Mtx.
 
 Opts
-  * class_main(CidMain=true)
+  * cid_main(CidMain=true)
     should we pass Cid as main title of the plot. When false, empty string is passed,
     which can be overriden with an explicit main() option
-  * class_postfix(Cfx=true)
+  * cid_postfix(Cfx=true)
     add column name to stem
   * debug(Dbg=true)
     informational, progress messages
@@ -84,9 +84,9 @@ r_mtx_class_distro_columns( [[Cid|Clm]|Clms], Self, ClassClm, Classes, Empty, Op
      ( Cs == Classes -> true; throw(mis_classes_in_cvs(Cs,Classes),b_real:Self/2) ),
      options_rename( Opts, [debug-debug_r_mtx_class_distro_columns,debug_r_hist-debug], RnmOpts, replace(false) ),
      r_mtx_class_distro_columns_transparency_colours( Self, Classes, Tlrs, Opts ),
-     ( options(class_main(true),Opts) -> Main = Cid; Main = '' ),
+     ( options(cid_main(true),Opts) -> Main = Cid; Main = '' ),
      options( stem(Stem), Opts ),
-     ( options(class_postfix(true),Opts) -> at_con([Stem,Cid],'_',RhStem); (Stem=='' -> RhStem = class; Stem=RhStem) ),
+     ( options(cid_postfix(true),Opts) -> at_con([Stem,Cid],'_',RhStem); (Stem=='' -> RhStem = class; Stem=RhStem) ),
      DisOpts =  [multi(true),as_density(true),transparency_colour(Tlrs),main= +Main],
      append( [stem(RhStem)|RnmOpts], DisOpts, RhiOpts ),
      r_hist( Vs, RhiOpts ),
