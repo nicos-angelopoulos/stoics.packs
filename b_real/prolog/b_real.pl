@@ -6,8 +6,8 @@
                     aheatmap/1, aheatmap/2,
                     lm_plot/3,
                     gg_bar_plot/2,
-                    gg_lollipop/2,                                     % +Data,  +Opts
-                    gg_outputs/2,                                      % +Gplot, +Opts
+                    gg_lollipop/2,                                      % +Data,  +Opts
+                    gg_outputs/2,                                       % +Gplot, +Opts
                     gg_theme/2,
                     vectors_subed_gg_bar_plot/4,
                     mtx_pheatmap/2,
@@ -17,7 +17,8 @@
                     pl_plot_on/2,
                     r_mtx/2, r_mtx/3, r_data_frame/2, r_unique/2,
                     r_mtx_class_distros/2,                              % +Mtx, +Opts
-                    r_hist/2,                                           % +Vect, +Opts 
+                    r_mtx_columns_hist/2,                               % +Mtx, +Opts
+                    r_hist/2,                                           % +Vct, +Opts 
                     columns_fisher_test/5,
                     dot/3,
                     mtx_df/2, mtx_df/3,
@@ -73,4 +74,5 @@
 :- lib(gg_lollipop/2).
 :- lib(b_errors/0).
 :- lib(r_mtx_class_distros/2).
+:- lib(r_mtx_columns_hist/2).
 :- lib(end(b_real)).

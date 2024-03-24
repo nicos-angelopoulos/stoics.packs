@@ -23,7 +23,7 @@ Opts
     which can be overriden with an explicit main() option
   * cid_postfix(Cfx=true)
     add column name to stem
-  * debug(Dbg=true)
+  * debug(Dbg=false)
     informational, progress messages
   * debug_r_hist(Drh=false)
     whether to debug the call to r_hist/2
