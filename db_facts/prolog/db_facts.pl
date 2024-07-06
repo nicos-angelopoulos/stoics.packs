@@ -101,7 +101,7 @@ true.
 ==
 */
 % db_version( 0:5:0, date(2018,3,18) ).
-db_version(0:6:0, date(2022,2,4)).
+db_version(0:5:2, date(2024,7,6)).
 
 /** db_create( +Conn, +Goal ).
 
@@ -135,7 +135,7 @@ create_pair_atom( H, A ) :-
     ( H=N+T; H=N-T ),
     !,
     create_type_atom( T, Tatom ),
-    atomic_list_concat( [N,Tatom], ' ', A ).
+    atomic_list_concat( ['[',N,'] ',Tatom], '', A ).
 
 % fixme [] for enum() is untested, in addition it doesnt work in sqlite...
 create_type_atom( [H|T], Tatom ) :-
@@ -203,7 +203,8 @@ db_assert( Conn, Goal, Affected ) :-
      maplist( dquote(ConT), KVals, QVals ),
      atomic_list_concat( QVals, ',', CVals ),
      atomic_list_concat( KClms, ',', CClms ),
-     atomic_list_concat( ['Insert into ',Table,' (',CClms,') Values ','(',CVals,')'], Insert ),
+     maplist( db_column_name_wrap, CClms, WClms ),
+     atomic_list_concat( ['Insert into ',Table,' (',WClms,') Values ','(',CVals,')'], Insert ),
 
      ( UClms == [] ->
           ( debug( db_facts, 'Assert query: ~w', [Insert] ),
@@ -525,6 +526,9 @@ fa_value( uvals, kkv_ukv(_,_,_,UVals), UVals ).
 fa_value( known, kkv_ukv(KClms,KVals,_,_), KClms, KVals ).
 fa_value( unown, kkv_ukv(_,_,UClms,UVals), UClms, UVals ).
 
+db_column_name_wrap( Clm, Wlm ) :-
+     atomic_list_concat( ['[',Clm,']'], '', Wlm ).
+
 fact_args_term( ArgsIn, Clms, _Goal, FATerm ) :-
      ( (ArgsIn=[Args],is_list(Args)) -> true ; Args = ArgsIn ),
      maplist( look_for_pair_nonvar, Args, Keys, Vals ),
@@ -654,7 +658,8 @@ sql_clm_and_val_to_sql_equals_atom(K, V, KVAtm) :-
           atom_concat(Vdb, '\'', VDsh),
           atom_concat('=\'',VDsh,EqV)
      ),
-     atom_concat(K, EqV, KVAtm).
+     atomic_list_concat( ['[',K,']',EqV], '', KVAtm ).
+     % it was, atom_concat(K, EqV, KVAtm)., changed to allow keywords as column/field names (see github issue)
 
 % fixme: date ?
 dquote( _, date(Y,M,D), Quoted ) :-

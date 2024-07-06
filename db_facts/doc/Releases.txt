@@ -8,7 +8,9 @@ TBD:
 
 ---
 
-0.6  22.07.01   DEPS:     system library(lists) and library(apply)
+0.6  
+     24.07.06   FIXED:    wrap field names in queries with [] to allow SQL keywords
+     22.07.01   DEPS:     system library(lists) and library(apply)
                 CHANGED:  sumlit/2 -> sum_list/2
 0.5         @   18.03.18
      18.03.17   FIXED:    db_holds/2, deal with single quote in fact's arguments
