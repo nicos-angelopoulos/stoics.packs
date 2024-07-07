@@ -196,15 +196,14 @@ db_assert( Conn, Goal, Affected ) :-
      Goal =.. [Table|Args],
      db_table_columns( Conn, Table, Clms ),
      db_current_connection( Conn, ConT ),
-
      fact_args_term( Args, Clms, Goal, FATerm ),
      fa_value( known, FATerm, KClms, KVals ), 
      fa_value( unown, FATerm, UClms, UVals ), 
      maplist( dquote(ConT), KVals, QVals ),
      atomic_list_concat( QVals, ',', CVals ),
-     atomic_list_concat( KClms, ',', CClms ),
-     maplist( db_column_name_wrap, CClms, WClms ),
-     atomic_list_concat( ['Insert into ',Table,' (',WClms,') Values ','(',CVals,')'], Insert ),
+     maplist( db_column_name_wrap, KClms, WClms ),
+     atomic_list_concat( WClms, ',', CClms ),
+     atomic_list_concat( ['Insert into ',Table,' (',CClms,') Values ','(',CVals,')'], Insert ),
 
      ( UClms == [] ->
           ( debug( db_facts, 'Assert query: ~w', [Insert] ),
@@ -253,7 +252,8 @@ db_holds( Conn, Goal ) :-
      ( UClms == [] ->  % then we are asking for confiramtion only
           UnC = '*', UnV = KVals  % can only succeed once in dbs.
           ;
-          atomic_list_concat( UClms, ',', UnC ),
+          maplist( db_column_name_wrap, UClms, WUClms ),
+          atomic_list_concat( WUClms, ',', UnC ),
           UnV = UVals
      ),
      atomic_list_concat( ['Select ',UnC,'From',Table,Where], ' ', Sql ),
