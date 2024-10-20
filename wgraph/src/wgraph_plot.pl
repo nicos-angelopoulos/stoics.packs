@@ -109,7 +109,8 @@ Opts
   * cnm_weight(Wc=weight)
     (graph) column name for edge weight
   * colours(Clrs="white")
-    colours for the nodes - should be known to R
+    colours for the nodes - should be known to R<br>
+    ordered in sort order of nodes (see example)
   * format(Frm=x11)
     output format: _pdf_, _x11_ or _none_ (as x11 without explicit <- x11() call).
     when Plotter is ggnet2 then Frm can x11 or any file extension recognised by
@@ -121,9 +122,12 @@ Opts
     currently not implemented
   * layout_fun(LayF)
     name of function in R that can generate coordinates object 
+    <br>
     (see https://www.rdocumentation.org/packages/igraph/versions/1.2.6/topics/layout_)
+    <br>
     defaults to: layout_with_fr, other values include: 
-
+      * as_bipartite, as_tree, in_circle, nicely, on_grid, on_sphere, randomly, with_dh,
+      * with_fr, with_gem, with_graphopt, with_kk, with_lgl, with_mds, with_sugiyama
   * layout_mtx(LayM)
     used if layout_call(LayG) is not present
   * orphan_edge_weight(OEW)
@@ -162,14 +166,22 @@ Also see wgraph/2 options for saving the graph (save/1 and stem/1).
 ?- G = [row(from,to,weight),row(1,2,50),row(2,3,100),row(4,'','')], assert(wg1(G) ).
 ?- wg1(G1), wgraph_plot(G1,true).
 
-?- G = [1-2:200,2-3:400,4], assert(wg1(G) ).
-?- wg1(G1), wgraph_plot(G1,true).
-?- wg1(G1), wgraph_plot(G1,orphan_edge_weight(0.1) ).
-?- wg1(G1), wgraph_plot(G1,plotter(ggnet2) ).
+?- G2 = [1-2:200,2-3:400,4], assert(wg2(G2) ).
+?- wg2(G2), wgraph_plot(G2,true).
+?- wg2(G2), wgraph_plot(G2,orphan_edge_weight(0.1) ).
+?- wg2(G2), wgraph_plot(G2,plotter(ggnet2) ).
 ==
+
+Colours should be given in sorted order of the nodes. 
+==
+?- G3 = [1-3:200, 2-3:400, 1-4:300, 3-4:200], 
+   wgraph_plot(G3, colours([tomato1,steelblue,khaki4,sienna1]) ).
+==
+
+Output to file.
  
 ==
-?- G1=[1-2:200,2-3:400,4], wgraph_plot(G1, [format(svg),stem(g1),save(false),plotter(ggnet2)] ).
+?- G4=[1-2:200,2-3:400,4], wgraph_plot(G4, [format(svg),stem(g1),save(false),plotter(ggnet2)] ).
 ==
 Produces file: g1.svg
 
@@ -179,6 +191,8 @@ Produces file: g1.svg
 @version  0.1 2014/11/21
 @version  0.2 2016/01/23
 @version  0.3 2019/04/21, added ggnet2
+@tbd 24.10.20: 1: resolve `graph.adjacency()` was deprecated in igraph 2.0.0. ℹ Please use `graph_from_adjacency_matrix()` instead.
+
 */
 wgraph_plot( ArgS ) :-
 	en_list( ArgS, Args ),

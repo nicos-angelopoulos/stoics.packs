@@ -1,6 +1,9 @@
 ---   Releases   ---
 --------------------
 
+0.8
+   24.10.20   DOC:      colours info and example; layout list of functions
+
 0.7           @ 22.12.29
    21.02.05   IFACE:    wgraph_ugraph/3 and implementation of wgraph_ugraph(-,+)
    21.02.05   IFACE:    added wgraph_del_vertices/3
