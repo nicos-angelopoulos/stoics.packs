@@ -27,14 +27,14 @@ Dependencies
 ==
 ?- pack_install( real ).
 ?- use_module( library(real) ).
-?- install.packages( "pheatmap" ).
+?- <- install.packages( "pheatmap" ).
 ==
 
 Examples
 ==
 ?- use_module( library(real) ).
 ?- <- write.csv( mtcars, "mtcars.csv" ).  % mtcars is an example dataset in R
-?- <- csv_read_file( Mt, 'mtcars.csv' ), assert( mt(Mt) ).
+?- csv_read_file( 'mtcars.csv', Mt ), assert( mt(Mt) ).
 ?- mt(Mt), mtx_pheatmap( Mt, [names(1),scale="column"] ).
 ?- mt(Mt), mtx_pheatmap( Mt, [names(1),scale="column",debug(true)] ).
 ==

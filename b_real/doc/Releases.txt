@@ -2,6 +2,7 @@
 --------------------
 
 1.1
+   25.02.28  DOC:      minor corrections in mtx_pheatmap/2
    24.03.24  IFACE:    new pred r_mtx_columns_hist/2
    24.03.23  DEPS:     start working pack(pack_errors)
              IFACE:    new pred r_mtx_class_distros/2
