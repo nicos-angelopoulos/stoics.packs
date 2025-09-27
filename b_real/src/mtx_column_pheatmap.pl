@@ -4,7 +4,8 @@
 :- lib(suggests(mtx)).
 % :- use_module( library(real) ).  % r_call/2, r_library/1
 
-:- r_library(pheatmap).
+% :- r_library(pheatmap).
+:- lib(promise(mtx_column_pheatmap/3,r_lib(pheatmap))).
 
 :- lib(heatmap_breaks/3).
 
