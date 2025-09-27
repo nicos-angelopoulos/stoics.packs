@@ -5,7 +5,7 @@
 % :- use_module( library(real) ).  % r_call/2, r_library/1
 
 % :- r_library(pheatmap).
-:- lib(promise(mtx_column_pheatmap/3,r_lib(pheatmap))).
+:- lib(promise(r(pheatmap),pheatmap)).
 
 :- lib(heatmap_breaks/3).
 
@@ -132,6 +132,8 @@ mtx_column_pheatmap( MtxF, Cid, ArgS ) :-
 	Rvar <- [Ord],
 	colnames(Rvar) <- ONames,
 	heatmap_breaks( Ord, BksTerm, Opts ),
+     mtx_column_pheatmap_r_lib,
+     lib_r_promised( pheatmap ),
 	r_call( pheatmap(Rvar), [BksTerm|RemOpts] ).
 
 mtx_column_pheatmap_assign_col_names( Opts, Mtx, CNames ) :-

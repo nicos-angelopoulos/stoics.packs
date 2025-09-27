@@ -3,7 +3,7 @@
 % :- use_module( library(mtx) ).  % mtx_column_select/3.
 
 :- use_module( library(real) ).  % <-/2, r_call/2.
-:- r_library( pheatmap ).
+:- lib(promise(r(pheatmap),pheatmap)).
 
 mtx_pheatmap_defaults( Defs ) :- 
 	Defs = [mtx(_),rvar(mtx_hmap), names([]) ].
@@ -53,6 +53,7 @@ mtx_pheatmap( Mtx, Args ) :-
 	Hdr =.. [_|Cnames],
 	colnames(Rvar) <- Cnames,
 	( Names == [] -> true; (rownames(Rvar) <- Names) ),
+     lib_r_promised( pheatmap ),
 	r_call( pheatmap(Rvar), Opts ).
 
 mtx_pheatmap_names_column( List, Mtx, Names, DataMtx ) :-
