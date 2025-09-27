@@ -15,7 +15,7 @@
 %  @author nicos angelopoulos
 %  @version 0.1 2014/02/12
 %  @version 0.2 2014/02/12,  switched the order, now: up = Red, down = Green.
-%  @Version 0.3 2025/09/27,  dependncy to RColorBrewer is promised now, also exposed preds to module interface
+%  @Version 0.3 2025/09/27,  dependancy to RColorBrewer is promised now, also exposed preds to module interface
 %
 colour_de_reg( up_down(Red,Green) ) :-
 	Set1 <- brewer.pal(9,"Set1"), 
