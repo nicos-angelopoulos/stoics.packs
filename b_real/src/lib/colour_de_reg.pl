@@ -18,9 +18,11 @@
 %  @Version 0.3 2025/09/27,  dependancy to RColorBrewer is promised now, also exposed preds to module interface
 %
 colour_de_reg( up_down(Red,Green) ) :-
-	Set1 <- brewer.pal(9,"Set1"), 
+     lib_r_promised( 'brewer.pal' ),
+	Set1 <- 'brewer.pal'(9,"Set1"), 
 	Set1 = [Red,_Blue,Green|_].
 
 colour_de_reg_3( up_down(Red,Orange,Green) ) :-
+     lib_r_promised( 'brewer.pal' ),
 	Set1 <- brewer.pal(9,"Set1"), 
 	Set1 = [Red,_Blue,Green,_Mauve,Orange|_].
