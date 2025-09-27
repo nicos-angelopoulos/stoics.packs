@@ -132,7 +132,6 @@ mtx_column_pheatmap( MtxF, Cid, ArgS ) :-
 	Rvar <- [Ord],
 	colnames(Rvar) <- ONames,
 	heatmap_breaks( Ord, BksTerm, Opts ),
-     mtx_column_pheatmap_r_lib,
      lib_r_promised( pheatmap ),
 	r_call( pheatmap(Rvar), [BksTerm|RemOpts] ).
 
