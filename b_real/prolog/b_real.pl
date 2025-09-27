@@ -1,6 +1,7 @@
 :- module( b_real, [
                     b_real/0, b_real_version/2,
                     c25/1,
+                    colour_de_reg/1,colour_de_reg_3/1,                  % -ClrsTerm
                     colours_pie/1, colours_pie/2,
                     colour_cb/1, colour_cbb/1,
                     aheatmap/1, aheatmap/2,

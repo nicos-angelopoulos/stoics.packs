@@ -1,6 +1,6 @@
 
-:- ensure_loaded( library(real) ).
-:- <- library("RColorBrewer").
+:- ensure_loaded(library(real)).
+:- lib(promise(r('brewer.pal'),'RColorBrewer')).
 
 %% colour_de_reg( -DeReg ).
 %% colour_de_reg_3( -DeReg3 ).
@@ -10,7 +10,6 @@
 %  Colours for up and down (de) regulation.
 %
 %==
-% ?- requires( colours_pie/1 ).
 % ?- colour_de_reg( up_down(Up,Down) ), colours_pie( [Up,Down] ).
 %==
 %  @author nicos angelopoulos
