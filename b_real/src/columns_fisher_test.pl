@@ -1,7 +1,7 @@
 
 :- use_module(library(real)).
 
-:- <- library( "RColorBrewer"  ).
+:- lib(promise(r('brewer.pal'),'RColorBrewer')).
 
 columns_fisher_test_defaults( plot(false) ).
 
@@ -106,6 +106,7 @@ cross_column_fisher_test_plot( _Data, Inters, _Odds, Lods ) :-
      ix <- colnames(Inters),
 	h <- hclust(dist(Inters[ix,ix])),
 	o <- h$order,
+    lib_r_promised( 'brewer.pal' ),
     <- image(x=1:ncol(Lods), y=1:nrow(Lods), Lods[o,o], col='brewer.pal'(11,"BrBG"), breaks = c(-200, seq(-3,3,2/3),  200), xaxt="n", yaxt="n", xlab="",ylab="", xlim=c(0, ncol(Lods)+3), ylim=c(0, ncol(Lods)+3)),
   % #image(x=1:ncol(interactions), y=1:nrow(interactions), log10(odds[o,o]), scale="none", col=brewer.pal(11,"BrBG"), breaks = seq(-3,3,length.out=12), xaxt="n", yaxt="n", xlab="",ylab="", xlim=c(0, ncol(interactions)+1))
 	<- mtext(side=1, at=1:ncol(Inters), colnames(Inters)[o], cex=0.5, font=c(rep(3,ncol(Inters)))),
