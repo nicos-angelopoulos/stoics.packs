@@ -2,6 +2,7 @@
 --------------------
 
 1.1
+   25.10.05  OPTS:     pass fill_colours(Clrs) through stoics_lib:colour_hex/2, with static file output example
    25.09.27  IFACE:    colour_de_reg/1,colour_de_reg_3/1 on module interface + promised RColorBrewer
              CHANGED:  changed dependancy to R:heatmap a promised one
    25.02.28  DOC:      minor corrections in mtx_pheatmap/2

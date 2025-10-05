@@ -1,8 +1,9 @@
 
-:- lib(options).
+:- lib(apply).  % maplist/2.
 :- use_module( library(real) ).
 :- lib(promise(gg_plot_dep/0,call(gg_plot_dep_load))).
 
+:- lib(options).
 
 % now from stoics
 :- lib(stoics_lib:positions/3).
@@ -17,6 +18,7 @@
 % :- requires( gg_hue_colour_strings/2 ).
 
 :- lib(stoics_lib:kv_decompose/3).
+:- lib(stoics_lib:colour_hex/2).
 
 gg_plot_dep_load :-
      lib(r("ggplot2")),
@@ -131,11 +133,22 @@ gg_bar_plot( Pairs, [flip(false),geom_bar(empty),fill_colours(FClrs)] ).
    gg_bar_plot( Pairs, [flip(false),geom_bar(empty),fill_colours(true),df_rvar_rmv(false)] ).
 ==
 
+Since v0.5 it is possible to pass colour names recognised by colour_hex/2. This examples also shows how to use the predicate for displaying up and downregulation 
+data from biological experiments.
+
+==
+?- Pairs = [a-[12,-22],b-[14,-5]], Fcs = [cadmiumred,brandeisblue], gg_bar_plot( Pairs, [fill_colours(Fcs),output(svg("dereg_bar_plot.svg"))] ).
+==
+Produces file: dereg_bar_plot.svg 
+
+[[doc/html/images/dereg_bar_plot.svg]]
+
 @author nicos angelopoulos
 @version  0.1 2014/10/21
 @version  0.2 2016/01/23
 @version  0.3 2016/08/31, added singleton groups as normal barplots
 @version  0.4 2022/02/16, re-introduced dependency to ggpubr
+@version  0.5 2025/10/05, pass colours through stoics_lib:colour_hex/2.
 
 */
 gg_bar_plot( Pairs, Args ) :-
@@ -148,10 +161,11 @@ gg_bar_plot( Pairs, Args ) :-
     gg_bar_plot_leg_reverse( Lrv, GGflip, GGlrev ),
     GBs =[geom_bar_draw_colour(Gbc),geom_bar(Gbb),geom_bar_position(Gbp)],  
     options( GBs, Opts ),
-    options( fill_colours(Fclrs), Opts ),
-    debuc( gg_bar_plot, 'fill_colours(~w)', [Fclrs] ),
+    options( fill_colours(FclrsPrv), Opts ),
+    debuc( gg_bar_plot, 'fill_colours(~w)', [FclrsPrv] ),
     options( legend_title(Ltitle), Opts ),
     options( legend_labels(LLbls), Opts ),
+    maplist( colour_hex, FclrsPrv, Fclrs ),
     gg_bar_plot_geom_bar( Nest, Gbb, Gbp, Gbc, Fclrs, GGlrev, GGgb ),
     debuc( gg_bar_plot, 'Legend labels: ~w', [LLbls] ),
     gg_bar_plot_fill_colours( Fclrs, Ltitle, Len, LLbls, GGgb, GGfill ),
