@@ -1,7 +1,7 @@
 ---   Releases   ---
 --------------------
 
-1.1
+1.1       @  25.10.05
    25.10.05  OPTS:     pass fill_colours(Clrs) through stoics_lib:colour_hex/2, with static file output example
    25.09.27  IFACE:    colour_de_reg/1,colour_de_reg_3/1 on module interface + promised RColorBrewer
              CHANGED:  changed dependancy to R:heatmap a promised one
@@ -10,6 +10,7 @@
    24.03.23  DEPS:     start working pack(pack_errors)
              IFACE:    new pred r_mtx_class_distros/2
    24.03.22  OPTS:     added multi(Multi) to both pl_vector/3 and r_hist/2.
+
 1.0       @  23.09.01
    23.09.02  IFACE:    pl_vector/3 allow Cid:Mtx notation and return option cps(Cps)
    23.09.01  CHANGED:  rebranding panel_theme to theme (options and pred names)

@@ -75,7 +75,7 @@ Options are passed to gg_outputs/2.
 ==
 Produces file: gg_lollipop.svg
 
-[[doc/html/images/gg_lollipop.svg]]
+[[html/images/gg_lollipop.svg]]
 
 Change basic parameters of the plot
 ==

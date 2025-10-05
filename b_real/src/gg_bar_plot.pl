@@ -139,9 +139,9 @@ data from biological experiments.
 ==
 ?- Pairs = [a-[12,-22],b-[14,-5]], Fcs = [cadmiumred,brandeisblue], gg_bar_plot( Pairs, [fill_colours(Fcs),output(svg("dereg_bar_plot.svg"))] ).
 ==
-Produces file: dereg_bar_plot.svg 
+Produces file: dereg_bar_plot.svg
 
-[[doc/html/images/dereg_bar_plot.svg]]
+[[html/images/dereg_bar_plot.svg]]
 
 @author nicos angelopoulos
 @version  0.1 2014/10/21

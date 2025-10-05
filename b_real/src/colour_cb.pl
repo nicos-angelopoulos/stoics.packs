@@ -14,7 +14,7 @@ Cb = c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E0
 ==
 Produces file: clr_cb.svg
 
-[[doc/html/images/clr_cb.svg]]
+[[html/images/clr_cb.svg]]
 
 @author nicos angelopoulos
 @version 0.1 2014/02/10

@@ -63,7 +63,7 @@ Examples
 ==
 Produces file: abc.svg
 
-[[doc/html/images/abc.svg]]
+[[html/images/abc.svg]]
 
 Width, Height and Stem can be overridden  by *|=|* options within Outs.
 In the example below, the pdf gets Width 8, from the =|plot_width|= parameter, while the png gets Width 9.

@@ -45,7 +45,7 @@ Opts
 ==
 Produces file: rh1.svg
 
-[[doc/html/images/rh1.svg]]
+[[html/images/rh1.svg]]
 
 ==
 ?- lib(real).
@@ -57,7 +57,7 @@ Produces file: rh1.svg
 ==
 Produces file: rh2.svg
 
-[[doc/html/images/rh2.svg]]
+[[html/images/rh2.svg]]
 
 ==
 ?- lib(real).
