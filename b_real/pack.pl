@@ -1,6 +1,6 @@
 name( b_real ).
 title( 'Interface predicates to commonly used R functions.' ).
-version( '1.0' ).
+version( '1.1' ).
 author( 'Nicos Angelopoulos', 'http://stoics.org.uk/~nicos' ).
 packager( 'Nicos Angelopoulos', 'http://stoics.org.uk/~nicos' ).
 maintainer( 'Nicos Angelopoulos', 'http://stoics.org.uk/~nicos' ).
