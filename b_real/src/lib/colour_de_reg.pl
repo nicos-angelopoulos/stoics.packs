@@ -12,10 +12,10 @@
 %==
 % ?- colour_de_reg( up_down(Up,Down) ), colours_pie( [Up,Down] ).
 %==
-%  @author nicos angelopoulos
-%  @version 0.1 2014/02/12
-%  @version 0.2 2014/02/12,  switched the order, now: up = Red, down = Green.
-%  @Version 0.3 2025/09/27,  dependancy to RColorBrewer is promised now, also exposed preds to module interface
+%@author nicos angelopoulos
+%@version 0.1 2014/02/12
+%@version 0.2 2014/02/12,  switched the order, now: up = Red, down = Green.
+%@version 0.3 2025/09/27,  dependancy to RColorBrewer is promised now, also exposed preds to module interface
 %
 colour_de_reg( up_down(Red,Green) ) :-
      lib_r_promised( 'brewer.pal' ),
