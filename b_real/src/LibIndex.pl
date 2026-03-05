@@ -1,17 +1,76 @@
-% lib_index(at_con, 3, any, user, 'atom/at_con').
-lib_index(aheatmap,2,any,user,aheatmap).
-lib_index(columns_fisher_test,5,any,user,columns_fisher_test).
-lib_index(dot,3,any,user,dot).
-lib_index(gg_bar_plot,2,any,user,gg_bar_plot).
-lib_index(lm_plot,3,any,user,lm_plot).
-lib_index(mtx_column_pheatmap,3,any,user,mtx_column_pheatmap).
-lib_index(mtx_df,2,any,user,mtx_df).
-lib_index(mtx_pheatmap,2,any,user,mtx_pheatmap).
-lib_index(options_rvar_rmv,2,any,user,'options_rvar_rmv').
-lib_index(pl_vector,3,any,user,pl_vector).
-lib_index(pl_plot_on,2,any,user,pl_plot_on).
-lib_index(r_mtx,3,any,user,r_mtx).
-lib_index(r_data_frame,2,any,user,r_data_frame).
-lib_index(r_unique,2,any,user,r_unique).
-lib_index(vector_scale,3,any,user,vector_scale).
-lib_index(vectors_subed_gg_bar_plot,4,any,user,vectors_subed_gg_bar_plot).
+% date(2026,3,5)
+
+lib_index(aheatmap, 1, any, b_real, '../src/aheatmap').
+lib_index(aheatmap, 1, any, b_real, aheatmap).
+lib_index(aheatmap, 2, any, b_real, '../src/aheatmap').
+lib_index(aheatmap, 2, any, b_real, aheatmap).
+lib_index(b_real, 0, any, b_real, '../src/b_real').
+lib_index(b_real, 0, any, b_real, b_real).
+lib_index(b_real_version, 2, any, b_real, '../src/b_real_version').
+lib_index(b_real_version, 2, any, b_real, b_real_version).
+lib_index(c25, 1, any, b_real, '../src/c25').
+lib_index(c25, 1, any, b_real, c25).
+lib_index(colour_cb, 1, any, b_real, '../src/colour_cb').
+lib_index(colour_cb, 1, any, b_real, colour_cb).
+lib_index(colour_cbb, 1, any, b_real, '../src/colour_cb').
+lib_index(colour_cbb, 1, any, b_real, colour_cb).
+lib_index(colour_de_reg, 1, any, b_real, '../src/lib/colour_de_reg').
+lib_index(colour_de_reg, 1, any, b_real, 'lib/colour_de_reg').
+lib_index(colour_de_reg_3, 1, any, b_real, '../src/lib/colour_de_reg').
+lib_index(colour_de_reg_3, 1, any, b_real, 'lib/colour_de_reg').
+lib_index(colours_pie, 1, any, b_real, '../src/colours_pie').
+lib_index(colours_pie, 1, any, b_real, colours_pie).
+lib_index(colours_pie, 2, any, b_real, '../src/colours_pie').
+lib_index(colours_pie, 2, any, b_real, colours_pie).
+lib_index(columns_fisher_test, 5, any, b_real, '../src/columns_fisher_test').
+lib_index(columns_fisher_test, 5, any, b_real, columns_fisher_test).
+lib_index(dot, 3, any, b_real, '../src/dot').
+lib_index(dot, 3, any, b_real, dot).
+lib_index(gg_bar_plot, 2, any, b_real, '../src/gg_bar_plot').
+lib_index(gg_bar_plot, 2, any, b_real, gg_bar_plot).
+lib_index(gg_lollipop, 2, any, b_real, '../src/gg_lollipop').
+lib_index(gg_lollipop, 2, any, b_real, gg_lollipop).
+lib_index(gg_outputs, 2, any, b_real, '../src/gg_outputs').
+lib_index(gg_outputs, 2, any, b_real, gg_outputs).
+lib_index(gg_theme, 2, any, b_real, '../src/gg_theme').
+lib_index(gg_theme, 2, any, b_real, gg_theme).
+lib_index(lm_plot, 3, any, b_real, '../src/lm_plot').
+lib_index(lm_plot, 3, any, b_real, lm_plot).
+lib_index(mtx_column_pheatmap, 3, any, b_real, '../src/mtx_column_pheatmap').
+lib_index(mtx_column_pheatmap, 3, any, b_real, mtx_column_pheatmap).
+lib_index(mtx_df, 2, any, b_real, '../src/mtx_df').
+lib_index(mtx_df, 2, any, b_real, mtx_df).
+lib_index(mtx_df, 3, any, b_real, '../src/mtx_df').
+lib_index(mtx_df, 3, any, b_real, mtx_df).
+lib_index(mtx_pheatmap, 2, any, b_real, '../src/mtx_pheatmap').
+lib_index(mtx_pheatmap, 2, any, b_real, mtx_pheatmap).
+lib_index(options_rvar_rmv, 2, any, b_real, '../src/options_rvar_rmv').
+lib_index(options_rvar_rmv, 2, any, b_real, options_rvar_rmv).
+lib_index(pl_plot_on, 2, any, b_real, '../src/pl_plot_on').
+lib_index(pl_plot_on, 2, any, b_real, pl_plot_on).
+lib_index(pl_vector, 3, any, b_real, '../src/pl_vector').
+lib_index(pl_vector, 3, any, b_real, pl_vector).
+lib_index(quantiles, 3, any, b_real, '../src/quantiles').
+lib_index(quantiles, 3, any, b_real, quantiles).
+lib_index(r_data_frame, 2, any, b_real, '../src/r_data_frame').
+lib_index(r_data_frame, 2, any, b_real, r_data_frame).
+lib_index(r_hist, 2, any, b_real, '../src/r_hist').
+lib_index(r_hist, 2, any, b_real, r_hist).
+lib_index(r_mtx, 2, any, b_real, '../src/r_mtx').
+lib_index(r_mtx, 2, any, b_real, r_mtx).
+lib_index(r_mtx, 3, any, b_real, '../src/r_mtx').
+lib_index(r_mtx, 3, any, b_real, r_mtx).
+lib_index(r_mtx_class_distros, 2, any, b_real, '../src/r_mtx_class_distros').
+lib_index(r_mtx_class_distros, 2, any, b_real, r_mtx_class_distros).
+lib_index(r_mtx_columns_hist, 2, any, b_real, '../src/r_mtx_columns_hist').
+lib_index(r_mtx_columns_hist, 2, any, b_real, r_mtx_columns_hist).
+lib_index(r_unique, 2, any, b_real, '../src/r_unique').
+lib_index(r_unique, 2, any, b_real, r_unique).
+lib_index(string_symbols_graph, 3, any, b_real, '../src/string_symbols_graph').
+lib_index(string_symbols_graph, 3, any, b_real, string_symbols_graph).
+lib_index(symboled_graph_display, 4, any, b_real, '../src/symboled_graph_display').
+lib_index(symboled_graph_display, 4, any, b_real, symboled_graph_display).
+lib_index(vector_scale, 3, any, b_real, '../src/vector_scale').
+lib_index(vector_scale, 3, any, b_real, vector_scale).
+lib_index(vectors_subed_gg_bar_plot, 4, any, b_real, '../src/vectors_subed_gg_bar_plot').
+lib_index(vectors_subed_gg_bar_plot, 4, any, b_real, vectors_subed_gg_bar_plot).
