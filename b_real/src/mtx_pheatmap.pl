@@ -53,7 +53,7 @@ mtx_pheatmap( Mtx, Args ) :-
 	Hdr =.. [_|Cnames],
 	colnames(Rvar) <- Cnames,
 	( Names == [] -> true; (rownames(Rvar) <- Names) ),
-     lib_r_promised( pheatmap ),
+     lib_r_promised( pheatmap, mtx_pheatmap/2 ),
 	r_call( pheatmap(Rvar), Opts ).
 
 mtx_pheatmap_names_column( List, Mtx, Names, DataMtx ) :-
